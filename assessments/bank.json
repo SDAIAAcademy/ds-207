@@ -3,164 +3,722 @@
   "version": 1,
   "questions": [
     {
-      "id": "q-example-1",
+      "id": "q-law-01",
       "type": "single",
-      "prompt": "REPLACE: a practice question on LO1, as a short scenario",
+      "prompt": "An analyst in a university's student support unit is asked by the communications office for the email addresses of students who used tutoring, to send them an offer from a private training provider. What kind of processing is this?",
       "options": [
-        "REPLACE: a wrong option that a common misconception makes tempting",
-        "REPLACE: the right answer",
-        "REPLACE: a wrong option that a common misconception makes tempting",
-        "REPLACE: a wrong option that a common misconception makes tempting"
+        "Processing within the purpose the data was collected for",
+        "A new purpose: advertising, which needs the students' prior consent",
+        "A statistical use, which the law allows without consent when results are reported for groups",
+        "A transfer of data outside the Kingdom"
       ],
       "correct": [
         1
       ],
-      "explanation": "REPLACE: why the right answer is right, in one sentence",
+      "explanation": "The data was collected to support students. Advertising is a different purpose and needs the recipient's consent first.",
       "misconceptions": [
-        "REPLACE: the misconception behind this option",
+        "Treats any use inside the same organisation as the original purpose",
         "",
-        "REPLACE: the misconception behind this option",
-        "REPLACE: the misconception behind this option"
+        "Treats any use of a list of people as statistics",
+        "Confuses sending to a third party with sending abroad"
       ],
       "lo": [
         "LO1"
       ],
       "day": "day1",
       "session": 1,
+      "slide": "four-kinds",
+      "level": "understand",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "q-law-02",
+      "type": "single",
+      "prompt": "An analyst says: \"I am only exploring the student table to see what is in it. The rules start when I produce a result.\" Which answer is right?",
+      "options": [
+        "She is right: exploration has no purpose yet, so no rule applies",
+        "She is right, provided she deletes the notebook and its outputs when she has finished looking",
+        "She is right if the table has no names in it",
+        "She is wrong: viewing and analysing personal data is processing"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "The law's definition of processing covers any operation on personal data, including viewing and analysing it. The purpose must exist before the first query.",
+      "misconceptions": [
+        "Believes there is a phase of work before the law",
+        "Treats deletion as undoing the processing",
+        "Treats removing names as removing the data from the law",
+        ""
+      ],
+      "lo": [
+        "LO1"
+      ],
+      "day": "day1",
+      "session": 1,
+      "slide": "analysis-is-processing",
+      "level": "understand",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "q-law-03",
+      "type": "single",
+      "prompt": "To finish a report at home, an analyst uploads a pseudonymised extract of student records to a free online notebook service hosted in another country. Nobody else opens the file. Which rule is engaged first?",
+      "options": [
+        "The rules on transfer of personal data outside the Kingdom",
+        "None: the file is pseudonymised, and no other person opened it while it was there",
+        "Only the rule on marketing consent",
+        "Only the data subject's right of access"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Storing personal data on servers abroad is a transfer, whoever reads it, and pseudonymised data is still personal data.",
+      "misconceptions": [
+        "",
+        "Treats pseudonymised data as outside the law and a transfer as needing a reader",
+        "Picks a rule by the word \"service\" instead of by what happens to the data",
+        "Confuses a duty of the controller with a right exercised by the student"
+      ],
+      "lo": [
+        "LO1"
+      ],
+      "day": "day1",
+      "session": 1,
+      "slide": "disclosure-transfer-breach",
       "level": "apply",
       "pool": "practice",
       "weight": 1
     },
     {
-      "id": "q-example-2",
-      "type": "tf",
-      "prompt": "REPLACE: a statement on LO2 that is true",
+      "id": "q-law-04",
+      "type": "single",
+      "prompt": "A dean asks an analyst for the list of students in his college who have a registered health condition, for a talk about student wellbeing. What should the analyst do first?",
       "options": [
-        "True",
-        "False"
+        "Send the list: a dean is senior enough to see it",
+        "Send the list with names replaced by student numbers, so that the dean cannot tell at a glance who is on it",
+        "Describe the request, the kind of processing and the rules engaged to the data protection officer",
+        "Refuse and delete the request"
       ],
       "correct": [
-        0
+        2
       ],
-      "explanation": "REPLACE: why the right answer is right, in one sentence",
+      "explanation": "Health data is sensitive and was collected for another purpose. The decision belongs to the data protection officer, and a clear note lets her answer quickly.",
       "misconceptions": [
+        "Lets seniority replace purpose and need to know",
+        "Treats a pseudonym as making health data safe to pass on",
         "",
-        "REPLACE: the misconception behind this option"
+        "Obstructs instead of routing: the dean's aim may be served by counts"
+      ],
+      "lo": [
+        "LO1"
+      ],
+      "day": "day1",
+      "session": 1,
+      "slide": "ask-the-dpo",
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "q-classify-01",
+      "type": "single",
+      "prompt": "From Restricted student records an analyst produces a table of pass rates by college. Every cell counts more than 500 students. What classification does the table have?",
+      "options": [
+        "Restricted, because everything made from Restricted data keeps that level for as long as it exists",
+        "It can be Public once assessed and approved by the data owner",
+        "It has no level: tables are not data",
+        "Secret, to be safe"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "An output is classified by the impact of its own disclosure. Large aggregates harm nobody, but the owner approves the release.",
+      "misconceptions": [
+        "Believes the level is inherited and never assessed again",
+        "",
+        "Believes classification applies only to databases",
+        "Over-classifies, against the policy's principle that data is open by default"
       ],
       "lo": [
         "LO2"
       ],
       "day": "day1",
-      "session": 1,
+      "session": 3,
+      "slide": "outputs-are-data",
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "q-classify-02",
+      "type": "single",
+      "prompt": "An extract has student names removed and registry numbers replaced by project codes. The registrar holds the key. An analyst says the extract is anonymous and can be shared freely. What is wrong?",
+      "options": [
+        "Nothing: without names nobody can be identified",
+        "Nothing, as long as the analyst herself never receives the key from the registrar",
+        "It would be anonymous if the codes were longer",
+        "It is pseudonymised: a key exists, so it is still personal data"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Pseudonymised data stays personal data because the link to the person can be restored.",
+      "misconceptions": [
+        "Equates removing names with anonymity",
+        "Judges identifiability by one person's access instead of whether a key exists",
+        "Thinks the strength of the code decides, not the existence of a way back",
+        ""
+      ],
+      "lo": [
+        "LO2"
+      ],
+      "day": "day1",
+      "session": 2,
+      "slide": "pseudonym-is-personal",
       "level": "understand",
       "pool": "practice",
       "weight": 1
     },
     {
-      "id": "q-example-3",
+      "id": "q-classify-03",
       "type": "single",
-      "prompt": "REPLACE: a practice question on LO3, as a short scenario",
+      "prompt": "A government observatory asks a university for eleven fields about all its students, to study which programmes the labour market needs. The study needs five of the fields and only final-year students. What is the right decision?",
       "options": [
-        "REPLACE: a wrong option that a common misconception makes tempting",
-        "REPLACE: the right answer",
-        "REPLACE: a wrong option that a common misconception makes tempting",
-        "REPLACE: a wrong option that a common misconception makes tempting"
+        "Share with conditions: the five fields, final-year students, over an approved channel",
+        "Refuse: personal data never leaves the University",
+        "Share all eleven fields for all students: the requester is a government entity and the purpose is in the public interest",
+        "Share all eleven fields with the names removed"
       ],
       "correct": [
-        1
+        0
       ],
-      "explanation": "REPLACE: why the right answer is right, in one sentence",
+      "explanation": "The purpose is legitimate, but the request fails the minimum-data test. The answer is a smaller release with conditions.",
       "misconceptions": [
-        "REPLACE: the misconception behind this option",
         "",
-        "REPLACE: the misconception behind this option",
-        "REPLACE: the misconception behind this option"
+        "Treats sharing as forbidden when the policy expects it for a legitimate purpose",
+        "Lets a legitimate purpose cancel the minimum-data test",
+        "Thinks removing names satisfies minimisation"
+      ],
+      "lo": [
+        "LO2"
+      ],
+      "day": "day1",
+      "session": 4,
+      "slide": "three-tests",
+      "level": "analyse",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "q-classify-04",
+      "type": "single",
+      "prompt": "An analyst wants to paste twenty rows of a Restricted extract into a public generative AI assistant to get help with a pandas error. Which is the right course?",
+      "options": [
+        "Paste them: twenty rows is too few to matter",
+        "Paste them after replacing each student code with a new random code that she makes up herself",
+        "Recreate the error with made-up rows of the same shape and paste those",
+        "Paste them and delete the conversation afterwards"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Only data classified Public may be entered into such a tool. The error depends on the shape of the data, not on real students.",
+      "misconceptions": [
+        "Believes the amount of data decides, not its level",
+        "Thinks re-coding changes the classification",
+        "",
+        "Treats deletion on the user's side as undoing the disclosure"
+      ],
+      "lo": [
+        "LO2"
+      ],
+      "day": "day1",
+      "session": 3,
+      "slide": "ai-tools",
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "q-cells-01",
+      "type": "single",
+      "prompt": "A unit's release policy suppresses counts from 1 to 9. A draft table shows, for one college, 4 students with a registered disability out of 1,200. What does the analyst publish in that cell?",
+      "options": [
+        "4, because it is the true value",
+        "0, so that nobody is pointed at",
+        "A suppression mark, and then checks whether the totals give it back",
+        "5, rounded to the nearest five so that the published figure looks less exact than the true one"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "A count under the threshold is suppressed, and suppression is finished only when the cell cannot be recovered from the totals.",
+      "misconceptions": [
+        "Believes accuracy outranks disclosure in a published table",
+        "Replaces a small count with a false value",
+        "",
+        "Applies an ad hoc change that the policy does not define and cannot be audited"
       ],
       "lo": [
         "LO3"
       ],
-      "day": "day1",
+      "day": "day2",
       "session": 1,
+      "slide": "threshold-rule",
       "level": "apply",
       "pool": "practice",
       "weight": 1
     },
     {
-      "id": "q-example-4",
-      "type": "tf",
-      "prompt": "REPLACE: a statement on LO4 that is true",
+      "id": "q-cells-02",
+      "type": "single",
+      "prompt": "A row of a table shows: Saudi 54, non-Saudi suppressed, row total 55. What is the problem?",
       "options": [
-        "True",
-        "False"
+        "There is none: the only small cell is suppressed",
+        "The row total is too small to publish",
+        "The Saudi count should be rounded to 50",
+        "The suppressed cell can be found by subtraction"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "55 minus 54 gives 1. A second cell in the row, or the total, must also be suppressed: complementary suppression.",
+      "misconceptions": [
+        "Stops at primary suppression",
+        "Applies the threshold to the wrong cell",
+        "Reaches for rounding without seeing the actual leak",
+        ""
+      ],
+      "lo": [
+        "LO3"
+      ],
+      "day": "day2",
+      "session": 1,
+      "slide": "subtraction-attack",
+      "level": "analyse",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "q-cells-03",
+      "type": "single",
+      "prompt": "In October a unit published students with a disability by college. In November it plans to publish the same table for Saudi students only. Each table alone meets the threshold of 10. What must be checked?",
+      "options": [
+        "Whether subtracting one table from the other reveals small counts of non-Saudi students",
+        "Nothing further: each of the two tables meets the threshold of 10 in every cell, which is what the policy asks",
+        "Whether the November table uses the same colours",
+        "Whether October's table can be withdrawn"
       ],
       "correct": [
         0
       ],
-      "explanation": "REPLACE: why the right answer is right, in one sentence",
+      "explanation": "Two safe tables can disclose together. The differencing check compares a new release with what is already out.",
       "misconceptions": [
         "",
-        "REPLACE: the misconception behind this option"
+        "Checks each release alone and ignores what is already published",
+        "Mistakes presentation for disclosure control",
+        "Assumes a published table can be taken back"
+      ],
+      "lo": [
+        "LO3"
+      ],
+      "day": "day2",
+      "session": 1,
+      "slide": "differencing",
+      "level": "analyse",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "q-cells-04",
+      "type": "single",
+      "prompt": "A table reports that 100% of the 14 students in a small programme were referred for academic support. No count is under 10. Why can this cell still disclose something?",
+      "options": [
+        "It cannot: 14 is above the threshold",
+        "Because a percentage is always less safe to publish than the count it was computed from",
+        "Because it tells you something about every student in the programme",
+        "Because 14 is an even number"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "When everyone in a group shares an attribute, knowing someone is in the group reveals the attribute.",
+      "misconceptions": [
+        "Believes the threshold is the only test",
+        "Over-generalises from one case",
+        "",
+        "Guesses at a rule with no meaning"
+      ],
+      "lo": [
+        "LO3"
+      ],
+      "day": "day2",
+      "session": 1,
+      "slide": "zeros-and-hundreds",
+      "level": "understand",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "q-bias-01",
+      "type": "single",
+      "prompt": "A rule refers students for support. Which rate tells you how often it fails students who needed support?",
+      "options": [
+        "The referral rate: the share of all students who are referred",
+        "The false-referral rate: the share of students who were fine at the end of term and were referred anyway",
+        "The share of referred students who are in first year",
+        "The missed rate: the share of struggling students who were not referred"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "The missed rate is computed among those who needed support. The false-referral rate is computed among those who did not.",
+      "misconceptions": [
+        "Reads volume as quality",
+        "Confuses the two kinds of error",
+        "Picks a description of the group, not an error",
+        ""
       ],
       "lo": [
         "LO4"
       ],
-      "day": "day1",
-      "session": 1,
+      "day": "day2",
+      "session": 3,
+      "slide": "two-errors",
       "level": "understand",
       "pool": "practice",
       "weight": 1
     },
     {
-      "id": "q-example-5",
+      "id": "q-bias-02",
       "type": "single",
-      "prompt": "REPLACE: a practice question on LO5, as a short scenario",
+      "prompt": "A rule's missed rate is 62% for one group and 43% for another. The 95% interval of the difference runs from 12 to 25 points. In a third comparison the difference is 3 points with an interval from -4 to 10. How should the two be reported?",
       "options": [
-        "REPLACE: a wrong option that a common misconception makes tempting",
-        "REPLACE: the right answer",
-        "REPLACE: a wrong option that a common misconception makes tempting",
-        "REPLACE: a wrong option that a common misconception makes tempting"
+        "Both as unfairness in the rule",
+        "The first as a clear difference to investigate, the second as not distinguishable from zero",
+        "Neither of them: differences between groups of students are too sensitive to report, whatever the interval says",
+        "Only the second, because it is less sensitive"
       ],
       "correct": [
         1
       ],
-      "explanation": "REPLACE: why the right answer is right, in one sentence",
+      "explanation": "An interval that excludes zero is a clear difference, still without a cause. One that includes zero is reported as such.",
       "misconceptions": [
-        "REPLACE: the misconception behind this option",
+        "Reports every difference as a finding and a gap as a cause",
         "",
-        "REPLACE: the misconception behind this option",
-        "REPLACE: the misconception behind this option"
+        "Hides findings because they are uncomfortable",
+        "Chooses what to report by comfort"
+      ],
+      "lo": [
+        "LO4"
+      ],
+      "day": "day2",
+      "session": 3,
+      "slide": "gaps-with-intervals",
+      "level": "analyse",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "q-bias-03",
+      "type": "single",
+      "prompt": "A referral rule that uses card-reader attendance wrongly refers many students who are allowed to attend remotely. A roll call shows their recorded attendance is far below their real attendance. Which bias type fits?",
+      "options": [
+        "Automation bias: staff trust the rule too much",
+        "Coverage bias: the group is missing from the data",
+        "Measurement bias: the recorded value is systematically too low for the group",
+        "Feedback loop bias: the referrals of one term change the attendance that is recorded in the next"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "The students are in the data, but the instrument records them wrongly. The fix is in the recording, not in a threshold per group.",
+      "misconceptions": [
+        "Names a bias of use for a problem in recording",
+        "Confuses wrong values with missing people",
+        "",
+        "Picks a dynamic effect with no evidence of one"
+      ],
+      "lo": [
+        "LO4"
+      ],
+      "day": "day2",
+      "session": 4,
+      "slide": "gap-a-candidates",
+      "level": "analyse",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "q-bias-04",
+      "type": "single",
+      "prompt": "Women are referred slightly more often than men overall, and the interval of the difference excludes zero. Inside every college the two rates are the same. What is the best conclusion?",
+      "options": [
+        "The difference comes from which colleges women and men study in",
+        "The rule treats women unfairly, in a way that the college figures conceal",
+        "The overall figure is a calculation error",
+        "Gender should be removed from the extract"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "A gap that disappears within colleges is explained by composition: the colleges have different referral rates and different mixes of students.",
+      "misconceptions": [
+        "",
+        "Infers treatment from an overall gap without looking inside groups",
+        "Rejects a real figure because it is surprising",
+        "Removes the field that made the check possible"
+      ],
+      "lo": [
+        "LO4"
+      ],
+      "day": "day2",
+      "session": 3,
+      "slide": "gap-inside-colleges",
+      "level": "analyse",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "q-docs-01",
+      "type": "single",
+      "prompt": "Which analysis log entry lets a reviewer trace a decision six months later?",
+      "options": [
+        "\"Dropped the address fields.\"",
+        "\"Dropped the address fields for privacy. Approved.\"",
+        "\"3 Nov. Dropped the address fields: the purpose does not need them. Approved by the analyst who wrote this entry.\"",
+        "\"3 Nov. Dropped the address fields: not needed for the purpose. Approved by the registrar.\""
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "A traceable entry has the date, the decision, the reason and a named role with the authority to approve it.",
+      "misconceptions": [
+        "Records the action without reason, date or authority",
+        "Names no approver who can be asked",
+        "Lets the author approve her own decision",
+        ""
       ],
       "lo": [
         "LO5"
       ],
-      "day": "day1",
+      "day": "day3",
       "session": 1,
+      "slide": "analysis-log",
       "level": "apply",
       "pool": "practice",
       "weight": 1
     },
     {
-      "id": "q-example-6",
-      "type": "tf",
-      "prompt": "REPLACE: a statement on LO6 that is true",
+      "id": "q-docs-02",
+      "type": "single",
+      "prompt": "An analyst knows that attendance is recorded too low for one group of students. Where does that belong?",
       "options": [
-        "True",
-        "False"
+        "Nowhere in writing: it would weaken trust in the analysis",
+        "In the datasheet, under how the data was collected, with the size of the problem",
+        "Only in a code comment beside the line that loads the field, where the next programmer will see it",
+        "In a private note to the manager"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "A datasheet tells a user what is wrong with the data before they rely on it. A reader who finds the weakness alone trusts nothing else.",
+      "misconceptions": [
+        "Believes hiding a weakness protects the work",
+        "",
+        "Puts documentation where only the author will read it",
+        "Keeps a known limit away from the people who use the data"
+      ],
+      "lo": [
+        "LO5"
+      ],
+      "day": "day3",
+      "session": 1,
+      "slide": "state-the-weakness",
+      "level": "understand",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "q-docs-03",
+      "type": "single",
+      "prompt": "A release record carries a hash of the data file as well as a version number. What does the hash add?",
+      "options": [
+        "It encrypts the file",
+        "It makes the file anonymous, because a hash cannot be turned back into the records it was computed from",
+        "It lets anyone check that the file they hold is the one the result came from",
+        "It replaces the need for an approver"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "A version number is a claim. A hash changes if one byte changes, so it can be checked.",
+      "misconceptions": [
+        "Confuses a fingerprint with protection",
+        "Confuses a fingerprint of a file with a pseudonym for a person",
+        "",
+        "Treats a technical check as an approval"
+      ],
+      "lo": [
+        "LO5"
+      ],
+      "day": "day3",
+      "session": 1,
+      "slide": "versioned-release",
+      "level": "understand",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "q-docs-04",
+      "type": "single",
+      "prompt": "A table with a suppressed cell is ready for release. Who should appear as approver in the log?",
+      "options": [
+        "The data owner, after a second person has checked the suppression",
+        "The analyst who built the table",
+        "\"The team\"",
+        "Nobody: the threshold rule was applied by tested code, which is more reliable than a signature"
       ],
       "correct": [
         0
       ],
-      "explanation": "REPLACE: why the right answer is right, in one sentence",
+      "explanation": "Release is the data owner's decision, and the check by a second person catches what the author no longer sees.",
       "misconceptions": [
         "",
-        "REPLACE: the misconception behind this option"
+        "Lets the author approve her own release",
+        "Names nobody who can be asked or shown to have authority",
+        "Treats automation as approval"
+      ],
+      "lo": [
+        "LO5"
+      ],
+      "day": "day3",
+      "session": 1,
+      "slide": "approver-is-a-person",
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "q-talk-01",
+      "type": "single",
+      "prompt": "A director says: \"Send me everything you have on the support programme.\" What does the analyst ask next?",
+      "options": [
+        "\"In which file format?\"",
+        "\"For which years?\"",
+        "\"Do you have written permission to see all of it?\"",
+        "\"What will you decide with it, and by when?\""
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "The decision tells the analyst which answer would matter, what data it needs and what is out of scope.",
+      "misconceptions": [
+        "Starts with delivery before purpose",
+        "Narrows the data before knowing the decision",
+        "Opens with a challenge instead of the sponsor's need",
+        ""
       ],
       "lo": [
         "LO6"
       ],
-      "day": "day1",
-      "session": 1,
-      "level": "understand",
+      "day": "day3",
+      "session": 2,
+      "slide": "four-questions",
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "q-talk-02",
+      "type": "single",
+      "prompt": "A vice-rector asks for a named list of students likely to fail, for the deans. She has to decide where to place new advisors. Which reply pushes back without obstructing?",
+      "options": [
+        "\"That is against the law, so I cannot help.\"",
+        "\"I can give you struggling students by college by Sunday, which places the advisors. Names stay with each student's advisor, because a list of predicted failure can follow a student into grading.\"",
+        "\"I will send it, but please keep it confidential.\"",
+        "\"I will send the list without the scores.\""
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "It serves her decision first, then names the harm in plain words. The alternative needs no names.",
+      "misconceptions": [
+        "Cites a rule and offers no way to serve the decision",
+        "",
+        "Complies and relies on a request for discretion",
+        "Removes a detail and keeps the harm: the names still reach the deans"
+      ],
+      "lo": [
+        "LO6"
+      ],
+      "day": "day3",
+      "session": 3,
+      "slide": "anatomy-of-a-no",
+      "level": "analyse",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "q-talk-03",
+      "type": "single",
+      "prompt": "After the analyst offers counts by college, the sponsor still insists on the named list and says it is an instruction. What does the analyst do?",
+      "options": [
+        "Sends the list: an instruction ends the matter",
+        "Stops answering the sponsor's messages",
+        "Writes to the data protection officer what was asked, what was offered and the decision needed, and copies the sponsor",
+        "Asks a colleague in another unit, who has access to the same records and fewer doubts, to send the list instead"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "The decision is neither the analyst's nor the sponsor's alone. Escalating openly says whose it is.",
+      "misconceptions": [
+        "Believes seniority transfers the decision to the sponsor",
+        "Obstructs by silence",
+        "",
+        "Moves the act to someone else without changing who should decide"
+      ],
+      "lo": [
+        "LO6"
+      ],
+      "day": "day3",
+      "session": 3,
+      "slide": "escalate",
+      "level": "apply",
+      "pool": "practice",
+      "weight": 1
+    },
+    {
+      "id": "q-talk-04",
+      "type": "single",
+      "prompt": "A slide will say \"The rule referred 55% of struggling students\". Which added line best explains the limits to a council of non-specialists?",
+      "options": [
+        "\"It missed 45%, is less reliable for two named groups, and must not be used to judge individual students.\"",
+        "\"The 95% Wilson interval is 53% to 57%.\"",
+        "\"Results should be interpreted with caution.\"",
+        "\"The analysis used a pseudonymised extract of 18,000 student records, approved by the registrar in November.\""
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "A limits statement blocks the likeliest misreadings: that the rule is complete, equal for all groups, and a verdict on a student.",
+      "misconceptions": [
+        "",
+        "Reports sampling uncertainty and leaves every misuse open",
+        "Offers a general disclaimer that names no limit",
+        "Gives a method note that blocks no misreading"
+      ],
+      "lo": [
+        "LO6"
+      ],
+      "day": "day3",
+      "session": 4,
+      "slide": "three-sentences",
+      "level": "analyse",
       "pool": "practice",
       "weight": 1
     }
