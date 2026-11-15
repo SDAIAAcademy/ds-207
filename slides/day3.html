@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-ax="deck" data-track="data-science">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Day 3 · Professional conduct · Responsible Data Practice and Conduct in Analytical Work</title>
+<meta name="generator" content="SDAIA Academy engine 1.0.0">
+<link rel="icon" href="../_engine/icon.svg">
+<link rel="alternate" type="text/markdown" href="day3.md">
+<link rel="describedby" href="../llms.txt">
+<link rel="stylesheet" href="../_engine/academy.css">
+</head>
+<body>
+<div class="deck" data-course="Responsible Data Practice and Conduct in Analytical Work" data-track="data-science" data-day="Day 3">
+<section class="slide title" id="title" data-auto="title" data-label="Welcome" data-n="1">
+  <div class="kicker">SDAIA Academy · Responsible Data Practice and Conduct in Analytical Work</div>
+  <h1>Professional conduct</h1>
+  <p class="lead mt">Day 3: Document the work so others can check it, and hold the three conversations</p>
+  <div class="meta"><span class="track">Data Science Track</span><span>3 teaching days + capstone day</span><span>4 sessions · 4 labs</span><span>DS-207</span></div>
+  <aside class="notes"><p>Two days of decisions are in notebooks and in heads. Today they become documents others can check, and then three conversations: scoping, pushing back, explaining limits. Sessions 2 and 3 are role-plays in threes; confirm the groups before session 1 starts. No AI assistant in the role-plays.</p></aside>
+</section>
+
+<section class="slide" id="agenda" data-auto="agenda" data-label="Agenda" data-n="2">
+  <div class="kicker">Today</div>
+  <h2>Professional conduct</h2>
+  <div class="agenda"><div class="item"><div><b>Session 1 · Datasheets and analysis logs</b><small>A reviewer must be able to trace a number to data, decisions and approvals</small></div></div><div class="item"><div><b>Session 2 · Scoping with a sponsor</b><small>A vague request becomes a decision, a population, a measure and a criterion</small></div></div><div class="item"><div><b>Session 3 · Pushing back without obstructing</b><small>Name the harm and the rule, offer an alternative, escalate when needed</small></div></div><div class="item"><div><b>Session 4 · Explaining limits</b><small>Say what the result does not show and what it must not be used for</small></div></div></div>
+</section>
+
+<section class="slide" id="review-day2" data-lo="LO3 LO4" data-n="3">
+  <div class="kicker">Review of Day 2</div>
+  <h2>What is the right next step?</h2>
+  <div class="quiz" data-type="single" data-lo="LO4" data-id="review-day2-q1">
+    <p class="lead">A rule misses struggling non-Saudi students more often than Saudi students: 62% against 43%, and the interval of the difference excludes zero. What does the analyst do next?</p>
+    <div class="opts">
+      <div class="opt" data-why="Fixes by the column where the gap showed: separate limits by nationality treat students by a protected characteristic and may miss the real cause" data-k="A">Propose a lower threshold for non-Saudi students</div>
+      <div class="opt" data-why="Treats a clear gap as proof of unfairness in the rule itself, before any cause is established" data-k="B">Report that the rule discriminates by nationality</div>
+      <div class="opt" data-ok data-k="C">Name two candidate causes and run the check on which they disagree</div>
+      <div class="opt" data-why="Hides a clear finding because it is uncomfortable: suppression is for small counts, not for results" data-k="D">Leave the breakdown by nationality out of the report</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> A gap is an observation. Yesterday's check showed the cause was missing marks for bridging-year entrants, and the fix was a data feed.</div>
+  </div>
+  <aside class="notes"><p>Answer: the third option. Recall the result: with a mark present both groups are missed at similar rates; with the mark missing both are missed three times in four or more.</p></aside>
+</section>
+
+<!-- Session 1 -->
+
+<section class="slide section" id="s1" data-auto="section" data-session="1" data-n="4">
+  <div class="kicker">Session 1</div>
+  <h1>Datasheets and analysis logs</h1>
+  <ul class="bullets outcomes"><li>Fill a datasheet that states what the data is, how it was collected and what it must not be used for</li><li>Keep an analysis log in which every decision has a reason, a date and an approver</li><li>Tie a release to a version so a result can be traced and rerun</li></ul>
+  <div class="sess-no">01</div>
+</section>
+
+<section class="slide" id="trace-a-number" data-lo="LO5" data-n="5" data-session="1">
+  <div class="kicker">The test of documentation</div>
+  <h2>"Where does the 55% come from?" must have an answer without you in the room</h2>
+  <div class="flow">
+    <div class="step c-teal"><b>The number</b>55% of struggling students referred</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>The release</b>version, date, file fingerprints</div>
+    <div class="arrow">→</div>
+    <div class="step c-purple"><b>The data</b>a datasheet: what it is, what is wrong with it</div>
+    <div class="arrow">→</div>
+    <div class="step c-coral"><b>The decisions</b>a log: reason, date, approver</div>
+  </div>
+  <div class="callout tip mt"><b>The reader.</b> A reviewer in six months, the data protection officer in an audit, your successor, and you.</div>
+  <aside class="notes"><p>The course outcome is exact about the test: a peer uses the datasheet and the log to answer five audit questions. Documentation that only its author can use fails it. Ask who in the room has inherited an analysis with no trail.</p></aside>
+</section>
+
+<section class="slide" id="datasheet-sections" data-lo="LO5" data-n="6" data-session="1">
+  <div class="kicker">The datasheet</div>
+  <h2>A datasheet answers what a careful user would ask before using the data</h2>
+  <table class="t small">
+    <tr><th>Section</th><th>The question</th></tr>
+    <tr><td>Motivation</td><td>Why was it made, for whom, for which decision?</td></tr>
+    <tr><td>Composition</td><td>What is one row? What is personal, sensitive, missing, and for whom?</td></tr>
+    <tr><td>Collection</td><td>Where does each field come from? What is recorded badly?</td></tr>
+    <tr><td>Preprocessing</td><td>What was dropped, coarsened, pseudonymised?</td></tr>
+    <tr><td>Uses</td><td>What is the approved use? What must it not be used for?</td></tr>
+    <tr><td>Distribution</td><td>Who may see it? What level? May it leave?</td></tr>
+    <tr><td>Maintenance</td><td>Who owns it? Kept until when? How is an error reported?</td></tr>
+  </table>
+  <aside class="notes"><p>The seven headings follow the published proposal for datasheets; the questions are shortened for an analysis extract. The template is <code>labs/data/datasheet_template.md</code>. Days 1 and 2 already produced most of the answers: the purpose, the minimisation log, the classification, the two recording problems.</p><p>Sources: Gebru et al., Datasheets for Datasets.</p></aside>
+</section>
+
+<section class="slide" id="state-the-weakness" data-lo="LO5" data-n="7" data-session="1">
+  <div class="kicker">Honesty in the datasheet</div>
+  <h2>A datasheet that states the data's weakness protects the analysis</h2>
+  <div class="cols cols-2">
+    <div class="card c-teal"><h4>Collection, as written in the lab</h4><p class="small mb0">"Known to be recorded badly: attendance is about 17 points too low for the 300 students with a remote accommodation, because remote sessions leave no card reading."</p></div>
+    <div class="card c-cyan"><h4>Composition, as written in the lab</h4><p class="small mb0">"The midterm mark is missing for 1,244 students, all bridging-year entrants."</p></div>
+  </div>
+  <ul class="bullets mt">
+    <li>A reader who finds the weakness alone stops trusting everything</li>
+    <li>A reader who is told can weigh the results that depend on it</li>
+  </ul>
+  <aside class="notes"><p>Both sentences are from the solution of Lab 3.1 and both numbers from Day 2. Transparency is one of the national AI ethics principles; for an analyst it starts here, with saying what is wrong with your own data.</p><p>Sources: AI Ethics Principles (transparency and explainability).</p></aside>
+</section>
+
+<section class="slide" id="analysis-log" data-lo="LO5" data-n="8" data-session="1">
+  <div class="kicker">The analysis log</div>
+  <h2>Every decision has a reason, a date and an approver</h2>
+  <table class="t small">
+    <tr><th>Id</th><th>Decision</th><th>Approver</th></tr>
+    <tr><td>L001</td><td>Evaluate Awn on a pseudonymised extract of 13 fields</td><td>Registrar (data owner)</td></tr>
+    <tr><td>L002</td><td>Add four group fields for the comparison</td><td>Data protection officer</td></tr>
+    <tr><td>L003</td><td>Release two one-way tables, not the cross table</td><td>Registrar; suppression checked by the director</td></tr>
+    <tr><td>L004</td><td>Do not release the Saudi-only table by college</td><td>Registrar</td></tr>
+    <tr><td>L005</td><td>Report bridging-year entrants and remote accommodation separately</td><td>Director of the unit</td></tr>
+  </table>
+  <div class="callout note mt"><b>Six fields per entry.</b> Id, date, decision, reason, approver, where the evidence is.</div>
+  <aside class="notes"><p>The first two entries are supplied; the lab adds three from Day 2. A log is written when the decision is made, not reconstructed at the end: the date is part of the evidence.</p></aside>
+</section>
+
+<section class="slide" id="approver-is-a-person" data-lo="LO5" data-n="9" data-session="1">
+  <div class="kicker">Accountability</div>
+  <h2>An approver is a named person with the authority to approve that thing</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>The data owner</h4><p class="small mb0">Approves extracts and releases of the data he is responsible for. Here: the registrar.</p></div>
+    <div class="card c-purple"><h4>The data protection officer</h4><p class="small mb0">Decides on sensitive fields, new purposes, disclosures and transfers.</p></div>
+    <div class="card c-cyan"><h4>The owner of the decision</h4><p class="small mb0">Approves how results are reported and used. Here: the director of the unit.</p></div>
+  </div>
+  <div class="callout warn mt"><b>What goes wrong.</b> "Approved by the team." A team cannot be asked a question in an audit, and cannot be shown to have had the authority.</div>
+  <aside class="notes"><p>The analyst's own name appears as the author of each entry, never as the approver of her own release. The second-person check on suppression from Day 2 is the same idea at small scale.</p><p>Sources: AI Ethics Principles (accountability and responsibility).</p></aside>
+</section>
+
+<section class="slide" id="versioned-release" data-lo="LO5" data-n="10" data-session="1">
+  <div class="kicker">Decision records and versioned releases</div>
+  <h2>A release is a version, a date, fingerprints and one line of warning</h2>
+  <div class="cols cols-2">
+    <pre class="code s"><code class="language-json"><span class="hljs-punctuation">{</span><span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2026.11.1&quot;</span><span class="hljs-punctuation">,</span>
+ <span class="hljs-attr">&quot;table&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Referral rate by college&quot;</span><span class="hljs-punctuation">,</span>
+ <span class="hljs-attr">&quot;files&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-attr">&quot;analysis_extract.csv&quot;</span><span class="hljs-punctuation">:</span>
+           <span class="hljs-string">&quot;2d9ebc9f490e9f0d&quot;</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+ <span class="hljs-attr">&quot;log_entries&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;L001&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;L002&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;L003&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+ <span class="hljs-attr">&quot;approved_by&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;the registrar&quot;</span><span class="hljs-punctuation">,</span>
+ <span class="hljs-attr">&quot;must_not_be_used_for&quot;</span><span class="hljs-punctuation">:</span>
+   <span class="hljs-string">&quot;ranking colleges or judging advisors&quot;</span><span class="hljs-punctuation">}</span></code></pre>
+    <ul class="bullets">
+      <li>A <b>fingerprint</b> (a hash of the file) changes if one byte changes: a version number is a claim, a fingerprint is a check</li>
+      <li>A <b>decision record</b> keeps the options that were rejected, and why</li>
+      <li>Templates live in <b>Git</b> beside the code, as Markdown or Quarto documents</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>The fingerprint shown is the one the lab computes for the course's extract. The lab's stretch is a decision record for the threshold of 10: context, options (3, 5, 10, rounding), decision, who, what would reopen it. The register of releases is also what makes Day 2's differencing check possible.</p></aside>
+</section>
+
+<section class="slide" id="records-the-law-asks" data-lo="LO5" data-n="11" data-session="1">
+  <div class="kicker">Not only good practice</div>
+  <h2>Some of this record is required</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>The University keeps a <b>record of processing</b>: the purpose, the categories of people, who the data is disclosed to, transfers, the retention period</li>
+      <li>For statistics without consent, the purpose is stated <b>in that record</b></li>
+      <li>Sharing requests and their documents are kept for <b>five years</b></li>
+      <li>Disposal of data is <b>logged</b></li>
+    </ul>
+    <div class="card c-teal"><h4>Your log feeds theirs</h4><p class="small mb0">The data protection officer keeps the record of processing. An analysis log with purposes, approvals and end dates is what lets her keep it true.</p></div>
+  </div>
+  <aside class="notes"><p>Tie back to Day 1: the duties of the statistics article included stating the purpose in the record. The analyst does not write the University's record; she supplies what it needs.</p><p>Sources: Personal Data Protection Law, Article 31; Implementing Regulation, Article 30; Data Sharing Policy, clause Eighth (paragraph 7); Data Classification Policy, disposal controls.</p></aside>
+</section>
+
+<section class="slide" id="five-audit-questions" data-lo="LO5" data-n="12" data-session="1">
+  <div class="kicker">The peer audit</div>
+  <h2>Five questions your documents must answer alone</h2>
+  <ol class="bullets">
+    <li>Which file and which version produced the referral table released in November?</li>
+    <li>Who approved the use of disability status in the group comparison, and on what condition?</li>
+    <li>Why are bridging-year entrants reported separately?</li>
+    <li>What must the group comparison not be used for?</li>
+    <li>How many cells were suppressed in the release, and who checked the suppression?</li>
+  </ol>
+  <div class="callout tip mt"><b>The rule of the swap.</b> Your peer reads only your documents. No asking, no notebook.</div>
+  <aside class="notes"><p>These are the questions of <code>labs/data/audit_questions.json</code>. Each maps to one place: the release record, log entry L002, log entry L005, the datasheet's "uses", log entry L003. "Cannot answer" is the useful result: it shows which sentence is missing.</p></aside>
+</section>
+
+<section class="slide" id="check-documentation" data-lo="LO5" data-n="13" data-session="1">
+  <div class="kicker">Checkpoint</div>
+  <h2>Which log entry would survive an audit?</h2>
+  <div class="quiz" data-type="single" data-lo="LO5" data-id="check-documentation-q1">
+    <p class="lead">The analyst decided to merge two small nationality groups in a published table. Which entry lets a reviewer trace that decision?</p>
+    <div class="opts">
+      <div class="opt" data-ok data-k="A">"2026-11-09. Merged groups X and Y in table T1: both had cells under 10. Approved by the registrar (data owner). Evidence: suppression log."</div>
+      <div class="opt" data-why="Records that something happened without the reason or the authority: a reviewer cannot tell whether it was allowed" data-k="B">"Merged some categories in T1 for privacy reasons. Approved."</div>
+      <div class="opt" data-why="Puts the trail in code only: a comment says what the code does, not who agreed or why" data-k="C">A comment in the notebook cell that does the merge</div>
+      <div class="opt" data-why="Treats the analyst's own judgement as the approval: the author of a release does not approve it" data-k="D">"2026-11-09. Merged X and Y in T1. Decided by the analyst."</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> Date, decision, reason, a named role with the authority, and where the evidence is. Remove any one and a question in the audit has no answer.</div>
+  </div>
+  <aside class="notes"><p>Answer: the first option. The fourth option has a date and a decision and still fails: nobody with authority over the data agreed.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-3-1" data-auto="lab" data-lab="3.1" data-label="Lab 3.1" data-n="14" data-session="1">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 3.1 · 25 min</div><h2>Datasheet and log</h2><p class="lead small">Fill a datasheet and log three decisions with their approver, then let a peer audit them.</p><a class="nb" href="../labs/D3_1_datasheet_log.ipynb">D3_1_datasheet_log.ipynb</a></div><ul class="checklist"><li>Fill the datasheet from the data and the notice <span class="min">8 min</span></li><li>Log three decisions with reason, date and approver <span class="min">6 min</span></li><li>Tag the release with its file fingerprints <span class="min">4 min</span></li><li>Swap with a peer and answer five audit questions <span class="min">5 min</span></li><li>Fix what the peer could not answer <span class="min">2 min</span></li><li class="stretch">✱ Stretch: Add a decision record for the choice of threshold, with the options that were rejected</li></ul></div>
+  <aside class="notes"><p>Task 1 takes its eight minutes: seven sections is a lot of writing; tell participants to write two sentences per section first. For task 4, pair participants and insist on silence between them. Working alone, the notebook's mechanical auditor stands in for the peer. The lab writes three files to <code>labs/artifacts/</code>. It starts from supplied files; no earlier lab is needed.</p></aside>
+</section>
+
+<!-- Session 2 -->
+
+<section class="slide section" id="s2" data-auto="section" data-session="2" data-n="15">
+  <div class="kicker">Session 2</div>
+  <h1>Scoping with a sponsor</h1>
+  <ul class="bullets outcomes"><li>Ask the questions that turn a request into a decision, a population, a measure and a time frame</li><li>Agree success criteria and what is out of scope before any analysis starts</li><li>Record the agreement in a scope note the sponsor confirms</li></ul>
+  <div class="sess-no">02</div>
+</section>
+
+<section class="slide" id="vague-request" data-lo="LO6" data-n="16" data-session="2">
+  <div class="kicker">How requests arrive</div>
+  <h2>A request is usually one sentence, and the sentence is not the question</h2>
+  <div class="cols cols-2">
+    <div class="chat">
+      <div class="msg user"><span class="who">Director</span>Is Awn working? The vice-rector will ask me next month.</div>
+      <div class="msg ai bad"><span class="who">Analyst, too fast</span>I will send you the referral numbers by Thursday.</div>
+      <div class="msg ai good"><span class="who">Analyst</span>What will you decide once you know?</div>
+    </div>
+    <ul class="bullets">
+      <li>"Working" could mean reaching struggling students, helping them, or costing less</li>
+      <li>Each meaning needs different data, and one of them cannot be answered at all</li>
+      <li>Starting the analysis before asking is the most expensive way to find that out</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>The exchange is brief B2 of the lab. The question that cannot be answered is whether support helps: there is no comparison group. Better to discover that in a six-minute conversation than in the fourth week.</p></aside>
+</section>
+
+<section class="slide" id="four-questions" data-lo="LO6" data-n="17" data-session="2">
+  <div class="kicker">The conversation</div>
+  <h2>Four questions turn a request into something answerable</h2>
+  <div class="cols cols-4">
+    <div class="card c-teal"><h4>The decision</h4><p class="small mb0">"What will you decide once you know?"</p></div>
+    <div class="card c-cyan"><h4>The population</h4><p class="small mb0">"Which students, which term?"</p></div>
+    <div class="card c-purple"><h4>The measure</h4><p class="small mb0">"What would you count, and compared with what?"</p></div>
+    <div class="card c-amber"><h4>The time</h4><p class="small mb0">"When is the decision taken?"</p></div>
+  </div>
+  <div class="callout tip mt"><b>Order matters.</b> The decision first. It tells you which answer would change what the sponsor does, and it is the purpose the law asks you for.</div>
+  <aside class="notes"><p>The same four parts as the purpose sentence of Day 1: a well-scoped question and a lawful purpose are the same sentence. Model the first question aloud in different words; participants need phrases that fit their own voice.</p></aside>
+</section>
+
+<section class="slide" id="success-criteria" data-lo="LO6" data-n="18" data-session="2">
+  <div class="kicker">Success criteria</div>
+  <h2>Agree what a useful answer looks like before you produce one</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>"If the answer were X, what would you do? And if it were Y?"</li>
+      <li>The <b>form</b>: one page, a table, a number with its definition</li>
+      <li>The <b>precision</b> that matters: to the point, or "more than half"?</li>
+      <li>What would make the sponsor <b>not believe</b> the answer</li>
+    </ul>
+    <div class="card c-teal"><h4>In brief B2</h4><p class="small mb0">"One page the director can take to the council: the two rates, the groups for which they differ clearly, and the cause where it could be established."</p></div>
+  </div>
+  <aside class="notes"><p>If no possible answer would change the decision, the analysis is not needed, and saying so is a service. The criterion on the card is from the solution's scope note.</p></aside>
+</section>
+
+<section class="slide" id="out-of-scope" data-lo="LO6" data-n="19" data-session="2">
+  <div class="kicker">Out of scope</div>
+  <h2>Write down what you will not do, while everyone still agrees</h2>
+  <table class="t small">
+    <tr><th>The sponsor's opening sentence</th><th>What was really needed</th><th>Out of scope</th></tr>
+    <tr><td>"I need the data on why engineering students are failing."</td><td>Whether to add tutorial sections to two first-year courses</td><td>Naming students or instructors</td></tr>
+    <tr><td>"Is Awn working?"</td><td>Extend the rule, or change its thresholds first</td><td>Whether support helps: no comparison group</td></tr>
+    <tr><td>"A nice number for the annual report."</td><td>One figure with its definition, beside last year's</td><td>Breakdowns with small counts</td></tr>
+  </table>
+  <div class="callout warn mt"><b>Requests grow.</b> The line "no lists of students" is the one you will point to in three weeks.</div>
+  <aside class="notes"><p>These are the three briefs of the lab with what each sponsor's card holds. Do not show this slide before the role-play if you want the cards to stay hidden; skip it with the arrow key and return to it in the debrief. The slide is placed here for self-paced readers.</p></aside>
+</section>
+
+<section class="slide" id="scope-note" data-lo="LO6" data-n="20" data-session="2">
+  <div class="kicker">The record</div>
+  <h2>The scope note: nine fields, one sentence each, confirmed by the sponsor</h2>
+  <div class="cols cols-3">
+    <ul class="bullets tight">
+      <li><b>Decision</b></li>
+      <li><b>Question</b></li>
+      <li><b>Population</b></li>
+    </ul>
+    <ul class="bullets tight">
+      <li><b>Measure</b></li>
+      <li><b>Success criterion</b></li>
+      <li><b>Out of scope</b></li>
+    </ul>
+    <ul class="bullets tight">
+      <li><b>Data</b></li>
+      <li><b>Deadline</b></li>
+      <li><b>Confirmed by</b></li>
+    </ul>
+  </div>
+  <div class="callout tip mt"><b>Send it within the hour.</b> Five lines, the question first, and one sentence you ask the sponsor to confirm by reply. An unconfirmed note is your opinion of what was agreed.</div>
+  <aside class="notes"><p>The "data" field is where Day 1 enters the conversation: which extract, which fields, under which approval. The note is a file of the capstone pack and 15 points of its rubric.</p></aside>
+</section>
+
+<section class="slide" id="how-to-ask" data-lo="LO6" data-n="21" data-session="2">
+  <div class="kicker">Technique</div>
+  <h2>Three habits make the six minutes work</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>Ask, then wait</h4><p class="small mb0">One question at a time. The pause after it is where the real answer comes.</p></div>
+    <div class="card c-cyan"><h4>Say it back</h4><p class="small mb0">"So the decision is whether to add tutorials, and you need it in three weeks." Sponsors correct a summary more easily than they answer a question.</p></div>
+    <div class="card c-purple"><h4>Propose the question</h4><p class="small mb0">Leave with a sentence that ends in a question mark and that data can answer. Read it aloud before you go.</p></div>
+  </div>
+  <aside class="notes"><p>Common failure in the role-play: the analyst explains methods. A sponsor has no opinion on Wilson intervals and a strong one on deadlines. Second failure: accepting "everything you have" as an answer; the next question is "what will you decide with it, and by when?"</p></aside>
+</section>
+
+<section class="slide dark" id="roleplay-scoping" data-lo="LO6" data-label="Role-play timers" data-n="22" data-session="2">
+  <div class="kicker">Role-play · three rounds</div>
+  <h2>Six minutes a round: four to talk, two for feedback. Rotate the roles each round</h2>
+  <div class="timers">
+    <div><h3>One round</h3><div class="timer" data-minutes="6"></div></div>
+    <div><ul class="bullets"><li>Round 1 · brief B1</li><li>Round 2 · brief B2</li><li>Round 3 · brief B3</li></ul></div>
+  </div>
+  <aside class="notes"><p>Come back to this slide during Lab 3.2 for the three rounds; reset the timer between rounds. The sponsor shows the card only in the feedback. Call "feedback" at four minutes. The observer speaks first: what was found out, what was not, the best question heard. Then the sponsor shows the card.</p></aside>
+</section>
+
+<section class="slide" id="check-scoping" data-lo="LO6" data-n="23" data-session="2">
+  <div class="kicker">Checkpoint</div>
+  <h2>Which is the best first question?</h2>
+  <div class="quiz" data-type="single" data-lo="LO6" data-id="check-scoping-q1">
+    <p class="lead">A dean says: "Get me the data on why our students are failing." What does the analyst ask first?</p>
+    <div class="opts">
+      <div class="opt" data-why="Starts with the data: the fields cannot be chosen before the purpose is known" data-k="A">"Which fields do you want in the extract?"</div>
+      <div class="opt" data-why="Starts with the method: a sponsor cannot choose between analyses he has not been shown a use for" data-k="B">"Would you prefer a regression or a simple breakdown?"</div>
+      <div class="opt" data-why="Narrows the population before knowing the decision: a useful question, asked second" data-k="C">"Do you mean first-year students or all students?"</div>
+      <div class="opt" data-ok data-k="D">"What do you have to decide, and by when?"</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The decision tells you which answer would change what the dean does, what data that needs and what is out of scope. Every other question depends on it.</div>
+  </div>
+  <aside class="notes"><p>Answer: the fourth option. The third option is a good question in the wrong place; ask the room what could go wrong if it came first. The analyst might scope a first-year study for a decision about final-year placements.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-3-2" data-auto="lab" data-lab="3.2" data-label="Lab 3.2" data-n="24" data-session="2">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 3.2 · 25 min</div><h2>Scope in six minutes</h2><p class="lead small">Turn a vague request into a question in a timed role-play, in threes, and write the scope note.</p><a class="nb" href="../labs/D3_2_scoping_roleplay.ipynb">D3_2_scoping_roleplay.ipynb</a></div><ul class="checklist"><li>Read the brief and your role card <span class="min">3 min</span></li><li>Round 1: analyst, sponsor, observer <span class="min">6 min</span></li><li>Round 2: rotate the roles <span class="min">6 min</span></li><li>Round 3: rotate the roles <span class="min">6 min</span></li><li>Write your scope note <span class="min">4 min</span></li><li class="stretch">✱ Stretch: Send the scope note as a five-line message and ask the sponsor to confirm one sentence</li></ul></div>
+  <aside class="notes"><p>Go back one slide for the timers. Groups of three; with a group of four, two share the observer role. Watch that sponsors do not volunteer the card. In the debrief ask each group for the best question they heard. The scope note is written alone, for the brief each participant handled as analyst. No AI assistant. The lab starts from the briefs file; no earlier lab is needed.</p></aside>
+</section>
+
+<!-- Session 3 -->
+
+<section class="slide section" id="s3" data-auto="section" data-session="3" data-n="25">
+  <div class="kicker">Session 3</div>
+  <h1>Pushing back without obstructing</h1>
+  <ul class="bullets outcomes"><li>Refuse an unsafe request by naming the harm and the rule, not by citing policy at the sponsor</li><li>Offer a lawful alternative that serves the sponsor's decision</li><li>Recognise when to escalate to the data protection officer and record the agreement</li></ul>
+  <div class="sess-no">03</div>
+</section>
+
+<section class="slide" id="the-risk-list" data-lo="LO6" data-n="26" data-session="3">
+  <div class="kicker">The request</div>
+  <h2>"A list of every student likely to fail, with names and a score, by Sunday"</h2>
+  <div class="cols cols-2">
+    <div class="card c-coral"><h4>Why it is unsafe</h4><p class="small mb0">A named list of predicted failure is a new purpose and reaches people who do not advise the student. The score is wrong for known groups. A label that travels to deans can follow a student into grading and discipline.</p></div>
+    <div class="card c-teal"><h4>What she has to decide</h4><p class="small mb0">Where to put twelve new advisors, and whether the colleges act on referrals. Neither decision needs a name.</p></div>
+  </div>
+  <div class="callout note mt"><b>The sponsor is not the villain.</b> Dr. Ibtisam Al-Khayyat wants struggling students helped. The request is the wrong tool for a good aim.</div>
+  <aside class="notes"><p>The request is in <code>labs/data/risk_list_request.json</code>. Set the tone before the role-play: analysts who treat the sponsor as an opponent lose the conversation and the relationship. The harm to name is the third one, in plain words.</p></aside>
+</section>
+
+<section class="slide" id="anatomy-of-a-no" data-lo="LO6" data-n="27" data-session="3">
+  <div class="kicker">The structure</div>
+  <h2>A refusal that works has five parts, and the alternative comes early</h2>
+  <div class="flow">
+    <div class="step c-teal"><b>1 · Listen</b>what must she decide?</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>2 · Alternative</b>what serves that decision</div>
+    <div class="arrow">→</div>
+    <div class="step c-coral"><b>3 · Harm</b>to students, in plain words</div>
+    <div class="arrow">→</div>
+    <div class="step c-purple"><b>4 · Rule</b>and who decides</div>
+    <div class="arrow">→</div>
+    <div class="step c-amber"><b>5 · Record</b>what was agreed</div>
+  </div>
+  <div class="callout tip mt"><b>Why this order.</b> She came with a problem. Someone who hears first how it gets solved by Sunday can listen to the reason. Someone who hears a rule first hears a refusal.</div>
+  <aside class="notes"><p>These five are the observer's rubric in the lab, scored 0 to 2 each. The order of 2 and 3 can swap; what must not happen is rule first, alternative never. "Policy says no" ends the conversation and sends the sponsor to someone less careful.</p></aside>
+</section>
+
+<section class="slide" id="alternative-with-numbers" data-lo="LO6" data-n="28" data-session="3">
+  <div class="kicker">The alternative, built</div>
+  <h2>An alternative you can show beats one you can describe</h2>
+  <div class="cols cols-21">
+    <table class="t small">
+      <tr><th>College</th><th class="num">Referred</th><th class="num">Struggled</th><th class="num">Missed</th><th class="num">Advisors of 12</th></tr>
+      <tr class="hl"><td>Health Sciences</td><td class="num">479</td><td class="num">488</td><td class="num">165</td><td class="num">2.7</td></tr>
+      <tr><td>Science</td><td class="num">390</td><td class="num">438</td><td class="num">192</td><td class="num">2.4</td></tr>
+      <tr><td>Arts and Humanities</td><td class="num">317</td><td class="num">363</td><td class="num">181</td><td class="num">2.0</td></tr>
+      <tr><td>Engineering</td><td class="num">332</td><td class="num">354</td><td class="num">172</td><td class="num">1.9</td></tr>
+      <tr><td>Business</td><td class="num">306</td><td class="num">310</td><td class="num">153</td><td class="num">1.7</td></tr>
+      <tr><td>Computing</td><td class="num">216</td><td class="num">238</td><td class="num">119</td><td class="num">1.3</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>Answers "where do twelve advisors go?"</li>
+      <li>Every cell is 10 or more</li>
+      <li>Named worklists stay with each student's advisor, as today</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>The table is task 1 of Lab 3.3: advisors shared out in proportion to struggling students. Bring it to the conversation. The second alternative answers her other question: the share of referred students contacted within two weeks, by college, without names.</p></aside>
+</section>
+
+<section class="slide" id="pressures" data-lo="LO6" data-n="29" data-session="3">
+  <div class="kicker">What you will hear</div>
+  <h2>Three pressures, and a reply to each that is not a rule</h2>
+  <table class="t small">
+    <tr><th>She says</th><th>A reply that keeps the conversation</th></tr>
+    <tr><td>"The council meets on Monday."</td><td>"You will have the table for the council on Sunday. It answers where the advisors go."</td></tr>
+    <tr><td>"Another university does this already."</td><td>"Ours would wrongly list most students who attend remotely with an accommodation. I would not want your name on that list."</td></tr>
+    <tr><td>"I am the vice-rector. I am allowed to see student data."</td><td>"You are. The question is what this decision needs, and it does not need names. If you need them, the data protection officer decides, and I will take it to her today."</td></tr>
+  </table>
+  <aside class="notes"><p>The third reply does three things: concedes what is true, returns to the decision, and names who decides. Access follows the purpose and the need to know, not rank. The claim in the second reply is Day 2's finding: 59% false referrals for that group.</p></aside>
+</section>
+
+<section class="slide" id="escalate" data-lo="LO6" data-n="30" data-session="3">
+  <div class="kicker">Escalation</div>
+  <h2>Escalating is saying aloud whose decision it is</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li><b>When:</b> the sponsor still wants named or sensitive data, a new purpose, a disclosure or a transfer</li>
+      <li><b>To whom:</b> the data protection officer, who monitors how the law is applied and supervises impact assessments</li>
+      <li><b>How:</b> three lines: what was asked and by whom, what you offered, the decision you need</li>
+    </ul>
+    <div class="card c-teal"><h4>Copy the sponsor</h4><p class="small mb0">Escalation said aloud and copied is a service: the decision was never the analyst's, and never the sponsor's alone. Escalation behind someone's back is a complaint.</p></div>
+  </div>
+  <aside class="notes"><p>The stretch of the lab is the three-line message. The analyst does not refuse an instruction on her own authority and does not carry it out on her own authority either: she routes it.</p><p>Sources: Implementing Regulation, Article 32 (data protection officer).</p></aside>
+</section>
+
+<section class="slide" id="obstruction" data-lo="LO6" data-n="31" data-session="3">
+  <div class="kicker">The other failure</div>
+  <h2>Obstructing is as much a failure as complying</h2>
+  <div class="cols cols-3">
+    <div class="card c-coral"><h4>Comply</h4><p class="small mb0">Send the list. The harm happens, with your name in the log.</p></div>
+    <div class="card c-amber"><h4>Obstruct</h4><p class="small mb0">"We cannot, it is the law." No alternative, no route. The sponsor asks someone else, who sends a worse list.</p></div>
+    <div class="card c-teal"><h4>Push back</h4><p class="small mb0">The decision is served by Sunday, the names stay with advisors, the record says who agreed, and the open question has an owner.</p></div>
+  </div>
+  <div class="callout tip mt"><b>The record.</b> Asked for, will deliver, will not deliver, why, who decides more, confirmed by. What is not written down was not agreed.</div>
+  <aside class="notes"><p>The six fields are the agreement of task 5. Ask the room which failure is more common where they work. In most organisations it is the second, and it is the one nobody is blamed for.</p></aside>
+</section>
+
+<section class="slide dark" id="roleplay-pushback" data-lo="LO6" data-label="Role-play timers" data-n="32" data-session="3">
+  <div class="kicker">Role-play · three rounds</div>
+  <h2>Five minutes a round: three to talk, two for the observer's five scores</h2>
+  <div class="timers">
+    <div><h3>One round</h3><div class="timer" data-minutes="5"></div></div>
+    <div><ul class="bullets"><li>Listen</li><li>Alternative</li><li>Harm</li><li>Rule and who decides</li><li>Record</li></ul></div>
+  </div>
+  <aside class="notes"><p>Come back to this slide during Lab 3.3 and reset the timer between the three rounds. The sponsor uses the pressures one at a time and gives way only to something that serves her decision. This role-play is the rehearsal for the observed one in the assessment: use the same rubric, and tell participants so. Sponsors should be firm, not theatrical. Call "observer" at three minutes.</p></aside>
+</section>
+
+<section class="slide" id="check-pushback" data-lo="LO6" data-n="33" data-session="3">
+  <div class="kicker">Checkpoint</div>
+  <h2>Which reply pushes back without obstructing?</h2>
+  <div class="quiz" data-type="single" data-lo="LO6" data-id="check-pushback-q1">
+    <p class="lead">A dean asks for the names of students who used the counselling service, "so lecturers can go easy on them". Which reply is best?</p>
+    <div class="opts">
+      <div class="opt" data-why="Cites the rule and stops: the dean's aim is left unserved and he will look for another route" data-k="A">"I cannot. Counselling data is health data."</div>
+      <div class="opt" data-ok data-k="B">"You want lecturers to support students under strain. I can give counts by department, and the service can contact lecturers for students who agree. Names would break what students were told."</div>
+      <div class="opt" data-why="Complies with a softer version: a confidential marking does not change who receives health data" data-k="C">"I will send the list marked confidential, for department heads only."</div>
+      <div class="opt" data-why="Escalates without listening or offering anything: the data protection officer receives a problem the analyst could have half solved" data-k="D">"That is a question for the data protection officer, not for me."</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> It names the dean's aim, offers two ways to serve it, and gives the reason in terms of students.</div>
+  </div>
+  <aside class="notes"><p>Answer: the second option. The first is true and useless; the fourth is correct about who decides and skips everything the analyst can do before that. Health data: the fewest staff who need it to provide the service.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-3-3" data-auto="lab" data-lab="3.3" data-label="Lab 3.3" data-n="34" data-session="3">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 3.3 · 25 min</div><h2>The risk list</h2><p class="lead small">Role-play a request for a risk list and agree a lawful alternative.</p><a class="nb" href="../labs/D3_3_pushback_roleplay.ipynb">D3_3_pushback_roleplay.ipynb</a></div><ul class="checklist"><li>Read the request and prepare two alternatives <span class="min">5 min</span></li><li>Round 1: analyst, sponsor, observer <span class="min">5 min</span></li><li>Round 2: rotate the roles <span class="min">5 min</span></li><li>Round 3: rotate the roles <span class="min">5 min</span></li><li>Record the agreement and the escalation <span class="min">5 min</span></li><li class="stretch">✱ Stretch: The sponsor insists: write the three-line escalation to the data protection officer</li></ul></div>
+  <aside class="notes"><p>Go back one slide for the timers. Task 1 first, alone: the table is the analyst's main tool in the conversation. Observers replace the example scores in the notebook with their own. The written agreement is individual. No AI assistant. The lab starts from the request file and the supplied extract; no earlier lab is needed.</p></aside>
+</section>
+
+<!-- Session 4 -->
+
+<section class="slide section" id="s4" data-auto="section" data-session="4" data-n="35">
+  <div class="kicker">Session 4</div>
+  <h1>Explaining limits</h1>
+  <ul class="bullets outcomes"><li>State what an analysis cannot show, separately from how uncertain it is</li><li>Write a limits statement a non-specialist cannot misread</li><li>Choose the capstone engagement and list what its pack must contain</li></ul>
+  <div class="sess-no">04</div>
+</section>
+
+<section class="slide" id="uncertainty-and-limits" data-lo="LO4 LO6" data-n="36" data-session="4">
+  <div class="kicker">Two different things</div>
+  <h2>An interval tells you how sure; a limit tells you what was never measured</h2>
+  <div class="cols cols-2">
+    <div class="card c-cyan"><h4>Uncertainty</h4><p class="small mb0">How far the number could move if you measured again. Awn referred 55% of struggling students, between 53% and 57%. Small, with 2,191 students.</p></div>
+    <div class="card c-coral"><h4>Limits</h4><p class="small mb0">What the number does not measure however often you measure: whether support helps, whether the label is right, whether the record is right, whether next term will be like this one.</p></div>
+  </div>
+  <div class="callout warn mt"><b>What goes wrong.</b> A tight interval read as "the analysis is solid". Precision about the wrong thing is still the wrong thing.</div>
+  <aside class="notes"><p>The interval is the lab's first task: 1,209 of 2,191. Most misuse of analytical results comes from limits, not from uncertainty. The limits of the Awn evaluation were found on Day 2 and written into the datasheet this morning; now they go next to the number.</p></aside>
+</section>
+
+<section class="slide" id="six-limits" data-lo="LO4 LO5" data-n="37" data-session="4">
+  <div class="kicker">The Awn evaluation</div>
+  <h2>Six real limits, and two that only sound like limits</h2>
+  <div class="cols cols-2">
+    <ul class="bullets tight">
+      <li>No test of whether support helps: no comparison group</li>
+      <li>One term of one year</li>
+      <li>Attendance under-recorded for remote accommodation</li>
+      <li>Marks missing for bridging-year entrants</li>
+      <li>"Struggled" is one definition; withdrawals can count as "ok"</li>
+      <li>It describes groups, not any one student's risk</li>
+    </ul>
+    <div class="card c-amber"><h4>Not limits</h4><p class="small mb0">"The sample is too small": 18,000 students give the overall rate to about two points. "The data is pseudonymised": a pseudonym changes who can be identified, not any rate.</p></div>
+  </div>
+  <aside class="notes"><p>Task 2 of Lab 3.4. False modesty is a failure too: a list of limits padded with things that are not limits teaches the reader to skip the list.</p></aside>
+</section>
+
+<section class="slide" id="three-sentences" data-lo="LO6" data-n="38" data-session="4">
+  <div class="kicker">The limits statement</div>
+  <h2>Three sentences that travel with the number</h2>
+  <ol class="bullets">
+    <li><b>What it shows.</b> "In term 1, Awn referred 55% of the students who ended the term struggling (between 53% and 57%), so it missed 45% of them."</li>
+    <li><b>What it does not show, and for whom it is worse.</b> "The analysis did not test whether the support that follows a referral helps, and the rule is known to be less reliable for two groups: it wrongly refers many students with a remote-attendance accommodation and misses most struggling bridging-year entrants."</li>
+    <li><b>What it must not be used for.</b> "The result describes groups of students and must not be used to judge, rank or list any individual student."</li>
+  </ol>
+  <aside class="notes"><p>The solution's statement: three sentences, 83 words. It goes in the report, on the slide and in the email, every time the number goes. For a slide it shortens to "missed 45%; unreliable for two groups; not for judging individuals".</p></aside>
+</section>
+
+<section class="slide" id="misreadings" data-lo="LO6" data-n="39" data-session="4">
+  <div class="kicker">Testing the statement</div>
+  <h2>A statement works if it blocks the ways a hurried reader will misread the number</h2>
+  <table class="t small">
+    <tr><th>The misreading</th><th>Blocked by</th></tr>
+    <tr><td>"Awn causes students to pass."</td><td>Sentence 2: support was not tested</td></tr>
+    <tr><td>"A student Awn did not refer is safe."</td><td>Sentence 1: it missed 45%</td></tr>
+    <tr><td>"The rule works equally well for every group."</td><td>Sentence 2: the two groups, named</td></tr>
+    <tr><td>"The list of referred students can decide who repeats a course."</td><td>Sentence 3: must not be used for</td></tr>
+  </table>
+  <div class="callout tip mt"><b>Which side of the number.</b> "Referred 55%" invites the second misreading. "Missed 45%" blocks it. Same fact.</div>
+  <aside class="notes"><p>Task 4 of the lab. Writing the misreadings down first is the method: ask "how will the most hurried reader use this?" and write against that. Explaining limits to a non-specialist is one of the three conversations the course practises, and the only one that is usually in writing.</p></aside>
+</section>
+
+<section class="slide" id="human-oversight" data-lo="LO6" data-n="40" data-session="4">
+  <div class="kicker">Who acts on the result</div>
+  <h2>A referral is a prompt for a person, and the statement keeps it that way</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>Awn's output goes to an <b>advisor</b>, who talks to the student and decides</li>
+      <li>People tend to favour a system's output over other evidence: the guide's <b>automation bias</b></li>
+      <li>"Must not be used to judge, rank or list" is the line that protects the advisor's judgement</li>
+    </ul>
+    <div class="card c-teal"><h4>In every release</h4><p class="small mb0">The unit's policy asks for a version, a date, an approver and a line that says what the table must not be used for. The line is not decoration: it is the record that you said it.</p></div>
+  </div>
+  <aside class="notes"><p>Human oversight is among the national AI ethics principles; a two-line rule needs it as much as a model does. If a referral list is later used for grading or discipline, the release record shows the unit said it must not be.</p><p>Sources: AI Ethics Principles (humanity; accountability and responsibility); AI Bias Reference Guide, automation bias.</p></aside>
+</section>
+
+<section class="slide" id="capstone-kickoff" data-lo="LO2 LO3 LO4 LO5 LO6" data-n="41" data-session="4">
+  <div class="kicker">Capstone kickoff</div>
+  <h2>Three engagements; choose one and build its responsible-practice pack</h2>
+  <table class="t small">
+    <tr><th>Engagement</th><th>The rule</th><th>The partner</th><th>The sponsor asks</th></tr>
+    <tr><td>Scholarship Office</td><td>Flags awards for review</td><td>A charity that co-funds awards</td><td>"Which students do not deserve their award?"</td></tr>
+    <tr><td>Student Housing</td><td>Gives priority for rooms</td><td>The city's municipality</td><td>"Prove the priority rule is fair."</td></tr>
+    <tr><td>Career Centre</td><td>Shortlists for internships</td><td>A private employers' council</td><td>"Send me the names of those not shortlisted."</td></tr>
+  </table>
+  <div class="callout note mt"><b>Each folder.</b> 4,000 synthetic records, the rule, the sponsor's brief and the partner's request, in <code>labs/capstone/</code>.</div>
+  <aside class="notes"><p>The last task of Lab 3.4 opens the chosen folder. Two partners are not government entities: the sharing decision changes with that, as the "one fact changes" slide of Day 1 said. Each dataset has one recording problem planted for one group; do not say which.</p></aside>
+</section>
+
+<section class="slide" id="the-pack" data-lo="LO2 LO3 LO4 LO5 LO6" data-n="42" data-session="4">
+  <div class="kicker">What you hand in</div>
+  <h2>Six documents in five scored parts, each one a lab you have done</h2>
+  <table class="t small">
+    <tr><th>Part of the pack</th><th>The lab that taught it</th><th class="num">Weight</th></tr>
+    <tr><td>Sharing decision with conditions and classification</td><td>1.1, 1.3, 1.4</td><td class="num">25</td></tr>
+    <tr><td>Release tables, suppression log, differencing check</td><td>2.1</td><td class="num">20</td></tr>
+    <tr><td>Group comparison: rates, intervals, two bias types, the check</td><td>2.3, 2.4</td><td class="num">20</td></tr>
+    <tr><td>Datasheet and analysis log</td><td>1.2, 3.1</td><td class="num">20</td></tr>
+    <tr><td>Scope note, with what the analysis must not be used for</td><td>3.2, 3.3, 3.4</td><td class="num">15</td></tr>
+  </table>
+  <div class="callout tip mt"><b>The defence.</b> Eight minutes: six on the pack, with a two-minute role-play inside, and two in which the assessor changes one fact of the partner's request.</div>
+  <aside class="notes"><p>The pack goes into a public repository; the template is <code>labs/capstone/pack_template/</code>. AI policy: an assistant may help draft the documents, defended live; the role-play and the supervised check are without AI. Follow-up task after the course: a classification and sharing table for one dataset at work, described in the labs' guide.</p></aside>
+</section>
+
+<section class="slide" id="check-limits" data-lo="LO6" data-n="43" data-session="4">
+  <div class="kicker">Checkpoint</div>
+  <h2>Which sentence belongs under the number?</h2>
+  <div class="quiz" data-type="single" data-lo="LO6" data-id="check-limits-q1">
+    <p class="lead">A slide for the University council will say "Awn referred 55% of struggling students". There is room for one more line. Which one?</p>
+    <div class="opts">
+      <div class="opt" data-why="Spends the line on sampling uncertainty, the smallest problem here, and leaves every misuse open" data-k="A">"95% confidence interval: 53% to 57%."</div>
+      <div class="opt" data-why="Gives a method note the council cannot use: it blocks no misreading" data-k="B">"Computed on a pseudonymised extract of 18,000 students."</div>
+      <div class="opt" data-ok data-k="C">"It missed 45%, is unreliable for two groups, and must not be used to judge individual students."</div>
+      <div class="opt" data-why="Protects the analyst rather than the reader: a general disclaimer names no limit and is skipped" data-k="D">"Results should be interpreted with caution."</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The line that travels with a number should block its likeliest misuse. Here that is treating the rule as complete, as equal for all, and as a verdict on a student.</div>
+  </div>
+  <aside class="notes"><p>Answer: the third option. The first is correct statistics and the wrong priority. The fourth is the sentence everyone has written; ask what a reader does differently after reading it. Nothing.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-3-4" data-auto="lab" data-lab="3.4" data-label="Lab 3.4" data-n="44" data-session="4">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 3.4 · 25 min</div><h2>Three sentences and the capstone case</h2><p class="lead small">Write a three-sentence limits statement and choose the capstone case.</p><a class="nb" href="../labs/D3_4_limits_statement.ipynb">D3_4_limits_statement.ipynb</a></div><ul class="checklist"><li>Read the result and its interval <span class="min">3 min</span></li><li>List what the analysis cannot show <span class="min">5 min</span></li><li>Write the three-sentence limits statement <span class="min">7 min</span></li><li>Test it against four misreadings <span class="min">5 min</span></li><li>Choose the capstone engagement and open its files <span class="min">5 min</span></li><li class="stretch">✱ Stretch: Rewrite the statement for a student newspaper, without a number that could mislead</li></ul></div>
+  <aside class="notes"><p>Task 3 is the centre: seven minutes for three sentences is tight, and it should be. Read two statements aloud and test them against the four misreadings with the room. Leave five full minutes for the capstone choice; participants should leave knowing their engagement. The lab starts from supplied files and the capstone folders; no earlier lab is needed.</p></aside>
+</section>
+
+<section class="slide" id="wrap-up" data-lo="LO5 LO6" data-n="45" data-session="4">
+  <div class="kicker">Day 3</div>
+  <h2>Three things to keep</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>Write it so a stranger can check it</h4><p class="small mb0">A datasheet that states the weakness, a log with a named approver, a release with a fingerprint.</p></div>
+    <div class="card c-cyan"><h4>The decision first</h4><p class="small mb0">Ask what the sponsor has to decide. The same sentence is the scope and the lawful purpose.</p></div>
+    <div class="card c-coral"><h4>No, with an alternative</h4><p class="small mb0">Serve the decision, name the harm, say who decides, write it down. Then say what the number does not show.</p></div>
+  </div>
+  <aside class="notes"><p>Ask each group of three for the sentence they would take back to work. Then the practical points of the capstone: engagement chosen, repository created, pack template copied.</p></aside>
+</section>
+
+<section class="slide dark" id="next" data-lo="LO6" data-n="46" data-session="4">
+  <div class="kicker">Next</div>
+  <h1>The capstone: your pack, defended</h1>
+  <p class="lead">Six documents for one engagement, in a public repository, and eight minutes in front of an assessor who will change one fact.</p>
+  <ul class="bullets">
+    <li>Before the day: build the pack from the template</li>
+    <li>Rehearse the two-minute role-play with a peer as your sponsor</li>
+  </ul>
+  <aside class="notes"><p>Remind participants of the passing rule: 70% overall, and at least 60% on both the capstone rubric and the supervised check. The supervised check is separate and without AI. Agree the running order now if you can.</p></aside>
+</section>
+</div>
+<script type="application/json" id="academy-data">{"v":1,"engine":"1.0.0","build":{"at":"2026-11-15T10:43:05Z","version":"2027.1.0","commit":"e8058f5"},"course":{"id":"ds-207","code":"DS-207","title":"Responsible Data Practice and Conduct in Analytical Work","track":"data-science","lang":"en","dir":"ltr","url":"https://sdaiaacademy.github.io/ds-207/","repo":"SDAIAAcademy/ds-207","home":"../index.html"},"deck":{"id":"day3","kind":"day","day":3,"label":"Day 3","title":"Professional conduct","prev":"day2.html","next":"capstone.html","md":"day3.md","alt":{}},"sessions":[{"n":1,"label":"Session 1","title":"Datasheets and analysis logs","slide":"s1","outcomes":["Fill a datasheet that states what the data is, how it was collected and what it must not be used for","Keep an analysis log in which every decision has a reason, a date and an approver","Tie a release to a version so a result can be traced and rerun"],"minutes":50,"lab":{"id":"3.1","title":"Datasheet and log","minutes":25,"href":"../labs/D3_1_datasheet_log.ipynb"}},{"n":2,"label":"Session 2","title":"Scoping with a sponsor","slide":"s2","outcomes":["Ask the questions that turn a request into a decision, a population, a measure and a time frame","Agree success criteria and what is out of scope before any analysis starts","Record the agreement in a scope note the sponsor confirms"],"minutes":50,"lab":{"id":"3.2","title":"Scope in six minutes","minutes":25,"href":"../labs/D3_2_scoping_roleplay.ipynb"}},{"n":3,"label":"Session 3","title":"Pushing back without obstructing","slide":"s3","outcomes":["Refuse an unsafe request by naming the harm and the rule, not by citing policy at the sponsor","Offer a lawful alternative that serves the sponsor's decision","Recognise when to escalate to the data protection officer and record the agreement"],"minutes":50,"lab":{"id":"3.3","title":"The risk list","minutes":25,"href":"../labs/D3_3_pushback_roleplay.ipynb"}},{"n":4,"label":"Session 4","title":"Explaining limits","slide":"s4","outcomes":["State what an analysis cannot show, separately from how uncertain it is","Write a limits statement a non-specialist cannot misread","Choose the capstone engagement and list what its pack must contain"],"minutes":50,"lab":{"id":"3.4","title":"Three sentences and the capstone case","minutes":25,"href":"../labs/D3_4_limits_statement.ipynb"}}],"slides":[{"id":"title","n":1,"title":"Professional conduct","kind":"title","session":0,"hash":"9e95242d","md":"#### [day3#title] Professional conduct\n\n*SDAIA Academy · Responsible Data Practice and Conduct in Analytical Work*\n\nDay 3: Document the work so others can check it, and hold the three conversations\n\nData Science Track · 3 teaching days + capstone day · 4 sessions · 4 labs · DS-207","notes":"Two days of decisions are in notebooks and in heads. Today they become documents others can check, and then three conversations: scoping, pushing back, explaining limits. Sessions 2 and 3 are role-plays in threes; confirm the groups before session 1 starts. No AI assistant in the role-plays.","minutes":null,"lo":[]},{"id":"agenda","n":2,"title":"Professional conduct","kind":"content","session":0,"hash":"0fc88005","md":"#### [day3#agenda] Professional conduct\n\n*Today*\n\n- **Session 1 · Datasheets and analysis logs**: A reviewer must be able to trace a number to data, decisions and approvals\n- **Session 2 · Scoping with a sponsor**: A vague request becomes a decision, a population, a measure and a criterion\n- **Session 3 · Pushing back without obstructing**: Name the harm and the rule, offer an alternative, escalate when needed\n- **Session 4 · Explaining limits**: Say what the result does not show and what it must not be used for","notes":"","minutes":null,"lo":[]},{"id":"review-day2","n":3,"title":"What is the right next step?","kind":"quiz","session":0,"hash":"7142023b","md":"#### [day3#review-day2] What is the right next step?\n\n*Review of Day 2*\n\n**Question:** A rule misses struggling non-Saudi students more often than Saudi students: 62% against 43%, and the interval of the difference excludes zero. What does the analyst do next?\n\n- A. Propose a lower threshold for non-Saudi students\n- B. Report that the rule discriminates by nationality\n- C. Name two candidate causes and run the check on which they disagree\n- D. Leave the breakdown by nationality out of the report","notes":"Answer: the third option. Recall the result: with a mark present both groups are missed at similar rates; with the mark missing both are missed three times in four or more.","minutes":null,"lo":["LO3","LO4"]},{"id":"s1","n":4,"title":"Datasheets and analysis logs","kind":"section","session":1,"hash":"ac3dffdd","md":"#### [day3#s1] Datasheets and analysis logs\n\n*Session 1*\n\n- Fill a datasheet that states what the data is, how it was collected and what it must not be used for\n- Keep an analysis log in which every decision has a reason, a date and an approver\n- Tie a release to a version so a result can be traced and rerun","notes":"","minutes":null,"lo":["LO5"]},{"id":"trace-a-number","n":5,"title":"\"Where does the 55% come from?\" must have an answer without you in the room","kind":"content","session":1,"hash":"1a702786","md":"#### [day3#trace-a-number] \"Where does the 55% come from?\" must have an answer without you in the room\n\n*The test of documentation*\n\n1. **The number** 55% of struggling students referred\n2. **The release** version, date, file fingerprints\n3. **The data** a datasheet: what it is, what is wrong with it\n4. **The decisions** a log: reason, date, approver\n\n> **The reader.** A reviewer in six months, the data protection officer in an audit, your successor, and you.","notes":"The course outcome is exact about the test: a peer uses the datasheet and the log to answer five audit questions. Documentation that only its author can use fails it. Ask who in the room has inherited an analysis with no trail.","minutes":null,"lo":["LO5"]},{"id":"datasheet-sections","n":6,"title":"A datasheet answers what a careful user would ask before using the data","kind":"content","session":1,"hash":"90dccb23","md":"#### [day3#datasheet-sections] A datasheet answers what a careful user would ask before using the data\n\n*The datasheet*\n\n| Section | The question |\n| --- | --- |\n| Motivation | Why was it made, for whom, for which decision? |\n| Composition | What is one row? What is personal, sensitive, missing, and for whom? |\n| Collection | Where does each field come from? What is recorded badly? |\n| Preprocessing | What was dropped, coarsened, pseudonymised? |\n| Uses | What is the approved use? What must it not be used for? |\n| Distribution | Who may see it? What level? May it leave? |\n| Maintenance | Who owns it? Kept until when? How is an error reported? |","notes":"The seven headings follow the published proposal for datasheets; the questions are shortened for an analysis extract. The template is `labs/data/datasheet_template.md`. Days 1 and 2 already produced most of the answers: the purpose, the minimisation log, the classification, the two recording problems.\n\nSources: Gebru et al., Datasheets for Datasets.","minutes":null,"lo":["LO5"]},{"id":"state-the-weakness","n":7,"title":"A datasheet that states the data's weakness protects the analysis","kind":"content","session":1,"hash":"314d5f31","md":"#### [day3#state-the-weakness] A datasheet that states the data's weakness protects the analysis\n\n*Honesty in the datasheet*\n\n- **Collection, as written in the lab.** \"Known to be recorded badly: attendance is about 17 points too low for the 300 students with a remote accommodation, because remote sessions leave no card reading.\"\n- **Composition, as written in the lab.** \"The midterm mark is missing for 1,244 students, all bridging-year entrants.\"\n\n- A reader who finds the weakness alone stops trusting everything\n- A reader who is told can weigh the results that depend on it","notes":"Both sentences are from the solution of Lab 3.1 and both numbers from Day 2. Transparency is one of the national AI ethics principles; for an analyst it starts here, with saying what is wrong with your own data.\n\nSources: AI Ethics Principles (transparency and explainability).","minutes":null,"lo":["LO5"]},{"id":"analysis-log","n":8,"title":"Every decision has a reason, a date and an approver","kind":"content","session":1,"hash":"1869df77","md":"#### [day3#analysis-log] Every decision has a reason, a date and an approver\n\n*The analysis log*\n\n| Id | Decision | Approver |\n| --- | --- | --- |\n| L001 | Evaluate Awn on a pseudonymised extract of 13 fields | Registrar (data owner) |\n| L002 | Add four group fields for the comparison | Data protection officer |\n| L003 | Release two one-way tables, not the cross table | Registrar; suppression checked by the director |\n| L004 | Do not release the Saudi-only table by college | Registrar |\n| L005 | Report bridging-year entrants and remote accommodation separately | Director of the unit |\n\n> **Six fields per entry.** Id, date, decision, reason, approver, where the evidence is.","notes":"The first two entries are supplied; the lab adds three from Day 2. A log is written when the decision is made, not reconstructed at the end: the date is part of the evidence.","minutes":null,"lo":["LO5"]},{"id":"approver-is-a-person","n":9,"title":"An approver is a named person with the authority to approve that thing","kind":"content","session":1,"hash":"2cbfb451","md":"#### [day3#approver-is-a-person] An approver is a named person with the authority to approve that thing\n\n*Accountability*\n\n- **The data owner.** Approves extracts and releases of the data he is responsible for. Here: the registrar.\n- **The data protection officer.** Decides on sensitive fields, new purposes, disclosures and transfers.\n- **The owner of the decision.** Approves how results are reported and used. Here: the director of the unit.\n\n> **What goes wrong.** \"Approved by the team.\" A team cannot be asked a question in an audit, and cannot be shown to have had the authority.","notes":"The analyst's own name appears as the author of each entry, never as the approver of her own release. The second-person check on suppression from Day 2 is the same idea at small scale.\n\nSources: AI Ethics Principles (accountability and responsibility).","minutes":null,"lo":["LO5"]},{"id":"versioned-release","n":10,"title":"A release is a version, a date, fingerprints and one line of warning","kind":"content","session":1,"hash":"36b97710","md":"#### [day3#versioned-release] A release is a version, a date, fingerprints and one line of warning\n\n*Decision records and versioned releases*\n\n```json\n{\"version\": \"2026.11.1\",\n \"table\": \"Referral rate by college\",\n \"files\": {\"analysis_extract.csv\":\n           \"2d9ebc9f490e9f0d\"},\n \"log_entries\": [\"L001\", \"L002\", \"L003\"],\n \"approved_by\": \"the registrar\",\n \"must_not_be_used_for\":\n   \"ranking colleges or judging advisors\"}\n```\n\n- A **fingerprint** (a hash of the file) changes if one byte changes: a version number is a claim, a fingerprint is a check\n- A **decision record** keeps the options that were rejected, and why\n- Templates live in **Git** beside the code, as Markdown or Quarto documents","notes":"The fingerprint shown is the one the lab computes for the course's extract. The lab's stretch is a decision record for the threshold of 10: context, options (3, 5, 10, rounding), decision, who, what would reopen it. The register of releases is also what makes Day 2's differencing check possible.","minutes":null,"lo":["LO5"]},{"id":"records-the-law-asks","n":11,"title":"Some of this record is required","kind":"content","session":1,"hash":"c55c4ee6","md":"#### [day3#records-the-law-asks] Some of this record is required\n\n*Not only good practice*\n\n- The University keeps a **record of processing**: the purpose, the categories of people, who the data is disclosed to, transfers, the retention period\n- For statistics without consent, the purpose is stated **in that record**\n- Sharing requests and their documents are kept for **five years**\n- Disposal of data is **logged**\n\n- **Your log feeds theirs.** The data protection officer keeps the record of processing. An analysis log with purposes, approvals and end dates is what lets her keep it true.","notes":"Tie back to Day 1: the duties of the statistics article included stating the purpose in the record. The analyst does not write the University's record; she supplies what it needs.\n\nSources: Personal Data Protection Law, Article 31; Implementing Regulation, Article 30; Data Sharing Policy, clause Eighth (paragraph 7); Data Classification Policy, disposal controls.","minutes":null,"lo":["LO5"]},{"id":"five-audit-questions","n":12,"title":"Five questions your documents must answer alone","kind":"content","session":1,"hash":"8a06a7ab","md":"#### [day3#five-audit-questions] Five questions your documents must answer alone\n\n*The peer audit*\n\n1. Which file and which version produced the referral table released in November?\n2. Who approved the use of disability status in the group comparison, and on what condition?\n3. Why are bridging-year entrants reported separately?\n4. What must the group comparison not be used for?\n5. How many cells were suppressed in the release, and who checked the suppression?\n\n> **The rule of the swap.** Your peer reads only your documents. No asking, no notebook.","notes":"These are the questions of `labs/data/audit_questions.json`. Each maps to one place: the release record, log entry L002, log entry L005, the datasheet's \"uses\", log entry L003. \"Cannot answer\" is the useful result: it shows which sentence is missing.","minutes":null,"lo":["LO5"]},{"id":"check-documentation","n":13,"title":"Which log entry would survive an audit?","kind":"quiz","session":1,"hash":"0452de10","md":"#### [day3#check-documentation] Which log entry would survive an audit?\n\n*Checkpoint*\n\n**Question:** The analyst decided to merge two small nationality groups in a published table. Which entry lets a reviewer trace that decision?\n\n- A. \"2026-11-09. Merged groups X and Y in table T1: both had cells under 10. Approved by the registrar (data owner). Evidence: suppression log.\"\n- B. \"Merged some categories in T1 for privacy reasons. Approved.\"\n- C. A comment in the notebook cell that does the merge\n- D. \"2026-11-09. Merged X and Y in T1. Decided by the analyst.\"","notes":"Answer: the first option. The fourth option has a date and a decision and still fails: nobody with authority over the data agreed.","minutes":null,"lo":["LO5"]},{"id":"lab-3-1","n":14,"title":"Datasheet and log","kind":"lab","session":1,"hash":"fcc36da3","md":"#### [day3#lab-3-1] Datasheet and log\n\nLab 3.1 · 25 min\n\nFill a datasheet and log three decisions with their approver, then let a peer audit them.\n\n[D3_1_datasheet_log.ipynb](https://sdaiaacademy.github.io/ds-207/labs/D3_1_datasheet_log.ipynb)\n\n- [ ] Fill the datasheet from the data and the notice (8 min)\n- [ ] Log three decisions with reason, date and approver (6 min)\n- [ ] Tag the release with its file fingerprints (4 min)\n- [ ] Swap with a peer and answer five audit questions (5 min)\n- [ ] Fix what the peer could not answer (2 min)\n- [ ] ✱ Stretch: Add a decision record for the choice of threshold, with the options that were rejected","notes":"Task 1 takes its eight minutes: seven sections is a lot of writing; tell participants to write two sentences per section first. For task 4, pair participants and insist on silence between them. Working alone, the notebook's mechanical auditor stands in for the peer. The lab writes three files to `labs/artifacts/`. It starts from supplied files; no earlier lab is needed.","minutes":null,"lo":[]},{"id":"s2","n":15,"title":"Scoping with a sponsor","kind":"section","session":2,"hash":"f11bea92","md":"#### [day3#s2] Scoping with a sponsor\n\n*Session 2*\n\n- Ask the questions that turn a request into a decision, a population, a measure and a time frame\n- Agree success criteria and what is out of scope before any analysis starts\n- Record the agreement in a scope note the sponsor confirms","notes":"","minutes":null,"lo":["LO6"]},{"id":"vague-request","n":16,"title":"A request is usually one sentence, and the sentence is not the question","kind":"content","session":2,"hash":"e33d4260","md":"#### [day3#vague-request] A request is usually one sentence, and the sentence is not the question\n\n*How requests arrive*\n\n**Director:** Is Awn working? The vice-rector will ask me next month.\n\n**Analyst, too fast (weak example):** I will send you the referral numbers by Thursday.\n\n**Analyst (good example):** What will you decide once you know?\n\n- \"Working\" could mean reaching struggling students, helping them, or costing less\n- Each meaning needs different data, and one of them cannot be answered at all\n- Starting the analysis before asking is the most expensive way to find that out","notes":"The exchange is brief B2 of the lab. The question that cannot be answered is whether support helps: there is no comparison group. Better to discover that in a six-minute conversation than in the fourth week.","minutes":null,"lo":["LO6"]},{"id":"four-questions","n":17,"title":"Four questions turn a request into something answerable","kind":"content","session":2,"hash":"c79dfa99","md":"#### [day3#four-questions] Four questions turn a request into something answerable\n\n*The conversation*\n\n- **The decision.** \"What will you decide once you know?\"\n- **The population.** \"Which students, which term?\"\n- **The measure.** \"What would you count, and compared with what?\"\n- **The time.** \"When is the decision taken?\"\n\n> **Order matters.** The decision first. It tells you which answer would change what the sponsor does, and it is the purpose the law asks you for.","notes":"The same four parts as the purpose sentence of Day 1: a well-scoped question and a lawful purpose are the same sentence. Model the first question aloud in different words; participants need phrases that fit their own voice.","minutes":null,"lo":["LO6"]},{"id":"success-criteria","n":18,"title":"Agree what a useful answer looks like before you produce one","kind":"content","session":2,"hash":"8ed85966","md":"#### [day3#success-criteria] Agree what a useful answer looks like before you produce one\n\n*Success criteria*\n\n- \"If the answer were X, what would you do? And if it were Y?\"\n- The **form**: one page, a table, a number with its definition\n- The **precision** that matters: to the point, or \"more than half\"?\n- What would make the sponsor **not believe** the answer\n\n- **In brief B2.** \"One page the director can take to the council: the two rates, the groups for which they differ clearly, and the cause where it could be established.\"","notes":"If no possible answer would change the decision, the analysis is not needed, and saying so is a service. The criterion on the card is from the solution's scope note.","minutes":null,"lo":["LO6"]},{"id":"out-of-scope","n":19,"title":"Write down what you will not do, while everyone still agrees","kind":"content","session":2,"hash":"c2486f9a","md":"#### [day3#out-of-scope] Write down what you will not do, while everyone still agrees\n\n*Out of scope*\n\n| The sponsor's opening sentence | What was really needed | Out of scope |\n| --- | --- | --- |\n| \"I need the data on why engineering students are failing.\" | Whether to add tutorial sections to two first-year courses | Naming students or instructors |\n| \"Is Awn working?\" | Extend the rule, or change its thresholds first | Whether support helps: no comparison group |\n| \"A nice number for the annual report.\" | One figure with its definition, beside last year's | Breakdowns with small counts |\n\n> **Requests grow.** The line \"no lists of students\" is the one you will point to in three weeks.","notes":"These are the three briefs of the lab with what each sponsor's card holds. Do not show this slide before the role-play if you want the cards to stay hidden; skip it with the arrow key and return to it in the debrief. The slide is placed here for self-paced readers.","minutes":null,"lo":["LO6"]},{"id":"scope-note","n":20,"title":"The scope note: nine fields, one sentence each, confirmed by the sponsor","kind":"content","session":2,"hash":"c420e726","md":"#### [day3#scope-note] The scope note: nine fields, one sentence each, confirmed by the sponsor\n\n*The record*\n\n- **Decision**\n- **Question**\n- **Population**\n\n- **Measure**\n- **Success criterion**\n- **Out of scope**\n\n- **Data**\n- **Deadline**\n- **Confirmed by**\n\n> **Send it within the hour.** Five lines, the question first, and one sentence you ask the sponsor to confirm by reply. An unconfirmed note is your opinion of what was agreed.","notes":"The \"data\" field is where Day 1 enters the conversation: which extract, which fields, under which approval. The note is a file of the capstone pack and 15 points of its rubric.","minutes":null,"lo":["LO6"]},{"id":"how-to-ask","n":21,"title":"Three habits make the six minutes work","kind":"content","session":2,"hash":"fbe09ba9","md":"#### [day3#how-to-ask] Three habits make the six minutes work\n\n*Technique*\n\n- **Ask, then wait.** One question at a time. The pause after it is where the real answer comes.\n- **Say it back.** \"So the decision is whether to add tutorials, and you need it in three weeks.\" Sponsors correct a summary more easily than they answer a question.\n- **Propose the question.** Leave with a sentence that ends in a question mark and that data can answer. Read it aloud before you go.","notes":"Common failure in the role-play: the analyst explains methods. A sponsor has no opinion on Wilson intervals and a strong one on deadlines. Second failure: accepting \"everything you have\" as an answer; the next question is \"what will you decide with it, and by when?\"","minutes":null,"lo":["LO6"]},{"id":"roleplay-scoping","n":22,"title":"Six minutes a round: four to talk, two for feedback. Rotate the roles each round","kind":"content","session":2,"hash":"f07823a2","md":"#### [day3#roleplay-scoping] Six minutes a round: four to talk, two for feedback. Rotate the roles each round\n\n*Role-play · three rounds*\n\n##### One round\n\n- Round 1 · brief B1\n- Round 2 · brief B2\n- Round 3 · brief B3","notes":"Come back to this slide during Lab 3.2 for the three rounds; reset the timer between rounds. The sponsor shows the card only in the feedback. Call \"feedback\" at four minutes. The observer speaks first: what was found out, what was not, the best question heard. Then the sponsor shows the card.","minutes":null,"lo":["LO6"]},{"id":"check-scoping","n":23,"title":"Which is the best first question?","kind":"quiz","session":2,"hash":"3e65e98d","md":"#### [day3#check-scoping] Which is the best first question?\n\n*Checkpoint*\n\n**Question:** A dean says: \"Get me the data on why our students are failing.\" What does the analyst ask first?\n\n- A. \"Which fields do you want in the extract?\"\n- B. \"Would you prefer a regression or a simple breakdown?\"\n- C. \"Do you mean first-year students or all students?\"\n- D. \"What do you have to decide, and by when?\"","notes":"Answer: the fourth option. The third option is a good question in the wrong place; ask the room what could go wrong if it came first. The analyst might scope a first-year study for a decision about final-year placements.","minutes":null,"lo":["LO6"]},{"id":"lab-3-2","n":24,"title":"Scope in six minutes","kind":"lab","session":2,"hash":"e7acaaa6","md":"#### [day3#lab-3-2] Scope in six minutes\n\nLab 3.2 · 25 min\n\nTurn a vague request into a question in a timed role-play, in threes, and write the scope note.\n\n[D3_2_scoping_roleplay.ipynb](https://sdaiaacademy.github.io/ds-207/labs/D3_2_scoping_roleplay.ipynb)\n\n- [ ] Read the brief and your role card (3 min)\n- [ ] Round 1: analyst, sponsor, observer (6 min)\n- [ ] Round 2: rotate the roles (6 min)\n- [ ] Round 3: rotate the roles (6 min)\n- [ ] Write your scope note (4 min)\n- [ ] ✱ Stretch: Send the scope note as a five-line message and ask the sponsor to confirm one sentence","notes":"Go back one slide for the timers. Groups of three; with a group of four, two share the observer role. Watch that sponsors do not volunteer the card. In the debrief ask each group for the best question they heard. The scope note is written alone, for the brief each participant handled as analyst. No AI assistant. The lab starts from the briefs file; no earlier lab is needed.","minutes":null,"lo":[]},{"id":"s3","n":25,"title":"Pushing back without obstructing","kind":"section","session":3,"hash":"c9eb183b","md":"#### [day3#s3] Pushing back without obstructing\n\n*Session 3*\n\n- Refuse an unsafe request by naming the harm and the rule, not by citing policy at the sponsor\n- Offer a lawful alternative that serves the sponsor's decision\n- Recognise when to escalate to the data protection officer and record the agreement","notes":"","minutes":null,"lo":["LO6"]},{"id":"the-risk-list","n":26,"title":"\"A list of every student likely to fail, with names and a score, by Sunday\"","kind":"content","session":3,"hash":"fcc4598f","md":"#### [day3#the-risk-list] \"A list of every student likely to fail, with names and a score, by Sunday\"\n\n*The request*\n\n- **Why it is unsafe.** A named list of predicted failure is a new purpose and reaches people who do not advise the student. The score is wrong for known groups. A label that travels to deans can follow a student into grading and discipline.\n- **What she has to decide.** Where to put twelve new advisors, and whether the colleges act on referrals. Neither decision needs a name.\n\n> **The sponsor is not the villain.** Dr. Ibtisam Al-Khayyat wants struggling students helped. The request is the wrong tool for a good aim.","notes":"The request is in `labs/data/risk_list_request.json`. Set the tone before the role-play: analysts who treat the sponsor as an opponent lose the conversation and the relationship. The harm to name is the third one, in plain words.","minutes":null,"lo":["LO6"]},{"id":"anatomy-of-a-no","n":27,"title":"A refusal that works has five parts, and the alternative comes early","kind":"content","session":3,"hash":"abf961bc","md":"#### [day3#anatomy-of-a-no] A refusal that works has five parts, and the alternative comes early\n\n*The structure*\n\n1. **1 · Listen** what must she decide?\n2. **2 · Alternative** what serves that decision\n3. **3 · Harm** to students, in plain words\n4. **4 · Rule** and who decides\n5. **5 · Record** what was agreed\n\n> **Why this order.** She came with a problem. Someone who hears first how it gets solved by Sunday can listen to the reason. Someone who hears a rule first hears a refusal.","notes":"These five are the observer's rubric in the lab, scored 0 to 2 each. The order of 2 and 3 can swap; what must not happen is rule first, alternative never. \"Policy says no\" ends the conversation and sends the sponsor to someone less careful.","minutes":null,"lo":["LO6"]},{"id":"alternative-with-numbers","n":28,"title":"An alternative you can show beats one you can describe","kind":"content","session":3,"hash":"29900c6a","md":"#### [day3#alternative-with-numbers] An alternative you can show beats one you can describe\n\n*The alternative, built*\n\n| College | Referred | Struggled | Missed | Advisors of 12 |\n| --- | --- | --- | --- | --- |\n| Health Sciences | 479 | 488 | 165 | 2.7 |\n| Science | 390 | 438 | 192 | 2.4 |\n| Arts and Humanities | 317 | 363 | 181 | 2.0 |\n| Engineering | 332 | 354 | 172 | 1.9 |\n| Business | 306 | 310 | 153 | 1.7 |\n| Computing | 216 | 238 | 119 | 1.3 |\n\n- Answers \"where do twelve advisors go?\"\n- Every cell is 10 or more\n- Named worklists stay with each student's advisor, as today","notes":"The table is task 1 of Lab 3.3: advisors shared out in proportion to struggling students. Bring it to the conversation. The second alternative answers her other question: the share of referred students contacted within two weeks, by college, without names.","minutes":null,"lo":["LO6"]},{"id":"pressures","n":29,"title":"Three pressures, and a reply to each that is not a rule","kind":"content","session":3,"hash":"00b5bdcb","md":"#### [day3#pressures] Three pressures, and a reply to each that is not a rule\n\n*What you will hear*\n\n| She says | A reply that keeps the conversation |\n| --- | --- |\n| \"The council meets on Monday.\" | \"You will have the table for the council on Sunday. It answers where the advisors go.\" |\n| \"Another university does this already.\" | \"Ours would wrongly list most students who attend remotely with an accommodation. I would not want your name on that list.\" |\n| \"I am the vice-rector. I am allowed to see student data.\" | \"You are. The question is what this decision needs, and it does not need names. If you need them, the data protection officer decides, and I will take it to her today.\" |","notes":"The third reply does three things: concedes what is true, returns to the decision, and names who decides. Access follows the purpose and the need to know, not rank. The claim in the second reply is Day 2's finding: 59% false referrals for that group.","minutes":null,"lo":["LO6"]},{"id":"escalate","n":30,"title":"Escalating is saying aloud whose decision it is","kind":"content","session":3,"hash":"be4f867f","md":"#### [day3#escalate] Escalating is saying aloud whose decision it is\n\n*Escalation*\n\n- **When:** the sponsor still wants named or sensitive data, a new purpose, a disclosure or a transfer\n- **To whom:** the data protection officer, who monitors how the law is applied and supervises impact assessments\n- **How:** three lines: what was asked and by whom, what you offered, the decision you need\n\n- **Copy the sponsor.** Escalation said aloud and copied is a service: the decision was never the analyst's, and never the sponsor's alone. Escalation behind someone's back is a complaint.","notes":"The stretch of the lab is the three-line message. The analyst does not refuse an instruction on her own authority and does not carry it out on her own authority either: she routes it.\n\nSources: Implementing Regulation, Article 32 (data protection officer).","minutes":null,"lo":["LO6"]},{"id":"obstruction","n":31,"title":"Obstructing is as much a failure as complying","kind":"content","session":3,"hash":"f4573003","md":"#### [day3#obstruction] Obstructing is as much a failure as complying\n\n*The other failure*\n\n- **Comply.** Send the list. The harm happens, with your name in the log.\n- **Obstruct.** \"We cannot, it is the law.\" No alternative, no route. The sponsor asks someone else, who sends a worse list.\n- **Push back.** The decision is served by Sunday, the names stay with advisors, the record says who agreed, and the open question has an owner.\n\n> **The record.** Asked for, will deliver, will not deliver, why, who decides more, confirmed by. What is not written down was not agreed.","notes":"The six fields are the agreement of task 5. Ask the room which failure is more common where they work. In most organisations it is the second, and it is the one nobody is blamed for.","minutes":null,"lo":["LO6"]},{"id":"roleplay-pushback","n":32,"title":"Five minutes a round: three to talk, two for the observer's five scores","kind":"content","session":3,"hash":"7e00f129","md":"#### [day3#roleplay-pushback] Five minutes a round: three to talk, two for the observer's five scores\n\n*Role-play · three rounds*\n\n##### One round\n\n- Listen\n- Alternative\n- Harm\n- Rule and who decides\n- Record","notes":"Come back to this slide during Lab 3.3 and reset the timer between the three rounds. The sponsor uses the pressures one at a time and gives way only to something that serves her decision. This role-play is the rehearsal for the observed one in the assessment: use the same rubric, and tell participants so. Sponsors should be firm, not theatrical. Call \"observer\" at three minutes.","minutes":null,"lo":["LO6"]},{"id":"check-pushback","n":33,"title":"Which reply pushes back without obstructing?","kind":"quiz","session":3,"hash":"7cc2ff41","md":"#### [day3#check-pushback] Which reply pushes back without obstructing?\n\n*Checkpoint*\n\n**Question:** A dean asks for the names of students who used the counselling service, \"so lecturers can go easy on them\". Which reply is best?\n\n- A. \"I cannot. Counselling data is health data.\"\n- B. \"You want lecturers to support students under strain. I can give counts by department, and the service can contact lecturers for students who agree. Names would break what students were told.\"\n- C. \"I will send the list marked confidential, for department heads only.\"\n- D. \"That is a question for the data protection officer, not for me.\"","notes":"Answer: the second option. The first is true and useless; the fourth is correct about who decides and skips everything the analyst can do before that. Health data: the fewest staff who need it to provide the service.","minutes":null,"lo":["LO6"]},{"id":"lab-3-3","n":34,"title":"The risk list","kind":"lab","session":3,"hash":"586a8137","md":"#### [day3#lab-3-3] The risk list\n\nLab 3.3 · 25 min\n\nRole-play a request for a risk list and agree a lawful alternative.\n\n[D3_3_pushback_roleplay.ipynb](https://sdaiaacademy.github.io/ds-207/labs/D3_3_pushback_roleplay.ipynb)\n\n- [ ] Read the request and prepare two alternatives (5 min)\n- [ ] Round 1: analyst, sponsor, observer (5 min)\n- [ ] Round 2: rotate the roles (5 min)\n- [ ] Round 3: rotate the roles (5 min)\n- [ ] Record the agreement and the escalation (5 min)\n- [ ] ✱ Stretch: The sponsor insists: write the three-line escalation to the data protection officer","notes":"Go back one slide for the timers. Task 1 first, alone: the table is the analyst's main tool in the conversation. Observers replace the example scores in the notebook with their own. The written agreement is individual. No AI assistant. The lab starts from the request file and the supplied extract; no earlier lab is needed.","minutes":null,"lo":[]},{"id":"s4","n":35,"title":"Explaining limits","kind":"section","session":4,"hash":"2771a75a","md":"#### [day3#s4] Explaining limits\n\n*Session 4*\n\n- State what an analysis cannot show, separately from how uncertain it is\n- Write a limits statement a non-specialist cannot misread\n- Choose the capstone engagement and list what its pack must contain","notes":"","minutes":null,"lo":["LO4","LO5","LO6"]},{"id":"uncertainty-and-limits","n":36,"title":"An interval tells you how sure; a limit tells you what was never measured","kind":"content","session":4,"hash":"f7e3d945","md":"#### [day3#uncertainty-and-limits] An interval tells you how sure; a limit tells you what was never measured\n\n*Two different things*\n\n- **Uncertainty.** How far the number could move if you measured again. Awn referred 55% of struggling students, between 53% and 57%. Small, with 2,191 students.\n- **Limits.** What the number does not measure however often you measure: whether support helps, whether the label is right, whether the record is right, whether next term will be like this one.\n\n> **What goes wrong.** A tight interval read as \"the analysis is solid\". Precision about the wrong thing is still the wrong thing.","notes":"The interval is the lab's first task: 1,209 of 2,191. Most misuse of analytical results comes from limits, not from uncertainty. The limits of the Awn evaluation were found on Day 2 and written into the datasheet this morning; now they go next to the number.","minutes":null,"lo":["LO4","LO6"]},{"id":"six-limits","n":37,"title":"Six real limits, and two that only sound like limits","kind":"content","session":4,"hash":"524c263b","md":"#### [day3#six-limits] Six real limits, and two that only sound like limits\n\n*The Awn evaluation*\n\n- No test of whether support helps: no comparison group\n- One term of one year\n- Attendance under-recorded for remote accommodation\n- Marks missing for bridging-year entrants\n- \"Struggled\" is one definition; withdrawals can count as \"ok\"\n- It describes groups, not any one student's risk\n\n- **Not limits.** \"The sample is too small\": 18,000 students give the overall rate to about two points. \"The data is pseudonymised\": a pseudonym changes who can be identified, not any rate.","notes":"Task 2 of Lab 3.4. False modesty is a failure too: a list of limits padded with things that are not limits teaches the reader to skip the list.","minutes":null,"lo":["LO4","LO5"]},{"id":"three-sentences","n":38,"title":"Three sentences that travel with the number","kind":"content","session":4,"hash":"7894760f","md":"#### [day3#three-sentences] Three sentences that travel with the number\n\n*The limits statement*\n\n1. **What it shows.** \"In term 1, Awn referred 55% of the students who ended the term struggling (between 53% and 57%), so it missed 45% of them.\"\n2. **What it does not show, and for whom it is worse.** \"The analysis did not test whether the support that follows a referral helps, and the rule is known to be less reliable for two groups: it wrongly refers many students with a remote-attendance accommodation and misses most struggling bridging-year entrants.\"\n3. **What it must not be used for.** \"The result describes groups of students and must not be used to judge, rank or list any individual student.\"","notes":"The solution's statement: three sentences, 83 words. It goes in the report, on the slide and in the email, every time the number goes. For a slide it shortens to \"missed 45%; unreliable for two groups; not for judging individuals\".","minutes":null,"lo":["LO6"]},{"id":"misreadings","n":39,"title":"A statement works if it blocks the ways a hurried reader will misread the number","kind":"content","session":4,"hash":"9e492280","md":"#### [day3#misreadings] A statement works if it blocks the ways a hurried reader will misread the number\n\n*Testing the statement*\n\n| The misreading | Blocked by |\n| --- | --- |\n| \"Awn causes students to pass.\" | Sentence 2: support was not tested |\n| \"A student Awn did not refer is safe.\" | Sentence 1: it missed 45% |\n| \"The rule works equally well for every group.\" | Sentence 2: the two groups, named |\n| \"The list of referred students can decide who repeats a course.\" | Sentence 3: must not be used for |\n\n> **Which side of the number.** \"Referred 55%\" invites the second misreading. \"Missed 45%\" blocks it. Same fact.","notes":"Task 4 of the lab. Writing the misreadings down first is the method: ask \"how will the most hurried reader use this?\" and write against that. Explaining limits to a non-specialist is one of the three conversations the course practises, and the only one that is usually in writing.","minutes":null,"lo":["LO6"]},{"id":"human-oversight","n":40,"title":"A referral is a prompt for a person, and the statement keeps it that way","kind":"content","session":4,"hash":"2bd3d855","md":"#### [day3#human-oversight] A referral is a prompt for a person, and the statement keeps it that way\n\n*Who acts on the result*\n\n- Awn's output goes to an **advisor**, who talks to the student and decides\n- People tend to favour a system's output over other evidence: the guide's **automation bias**\n- \"Must not be used to judge, rank or list\" is the line that protects the advisor's judgement\n\n- **In every release.** The unit's policy asks for a version, a date, an approver and a line that says what the table must not be used for. The line is not decoration: it is the record that you said it.","notes":"Human oversight is among the national AI ethics principles; a two-line rule needs it as much as a model does. If a referral list is later used for grading or discipline, the release record shows the unit said it must not be.\n\nSources: AI Ethics Principles (humanity; accountability and responsibility); AI Bias Reference Guide, automation bias.","minutes":null,"lo":["LO6"]},{"id":"capstone-kickoff","n":41,"title":"Three engagements; choose one and build its responsible-practice pack","kind":"content","session":4,"hash":"39ca2ecd","md":"#### [day3#capstone-kickoff] Three engagements; choose one and build its responsible-practice pack\n\n*Capstone kickoff*\n\n| Engagement | The rule | The partner | The sponsor asks |\n| --- | --- | --- | --- |\n| Scholarship Office | Flags awards for review | A charity that co-funds awards | \"Which students do not deserve their award?\" |\n| Student Housing | Gives priority for rooms | The city's municipality | \"Prove the priority rule is fair.\" |\n| Career Centre | Shortlists for internships | A private employers' council | \"Send me the names of those not shortlisted.\" |\n\n> **Each folder.** 4,000 synthetic records, the rule, the sponsor's brief and the partner's request, in `labs/capstone/`.","notes":"The last task of Lab 3.4 opens the chosen folder. Two partners are not government entities: the sharing decision changes with that, as the \"one fact changes\" slide of Day 1 said. Each dataset has one recording problem planted for one group; do not say which.","minutes":null,"lo":["LO2","LO3","LO4","LO5","LO6"]},{"id":"the-pack","n":42,"title":"Six documents in five scored parts, each one a lab you have done","kind":"content","session":4,"hash":"a6a08619","md":"#### [day3#the-pack] Six documents in five scored parts, each one a lab you have done\n\n*What you hand in*\n\n| Part of the pack | The lab that taught it | Weight |\n| --- | --- | --- |\n| Sharing decision with conditions and classification | 1.1, 1.3, 1.4 | 25 |\n| Release tables, suppression log, differencing check | 2.1 | 20 |\n| Group comparison: rates, intervals, two bias types, the check | 2.3, 2.4 | 20 |\n| Datasheet and analysis log | 1.2, 3.1 | 20 |\n| Scope note, with what the analysis must not be used for | 3.2, 3.3, 3.4 | 15 |\n\n> **The defence.** Eight minutes: six on the pack, with a two-minute role-play inside, and two in which the assessor changes one fact of the partner's request.","notes":"The pack goes into a public repository; the template is `labs/capstone/pack_template/`. AI policy: an assistant may help draft the documents, defended live; the role-play and the supervised check are without AI. Follow-up task after the course: a classification and sharing table for one dataset at work, described in the labs' guide.","minutes":null,"lo":["LO2","LO3","LO4","LO5","LO6"]},{"id":"check-limits","n":43,"title":"Which sentence belongs under the number?","kind":"quiz","session":4,"hash":"b16cc783","md":"#### [day3#check-limits] Which sentence belongs under the number?\n\n*Checkpoint*\n\n**Question:** A slide for the University council will say \"Awn referred 55% of struggling students\". There is room for one more line. Which one?\n\n- A. \"95% confidence interval: 53% to 57%.\"\n- B. \"Computed on a pseudonymised extract of 18,000 students.\"\n- C. \"It missed 45%, is unreliable for two groups, and must not be used to judge individual students.\"\n- D. \"Results should be interpreted with caution.\"","notes":"Answer: the third option. The first is correct statistics and the wrong priority. The fourth is the sentence everyone has written; ask what a reader does differently after reading it. Nothing.","minutes":null,"lo":["LO6"]},{"id":"lab-3-4","n":44,"title":"Three sentences and the capstone case","kind":"lab","session":4,"hash":"b2dd0b92","md":"#### [day3#lab-3-4] Three sentences and the capstone case\n\nLab 3.4 · 25 min\n\nWrite a three-sentence limits statement and choose the capstone case.\n\n[D3_4_limits_statement.ipynb](https://sdaiaacademy.github.io/ds-207/labs/D3_4_limits_statement.ipynb)\n\n- [ ] Read the result and its interval (3 min)\n- [ ] List what the analysis cannot show (5 min)\n- [ ] Write the three-sentence limits statement (7 min)\n- [ ] Test it against four misreadings (5 min)\n- [ ] Choose the capstone engagement and open its files (5 min)\n- [ ] ✱ Stretch: Rewrite the statement for a student newspaper, without a number that could mislead","notes":"Task 3 is the centre: seven minutes for three sentences is tight, and it should be. Read two statements aloud and test them against the four misreadings with the room. Leave five full minutes for the capstone choice; participants should leave knowing their engagement. The lab starts from supplied files and the capstone folders; no earlier lab is needed.","minutes":null,"lo":[]},{"id":"wrap-up","n":45,"title":"Three things to keep","kind":"content","session":4,"hash":"28d17dff","md":"#### [day3#wrap-up] Three things to keep\n\n*Day 3*\n\n- **Write it so a stranger can check it.** A datasheet that states the weakness, a log with a named approver, a release with a fingerprint.\n- **The decision first.** Ask what the sponsor has to decide. The same sentence is the scope and the lawful purpose.\n- **No, with an alternative.** Serve the decision, name the harm, say who decides, write it down. Then say what the number does not show.","notes":"Ask each group of three for the sentence they would take back to work. Then the practical points of the capstone: engagement chosen, repository created, pack template copied.","minutes":null,"lo":["LO5","LO6"]},{"id":"next","n":46,"title":"The capstone: your pack, defended","kind":"content","session":4,"hash":"e9639587","md":"#### [day3#next] The capstone: your pack, defended\n\n*Next*\n\nSix documents for one engagement, in a public repository, and eight minutes in front of an assessor who will change one fact.\n\n- Before the day: build the pack from the template\n- Rehearse the two-minute role-play with a peer as your sponsor","notes":"Remind participants of the passing rule: 70% overall, and at least 60% on both the capstone rubric and the supervised check. The supervised check is separate and without AI. Agree the running order now if you can.","minutes":null,"lo":["LO6"]}],"activities":[{"id":"review-day2-q1","slide":"review-day2","type":"single","prompt":"A rule misses struggling non-Saudi students more often than Saudi students: 62% against 43%, and the interval of the difference excludes zero. What does the analyst do next?","options":[{"key":"A","text":"Propose a lower threshold for non-Saudi students"},{"key":"B","text":"Report that the rule discriminates by nationality"},{"key":"C","text":"Name two candidate causes and run the check on which they disagree"},{"key":"D","text":"Leave the breakdown by nationality out of the report"}],"correct":[2],"explanation":"A gap is an observation. Yesterday's check showed the cause was missing marks for bridging-year entrants, and the fix was a data feed.","misconceptions":["Fixes by the column where the gap showed: separate limits by nationality treat students by a protected characteristic and may miss the real cause","Treats a clear gap as proof of unfairness in the rule itself, before any cause is established","","Hides a clear finding because it is uncomfortable: suppression is for small counts, not for results"],"lo":["LO4"]},{"id":"check-documentation-q1","slide":"check-documentation","type":"single","prompt":"The analyst decided to merge two small nationality groups in a published table. Which entry lets a reviewer trace that decision?","options":[{"key":"A","text":"\"2026-11-09. Merged groups X and Y in table T1: both had cells under 10. Approved by the registrar (data owner). Evidence: suppression log.\""},{"key":"B","text":"\"Merged some categories in T1 for privacy reasons. Approved.\""},{"key":"C","text":"A comment in the notebook cell that does the merge"},{"key":"D","text":"\"2026-11-09. Merged X and Y in T1. Decided by the analyst.\""}],"correct":[0],"explanation":"Date, decision, reason, a named role with the authority, and where the evidence is. Remove any one and a question in the audit has no answer.","misconceptions":["","Records that something happened without the reason or the authority: a reviewer cannot tell whether it was allowed","Puts the trail in code only: a comment says what the code does, not who agreed or why","Treats the analyst's own judgement as the approval: the author of a release does not approve it"],"lo":["LO5"]},{"id":"check-scoping-q1","slide":"check-scoping","type":"single","prompt":"A dean says: \"Get me the data on why our students are failing.\" What does the analyst ask first?","options":[{"key":"A","text":"\"Which fields do you want in the extract?\""},{"key":"B","text":"\"Would you prefer a regression or a simple breakdown?\""},{"key":"C","text":"\"Do you mean first-year students or all students?\""},{"key":"D","text":"\"What do you have to decide, and by when?\""}],"correct":[3],"explanation":"The decision tells you which answer would change what the dean does, what data that needs and what is out of scope. Every other question depends on it.","misconceptions":["Starts with the data: the fields cannot be chosen before the purpose is known","Starts with the method: a sponsor cannot choose between analyses he has not been shown a use for","Narrows the population before knowing the decision: a useful question, asked second",""],"lo":["LO6"]},{"id":"check-pushback-q1","slide":"check-pushback","type":"single","prompt":"A dean asks for the names of students who used the counselling service, \"so lecturers can go easy on them\". Which reply is best?","options":[{"key":"A","text":"\"I cannot. Counselling data is health data.\""},{"key":"B","text":"\"You want lecturers to support students under strain. I can give counts by department, and the service can contact lecturers for students who agree. Names would break what students were told.\""},{"key":"C","text":"\"I will send the list marked confidential, for department heads only.\""},{"key":"D","text":"\"That is a question for the data protection officer, not for me.\""}],"correct":[1],"explanation":"It names the dean's aim, offers two ways to serve it, and gives the reason in terms of students.","misconceptions":["Cites the rule and stops: the dean's aim is left unserved and he will look for another route","","Complies with a softer version: a confidential marking does not change who receives health data","Escalates without listening or offering anything: the data protection officer receives a problem the analyst could have half solved"],"lo":["LO6"]},{"id":"check-limits-q1","slide":"check-limits","type":"single","prompt":"A slide for the University council will say \"Awn referred 55% of struggling students\". There is room for one more line. Which one?","options":[{"key":"A","text":"\"95% confidence interval: 53% to 57%.\""},{"key":"B","text":"\"Computed on a pseudonymised extract of 18,000 students.\""},{"key":"C","text":"\"It missed 45%, is unreliable for two groups, and must not be used to judge individual students.\""},{"key":"D","text":"\"Results should be interpreted with caution.\""}],"correct":[2],"explanation":"The line that travels with a number should block its likeliest misuse. Here that is treating the rule as complete, as equal for all, and as a verdict on a student.","misconceptions":["Spends the line on sampling uncertainty, the smallest problem here, and leaves every misuse open","Gives a method note the council cannot use: it blocks no misreading","","Protects the analyst rather than the reader: a general disclaimer names no limit and is skipped"],"lo":["LO6"]}],"ai":{"context":{"course":"../context/course.md","courseJs":"../context/course.js","day":"day3.md","llms":"../llms.txt"},"tasks":[],"tools":[]},"bridge":{"allowedOrigins":[]},"features":{},"strings":{}}</script>
+<script src="../_engine/academy.js"></script>
+</body>
+</html>

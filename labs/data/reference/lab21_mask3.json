@@ -1,0 +1,18 @@
+{
+ "Saudi": {
+  "Arts and Humanities": true,
+  "Business": true,
+  "Computing": true,
+  "Engineering": false,
+  "Health Sciences": true,
+  "Science": true
+ },
+ "non-Saudi": {
+  "Arts and Humanities": true,
+  "Business": true,
+  "Computing": true,
+  "Engineering": false,
+  "Health Sciences": true,
+  "Science": true
+ }
+}

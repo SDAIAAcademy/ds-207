@@ -1,0 +1,18 @@
+[
+ {
+  "id": "L001",
+  "date": "2026-11-02",
+  "decision": "Evaluate Awn on a pseudonymised extract of 13 fields; names, contacts, identity numbers, addresses, bank accounts and free-text notes are not extracted.",
+  "reason": "The purpose needs none of them.",
+  "approver": "Rami Al-Tuwaijri, registrar (data owner)",
+  "evidence": "minimisation log, Lab 1.2"
+ },
+ {
+  "id": "L002",
+  "date": "2026-11-04",
+  "decision": "Include gender, nationality group, disability status and remote accommodation in the extract for the group comparison.",
+  "reason": "Error rates by group cannot be checked without them. Disability status is health data, so the comparison runs only on the pseudonymised extract inside the unit and is reported in aggregate.",
+  "approver": "Shatha Al-Omair, data protection officer",
+  "evidence": "email of 2026-11-04, filed with the record of processing"
+ }
+]

@@ -1,0 +1,10 @@
+{
+ "legal basis": "Shared under the Observatory's mandate for labour-market planning, a public-interest purpose; used for the linkage study and nothing else.",
+ "authorisation": "Access for named Observatory analysts only, on a need-to-know basis; no contractors unless named and approved in writing.",
+ "data type": "Five fields for final-year students: identity number, college, programme, level, grade band. A new field is a new request.",
+ "pre-processing": "The Observatory replaces the identity number with its own study code immediately after linkage and destroys the identity numbers.",
+ "sharing means": "Through the Government Service Bus or another channel approved by the data management office; never by email attachment.",
+ "usage and protection": "Marked Restricted and protected as Restricted; no onward sharing with the consulting firm or anyone else; results published only as tables with no count under 10.",
+ "duration and termination": "Kept for 12 months from delivery, then destroyed with a written confirmation; access revoked if a condition is broken.",
+ "liability": "Each party answers for its own breach of these conditions; a data leak is reported to the University within 24 hours of discovery."
+}

@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-ax="deck" data-track="data-science">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Day 2 · Fair and safe outputs · Responsible Data Practice and Conduct in Analytical Work</title>
+<meta name="generator" content="SDAIA Academy engine 1.0.0">
+<link rel="icon" href="../_engine/icon.svg">
+<link rel="alternate" type="text/markdown" href="day2.md">
+<link rel="describedby" href="../llms.txt">
+<link rel="stylesheet" href="../_engine/academy.css">
+</head>
+<body>
+<div class="deck" data-course="Responsible Data Practice and Conduct in Analytical Work" data-track="data-science" data-day="Day 2">
+<section class="slide title" id="title" data-auto="title" data-label="Welcome" data-n="1">
+  <div class="kicker">SDAIA Academy · Responsible Data Practice and Conduct in Analytical Work</div>
+  <h1>Fair and safe outputs</h1>
+  <p class="lead mt">Day 2: Release tables that single nobody out, and compare groups with honest uncertainty</p>
+  <div class="meta"><span class="track">Data Science Track</span><span>3 teaching days + capstone day</span><span>4 sessions · 4 labs</span><span>DS-207</span></div>
+  <aside class="notes"><p>Yesterday was about what may be done with the data. Today is about what comes out of it: tables that must not point at a student, and comparisons that must not mislead. Every lab today starts from supplied files, so nobody is blocked by yesterday.</p></aside>
+</section>
+
+<section class="slide" id="agenda" data-auto="agenda" data-label="Agenda" data-n="2">
+  <div class="kicker">Today</div>
+  <h2>Fair and safe outputs</h2>
+  <div class="agenda"><div class="item"><div><b>Session 1 · Aggregate release and small cells</b><small>An aggregate table can still point at one student</small></div></div><div class="item"><div><b>Session 2 · Where bias enters</b><small>Bias enters in recording, coverage, labels and use, before any metric</small></div></div><div class="item"><div><b>Session 3 · Comparing groups</b><small>Referral and error rates by group, each with its interval</small></div></div><div class="item"><div><b>Session 4 · Naming the bias</b><small>Two candidate bias types for a gap, and the check that separates them</small></div></div></div>
+</section>
+
+<section class="slide" id="review-day1" data-lo="LO1 LO2" data-n="3">
+  <div class="kicker">Review of Day 1</div>
+  <h2>Which statement about the pseudonymised extract is right?</h2>
+  <div class="quiz" data-type="single" data-lo="LO2" data-id="review-day1-q1">
+    <p class="lead">The analysis extract has 13 columns per student under a project pseudonym, with no names or identity numbers. A colleague wants to paste 500 rows into a hosted AI assistant to get plotting code.</p>
+    <div class="opts">
+      <div class="opt" data-why="Equates removing names with anonymising: the key exists and each row is one student" data-k="A">Fine: without names the rows are anonymous</div>
+      <div class="opt" data-ok data-k="B">Not allowed: the extract is personal data classified Restricted; describe the columns and ask for code</div>
+      <div class="opt" data-why="Looks for a technical fix to a classification rule: the level of the data does not change with the channel" data-k="C">Fine if the assistant's history is switched off</div>
+      <div class="opt" data-why="Over-classifies: the impact is on individuals' privacy, which the policy places at low impact, so Restricted" data-k="D">Not allowed: student data is classified Secret</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> Pseudonymised data is personal data, its level is Restricted, and only Public data goes into a generative AI tool.</div>
+  </div>
+  <aside class="notes"><p>Answer: the second option. It joins three ideas of Day 1: pseudonymised is not anonymised, the level follows the impact, and the rule for AI tools. If the room is unsure, give two minutes to the Day 1 wrap-up before going on.</p></aside>
+</section>
+
+<section class="slide" id="approved-extract" data-lo="LO4 LO5" data-n="4">
+  <div class="kicker">Where today starts</div>
+  <h2>The group comparison is a separate decision, already approved and logged</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>Yesterday's extract dropped gender, nationality and disability status: its purpose did not need them</li>
+      <li>Checking the rule's errors by group <b>does</b> need them</li>
+      <li>Disability status is health data, so the data protection officer decided</li>
+    </ul>
+    <div class="card c-teal"><h4>Log entry L002, approved by Shatha Al-Omair</h4><p class="small mb0">Gender, nationality group, disability status and remote accommodation are added to the extract for the group comparison. It runs only on the pseudonymised extract inside the unit and is reported in aggregate.</p></div>
+  </div>
+  <aside class="notes"><p>The file is <code>labs/data/analysis_extract.csv</code>, 18,000 rows and 13 columns. Nationality has been coarsened to Saudi and non-Saudi. Make the point that measuring fairness needs the sensitive fields; refusing to hold them does not make a rule fair, it makes its errors invisible. The approval is in <code>labs/data/analysis_log_seed.json</code>, which Day 3 extends.</p></aside>
+</section>
+
+<!-- Session 1 -->
+
+<section class="slide section" id="s1" data-auto="section" data-session="1" data-n="5">
+  <div class="kicker">Session 1</div>
+  <h1>Aggregate release and small cells</h1>
+  <ul class="bullets outcomes"><li>Explain how a small cell, a total or a second release singles out a student</li><li>Apply a threshold rule with complementary suppression and log each suppressed cell</li><li>Test a release for recovery by subtraction and by differencing before it leaves</li></ul>
+  <div class="sess-no">01</div>
+</section>
+
+<section class="slide" id="aggregates-disclose" data-lo="LO3" data-n="6" data-session="1">
+  <div class="kicker">The idea of this session</div>
+  <h2>An aggregate table can point at one student in three ways</h2>
+  <div class="cols cols-3">
+    <div class="card c-coral"><h4>A small cell</h4><p class="small mb0">A count of 1 in "Computing, non-Saudi, registered disability" is a person, to anyone who knows that college.</p></div>
+    <div class="card c-amber"><h4>A total</h4><p class="small mb0">Hide the 1 and print the row total: the reader subtracts and has it back.</p></div>
+    <div class="card c-purple"><h4>A second table</h4><p class="small mb0">Two tables that each look safe differ by exactly the students one of them leaves out.</p></div>
+  </div>
+  <div class="callout note mt"><b>Singling out</b> means a reader can tell that a cell is one particular person, and so learns what the table says about that person.</div>
+  <aside class="notes"><p>The three ways are the three attacks of Lab 2.1. Ask who the attacker is: not a hacker, a classmate, a lecturer, a journalist with the earlier report. The US Department of Education's guidance uses a "reasonable person in the school community" as the standard.</p><p>Sources: Privacy Technical Assistance Center, Frequently Asked Questions: Disclosure Avoidance.</p></aside>
+</section>
+
+<section class="slide" id="threshold-rule" data-lo="LO3" data-n="7" data-session="1">
+  <div class="kicker">The rule</div>
+  <h2>A threshold rule: no count from 1 to 9 leaves the unit</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>The unit's release policy sets <b>10</b>. It is the University's own choice</li>
+      <li><b>No national instrument sets a number.</b> The national guideline requires that aggregated data cannot be used to identify a person</li>
+      <li>Practice elsewhere: 3 as an absolute floor, 5 or 10 as common minimums</li>
+    </ul>
+    <div class="card c-teal"><h4>Choosing a threshold</h4><p class="small mb0">Higher when the attribute is sensitive (health), when the population is small and people know each other (a college), and when more tables on the same population will follow.</p></div>
+  </div>
+  <aside class="notes"><p>Be exact about what is law and what is house policy: the PDPL and its guideline give the goal, the number is the unit's. The 3, 5 and 10 come from the US Department of Education's guidance for education data and are cited as practice, not as a Saudi rule. The policy text is <code>labs/data/release_policy.md</code>.</p><p>Sources: Personal Data Destruction, Anonymization and Pseudonymisation Guideline; Privacy Technical Assistance Center, Frequently Asked Questions: Disclosure Avoidance.</p></aside>
+</section>
+
+<section class="slide" id="draft-table" data-lo="LO3" data-n="8" data-session="1">
+  <div class="kicker">From the lab's run</div>
+  <h2>The draft: students with a registered disability, by college and nationality group</h2>
+  <div class="cols cols-21">
+    <table class="t small">
+      <tr><th>College</th><th class="num">Saudi</th><th class="num">non-Saudi</th><th class="num">Total</th></tr>
+      <tr><td>Arts and Humanities</td><td class="num">65</td><td class="num">8</td><td class="num">73</td></tr>
+      <tr><td>Business</td><td class="num">92</td><td class="num">8</td><td class="num">100</td></tr>
+      <tr class="hl"><td>Computing</td><td class="num">54</td><td class="num">1</td><td class="num">55</td></tr>
+      <tr><td>Engineering</td><td class="num">81</td><td class="num">12</td><td class="num">93</td></tr>
+      <tr><td>Health Sciences</td><td class="num">51</td><td class="num">3</td><td class="num">54</td></tr>
+      <tr><td>Science</td><td class="num">50</td><td class="num">4</td><td class="num">54</td></tr>
+    </table>
+    <div class="stack">
+      <div class="stat center"><div class="big">5</div><div class="lbl">cells from 1 to 9</div></div>
+      <div class="callout warn"><b>One student.</b> The cell of 1 states a health fact about a person a whole college can name.</div>
+    </div>
+  </div>
+  <aside class="notes"><p>This is table T3 of Lab 2.1, computed from the synthetic registry. Ask the room to find the problem before you highlight it. Then ask: is 8 a problem? Under the unit's rule, yes.</p></aside>
+</section>
+
+<section class="slide" id="subtraction-attack" data-lo="LO3" data-n="9" data-session="1">
+  <div class="kicker">Attack one</div>
+  <h2>Suppress the small cells, keep the totals, and all five come back</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>College</th><th class="num">Saudi</th><th class="num">non-Saudi</th><th class="num">Total</th></tr>
+      <tr><td>Arts and Humanities</td><td class="num">65</td><td class="num">c</td><td class="num">73</td></tr>
+      <tr><td>Business</td><td class="num">92</td><td class="num">c</td><td class="num">100</td></tr>
+      <tr class="hl"><td>Computing</td><td class="num">54</td><td class="num">c</td><td class="num">55</td></tr>
+      <tr><td>Engineering</td><td class="num">81</td><td class="num">12</td><td class="num">93</td></tr>
+      <tr><td>Health Sciences</td><td class="num">51</td><td class="num">c</td><td class="num">54</td></tr>
+      <tr><td>Science</td><td class="num">50</td><td class="num">c</td><td class="num">54</td></tr>
+    </table>
+    <div>
+      <pre class="code"><code class="language-python"><span class="hljs-number">55</span> - <span class="hljs-number">54</span>   <span class="hljs-comment"># Computing, non-Saudi: 1</span>
+<span class="hljs-number">54</span> - <span class="hljs-number">51</span>   <span class="hljs-comment"># Health Sciences: 3</span></code></pre>
+      <div class="callout warn mt-s"><b>What changed.</b> How the table looks. Not what it reveals.</div>
+    </div>
+  </div>
+  <aside class="notes"><p>Demonstration: run task 3 of the lab. The function recovers every cell that is the only suppressed one in its row or column. This is the most common real mistake in published tables: a "c" beside an exact total.</p></aside>
+</section>
+
+<section class="slide" id="complementary" data-lo="LO3" data-n="10" data-session="1">
+  <div class="kicker">The repair, and its price</div>
+  <h2>Complementary suppression protects the cell and can eat the table</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>Where one hidden cell can be subtracted back, hide a <b>second</b> cell in the same row and column</li>
+      <li>Repeat until no row or column has exactly one hidden cell</li>
+      <li>In the draft: <b>10 of 12 cells</b> end up hidden, including counts of 50 to 92 nobody needed to hide</li>
+    </ul>
+    <div class="card c-teal"><h4>Redesign beats repair</h4><p class="small mb0">Two one-way tables: by college (54 to 100) and by nationality group (393 and 36). Every cell is 10 or more, no suppression, and almost the same message.</p></div>
+  </div>
+  <aside class="notes"><p>Numbers from task 4 of the lab. The lesson analysts resist: when suppression removes most of a table, the breakdown is too fine for the population. Coarsen the categories or split the table.</p><p>Sources: Privacy Technical Assistance Center, Frequently Asked Questions: Disclosure Avoidance (complementary suppression).</p></aside>
+</section>
+
+<section class="slide" id="differencing" data-lo="LO3" data-n="11" data-session="1">
+  <div class="kicker">Attack two</div>
+  <h2>Two safe tables can differ by one student</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Registered disability</th><th class="num">Published last month, all</th><th class="num">Asked for now, Saudi only</th><th class="num">Difference</th></tr>
+      <tr><td>Arts and Humanities</td><td class="num">73</td><td class="num">65</td><td class="num">8</td></tr>
+      <tr><td>Business</td><td class="num">100</td><td class="num">92</td><td class="num">8</td></tr>
+      <tr class="hl"><td>Computing</td><td class="num">55</td><td class="num">54</td><td class="num">1</td></tr>
+      <tr><td>Health Sciences</td><td class="num">54</td><td class="num">51</td><td class="num">3</td></tr>
+      <tr><td>Science</td><td class="num">54</td><td class="num">50</td><td class="num">4</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>Each table passes the threshold alone: every count is 50 or more</li>
+      <li>The difference is the group the second table left out</li>
+      <li><b>The check:</b> before a release, compare it with every earlier table on the same population</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>Task 5 of the lab. The decision recorded there: the Saudi-only table by college is not released; the University-level split by nationality group is offered. Differencing needs a register of releases: you cannot check against a table nobody remembers publishing.</p></aside>
+</section>
+
+<section class="slide" id="other-methods" data-lo="LO3" data-n="12" data-session="1">
+  <div class="kicker">Beyond suppression</div>
+  <h2>Suppression is one of four tools</h2>
+  <table class="t small">
+    <tr><th>Method</th><th>What it does</th><th>What the reader loses</th></tr>
+    <tr><td>Coarsen the categories</td><td>Merge colleges, or nationalities into two groups</td><td>Detail; usually the cheapest loss</td></tr>
+    <tr><td>Suppress</td><td>Hide small cells and their complements</td><td>Cells, sometimes most of them</td></tr>
+    <tr><td>Round or band</td><td>Counts to a base of 5; "fewer than 10"</td><td>Exactness of every cell</td></tr>
+    <tr><td>Perturb</td><td>Small random changes to counts</td><td>Trust that a number is the number</td></tr>
+  </table>
+  <div class="callout note mt"><b>Later.</b> Noise with a mathematical guarantee (differential privacy) and measured re-identification risk are in DS-309.</div>
+  <aside class="notes"><p>The lab's stretch is rounding. For public accountability tables, perturbation is often judged unsuitable because readers can no longer trust a figure. Whatever the method, published exact totals reopen the subtraction attack.</p><p>Sources: Privacy Technical Assistance Center, Frequently Asked Questions: Disclosure Avoidance (suppression, blurring, perturbation).</p></aside>
+</section>
+
+<section class="slide" id="zeros-and-hundreds" data-lo="LO3" data-n="13" data-session="1">
+  <div class="kicker">Not only small counts</div>
+  <h2>A cell of zero or of everyone can disclose too</h2>
+  <div class="cols cols-2">
+    <div class="card c-coral"><h4>Everyone in a group</h4><p class="small mb0">"All 14 students of programme X were referred." No small cell, and you now know the referral status of each of the 14.</p></div>
+    <div class="card c-amber"><h4>Nobody in a group</h4><p class="small mb0">"0 of 14 were not referred" is the same sentence. A zero that tells you about everyone else is not harmless.</p></div>
+  </div>
+  <ul class="bullets mt">
+    <li>Check <b>rates of 0% and 100%</b> in small groups as well as counts</li>
+    <li>The unit's rule covers counts of 1 to 9; this case needs your judgement and a line in the log</li>
+  </ul>
+  <aside class="notes"><p>This is group disclosure: nobody is singled out, yet everyone in the group is described. The illustration of 14 students is an example, not a number from the data. Ask where it could occur in the Awn tables: a small programme where every student was referred.</p><p>Sources: Privacy Technical Assistance Center, Frequently Asked Questions: Disclosure Avoidance.</p></aside>
+</section>
+
+<section class="slide" id="suppression-log" data-lo="LO3 LO5" data-n="14" data-session="1">
+  <div class="kicker">The evidence</div>
+  <h2>Every suppressed cell has a line in the log, and every release a line in the register</h2>
+  <table class="t small">
+    <tr><th>Table</th><th>Row</th><th>Column</th><th>Kind</th><th>Reason</th></tr>
+    <tr><td>T3</td><td>Computing</td><td>non-Saudi</td><td>primary</td><td>count of 1 to 9</td></tr>
+    <tr><td>T3</td><td>Computing</td><td>Saudi</td><td>complementary</td><td>protects a suppressed cell from subtraction</td></tr>
+    <tr><td>Saudi-only by college</td><td>all</td><td>all</td><td>not released</td><td>differencing against the release of 2026-10 reveals counts of 1 to 9</td></tr>
+  </table>
+  <div class="callout tip mt"><b>Second person.</b> The unit's policy: a table with a suppressed cell is checked by someone who did not make it, before it is proposed as Public.</div>
+  <aside class="notes"><p>Three of the eleven lines the lab writes. The log is the evidence for the course outcome and a file of the capstone pack. The register of releases (population, breakdown, date, version) is what makes next month's differencing check possible.</p></aside>
+</section>
+
+<section class="slide" id="check-small-cells" data-lo="LO3" data-n="15" data-session="1">
+  <div class="kicker">Checkpoint</div>
+  <h2>Is this table ready for release?</h2>
+  <div class="quiz" data-type="single" data-lo="LO3" data-id="check-small-cells-q1">
+    <p class="lead">A table of referred students by college and level has one cell of 4. The analyst replaces it with "c" and keeps the row and column totals. The threshold is 10. What is the state of the table?</p>
+    <div class="opts">
+      <div class="opt" data-why="Stops at primary suppression: the totals give the cell back by subtraction" data-k="A">Ready: the only small cell is suppressed</div>
+      <div class="opt" data-why="Believes totals are the problem in themselves: removing them destroys the table's use when a second suppressed cell would do" data-k="B">Not ready: all totals must be removed from every table</div>
+      <div class="opt" data-why="Reads the threshold as a rule about the smallest value shown, not about what can be derived" data-k="C">Ready, provided the cell is shown as "fewer than 10"</div>
+      <div class="opt" data-ok data-k="D">Not ready: the 4 is recovered from its row total until a second cell in that row and column is suppressed</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> One hidden cell beside exact totals is a subtraction. Complementary suppression, or a coarser table, closes it.</div>
+  </div>
+  <aside class="notes"><p>Answer: the fourth option. The third option is worth a minute: "fewer than 10" beside a row total that leaves exactly 4 unexplained is the same leak with a different label.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-2-1" data-auto="lab" data-lab="2.1" data-label="Lab 2.1" data-n="16" data-session="1">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 2.1 · 25 min</div><h2>Suppress, then attack</h2><p class="lead small">Apply a threshold rule and test for singling out by differencing.</p><a class="nb" href="../labs/D2_1_small_cells.ipynb">D2_1_small_cells.ipynb</a></div><ul class="checklist"><li>Count the cells under the threshold in three draft tables <span class="min">4 min</span></li><li>Suppress them and log each cell with its reason <span class="min">6 min</span></li><li>Recover a suppressed cell from the totals <span class="min">4 min</span></li><li>Add complementary suppression and test again <span class="min">6 min</span></li><li>Difference the table against an earlier release <span class="min">5 min</span></li><li class="stretch">✱ Stretch: Round the counts to a base of 5 in place of suppression and compare what a reader loses</li></ul></div>
+  <aside class="notes"><p>Task 4 is the hard one; participants who are stuck on the loop can read the solution's function and spend their time on the "look at" that follows. Typical error: forgetting the column direction. The lab writes the suppression log to <code>labs/artifacts/</code>. It starts from the registry and last month's published table; no earlier lab is needed.</p></aside>
+</section>
+
+<!-- Session 2 -->
+
+<section class="slide section" id="s2" data-auto="section" data-session="2" data-n="17">
+  <div class="kicker">Session 2</div>
+  <h1>Where bias enters</h1>
+  <ul class="bullets outcomes"><li>Trace a rule's data from the event to the decision and mark where bias can enter</li><li>Distinguish a recording problem, a coverage problem, a label problem and a use problem</li><li>Measure one entry point with data instead of arguing about it</li></ul>
+  <div class="sess-no">02</div>
+</section>
+
+<section class="slide" id="bias-is-systematic" data-lo="LO4" data-n="18" data-session="2">
+  <div class="kicker">A working definition</div>
+  <h2>Bias is a systematic error that falls on some groups more than others</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>It needs <b>no intent</b>: a process that records or covers people unequally is enough</li>
+      <li>It is <b>not noise</b>: more data of the same kind does not remove it</li>
+      <li>It enters <b>before</b> any metric is computed</li>
+    </ul>
+    <div class="card c-teal"><h4>The national frame</h4><p class="small mb0">Fairness is the first of SDAIA's AI Ethics Principles: act to eliminate bias in the data, the design and the use of a system. The AI Bias Reference Guide names more than a hundred types, with how each arises and how to mitigate it.</p></div>
+  </div>
+  <aside class="notes"><p>Awn is a two-line rule, not a trained model. Everything the guide says about data applies to it all the same: the rule's inputs are recorded data and its thresholds were set on historical data.</p><p>Sources: AI Ethics Principles, principle 1 (fairness); AI Bias Reference Guide, introduction.</p></aside>
+</section>
+
+<section class="slide" id="six-stages" data-lo="LO4" data-n="19" data-session="2">
+  <div class="kicker">Walk the path</div>
+  <h2>Awn's data passes six stages, and each is an entry point</h2>
+  <div class="cols cols-3">
+    <div class="card flat c-teal"><h4>1 · Recording</h4><p class="small mb0">A card read at the door of a teaching room</p></div>
+    <div class="card flat c-cyan"><h4>2 · Marks</h4><p class="small mb0">Midterm marks entered in the registry</p></div>
+    <div class="card flat c-purple"><h4>3 · Thresholds</h4><p class="small mb0">75% and 2.5, set in 2023 on two colleges</p></div>
+    <div class="card flat c-amber"><h4>4 · Outcome label</h4><p class="small mb0">"Struggled": a term average below 2.5</p></div>
+    <div class="card flat c-coral"><h4>5 · Use</h4><p class="small mb0">An advisor contacts the referred student</p></div>
+    <div class="card flat c-navy"><h4>6 · Reporting</h4><p class="small mb0">One rate for the whole University</p></div>
+  </div>
+  <div class="callout tip mt"><b>The question at each stage.</b> For whom could this step go wrong more often than for others?</div>
+  <aside class="notes"><p>The stages are in <code>labs/data/awn_pipeline.json</code>, with one sentence each. The framework behind the walk is the life-cycle view of sources of harm: historical, representation, measurement, aggregation, evaluation and deployment.</p><p>Sources: Suresh and Guttag, A Framework for Understanding Sources of Harm throughout the Machine Learning Life Cycle.</p></aside>
+</section>
+
+<section class="slide" id="recording-gap" data-lo="LO4" data-n="20" data-session="2">
+  <div class="kicker">Entry point 1, measured</div>
+  <h2>The card record is 17 points too low for students who attend remotely</h2>
+  <div class="cols cols-2 mid">
+    <div class="bars">
+      <div class="row"><span>Remote accommodation</span><div class="bar c-coral" style="--w:84%"></div><span class="val">16.8 points</span></div>
+      <div class="row"><span>Other students</span><div class="bar c-teal" style="--w:1%"></div><span class="val">-0.1 points</span></div>
+    </div>
+    <ul class="bullets">
+      <li>Roll call minus card record, from an audit of 1,600 students</li>
+      <li>Of 300 students with a remote accommodation, <b>191</b> are below the 75% limit on the card record</li>
+      <li>On the roll call, <b>14</b> are</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>Task 3 of Lab 2.2. A remote session leaves no card reading. 242 of the 300 students with a remote accommodation have a registered disability, which is why the effect will show up tomorrow morning under "disability" in the group table. The guide's name for a record that is systematically too low is measurement bias.</p><p>Sources: AI Bias Reference Guide, measurement bias.</p></aside>
+</section>
+
+<section class="slide" id="coverage-gap" data-lo="LO4" data-n="21" data-session="2">
+  <div class="kicker">Entry point 2, measured</div>
+  <h2>Over a third of non-Saudi students have no midterm mark in the registry</h2>
+  <div class="cols cols-2 mid">
+    <div class="bars">
+      <div class="row"><span>Non-Saudi students</span><div class="bar c-coral" style="--w:72%"></div><span class="val">36.2%</span></div>
+      <div class="row"><span>Saudi students</span><div class="bar c-teal" style="--w:7%"></div><span class="val">3.4%</span></div>
+    </div>
+    <ul class="bullets">
+      <li>1,244 students have no mark; <b>every one</b> is a bridging-year entrant</li>
+      <li>Their marks are in the bridging programme's own system</li>
+      <li>For them, half of the rule cannot fire</li>
+    </ul>
+  </div>
+  <div class="callout note mt"><b>Where you see it is not where it comes from.</b> The effect appears under nationality; the cause is the admission route.</div>
+  <aside class="notes"><p>Task 4 of Lab 2.2. Data that does not adequately represent part of the population is what the guide calls coverage bias. Hold the callout for session 4: the fix follows the cause, not the column where the gap showed.</p><p>Sources: AI Bias Reference Guide, coverage bias.</p></aside>
+</section>
+
+<section class="slide" id="thresholds-and-labels" data-lo="LO4" data-n="22" data-session="2">
+  <div class="kicker">Entry points 3 and 4</div>
+  <h2>Thresholds carry their history, and labels carry a definition</h2>
+  <div class="cols cols-2">
+    <div class="card c-purple"><h4>Thresholds from 2023, two colleges</h4><p class="small mb0">A limit tuned on Business and Engineering may not fit Health Sciences, where one student in five ends the term struggling. Past conditions built into today's rule: the guide's historical bias.</p></div>
+    <div class="card c-amber"><h4>"Struggled" is a choice</h4><p class="small mb0">A term average below 2.5. A student who withdraws after two courses keeps a good average and counts as "ok". Change the label and every error rate changes with it.</p></div>
+  </div>
+  <div class="callout warn mt"><b>What goes wrong.</b> Treating the outcome column as the truth. It is one more measurement, with its own blind spots.</div>
+  <aside class="notes"><p>Neither of these is measured in the lab; they are marked as entry points and stated as limits on Day 3. The share of one in five for Health Sciences is from the course data (20.3% struggled).</p><p>Sources: AI Bias Reference Guide, historical bias.</p></aside>
+</section>
+
+<section class="slide" id="use-and-feedback" data-lo="LO4" data-n="23" data-session="2">
+  <div class="kicker">Entry points 5 and 6</div>
+  <h2>What happens after the referral changes what the data says about it</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li><b>Support that works hides itself.</b> A referred student who is helped and passes counts as a referral that was "not needed"</li>
+      <li><b>Take-up differs.</b> Who answers an advisor's call, who can come during working hours?</li>
+      <li><b>One number for everyone</b> hides a rule that fails a small group</li>
+    </ul>
+    <div class="card c-coral"><h4>The loop</h4><p class="small mb0">If next year's thresholds are tuned on this year's outcomes, colleges with good advisors will look as if they need fewer referrals. The guide's feedback loop bias.</p></div>
+  </div>
+  <aside class="notes"><p>The unit cannot separate "false alarm" from "helped" without a comparison group, and it has none. That sentence goes into the limits statement of Lab 3.4. Combining groups that differ so that the result fits the largest one is the guide's aggregation bias.</p><p>Sources: AI Bias Reference Guide, feedback loop bias and aggregation bias.</p></aside>
+</section>
+
+<section class="slide" id="measure-not-argue" data-lo="LO4" data-n="24" data-session="2">
+  <div class="kicker">Method</div>
+  <h2>An entry point is a hypothesis until someone measures it</h2>
+  <div class="cols cols-2">
+    <div class="card c-coral"><h4>An opinion</h4><p class="small mb0">"Attendance data is probably unfair to some students." Nobody can act on it, and nobody can refute it.</p></div>
+    <div class="card c-teal"><h4>A measurement</h4><p class="small mb0">"For 300 students with a remote accommodation the record is 17 points below the roll call; 191 fall under the limit on paper, 14 in fact." A size, a group, a consequence.</p></div>
+  </div>
+  <ul class="bullets mt">
+    <li>The audit sampled <b>all 300</b> students of the small group and 1,300 others at random: a small group needs all its members to be measured at all</li>
+  </ul>
+  <aside class="notes"><p>The design point matters for participants' own work: a simple random sample of 1,600 from 18,000 would have held about 27 students with a remote accommodation. Sampling the small group in full is what makes the comparison possible.</p></aside>
+</section>
+
+<section class="slide" id="check-entry-point" data-lo="LO4" data-n="25" data-session="2">
+  <div class="kicker">Checkpoint</div>
+  <h2>Where did the bias enter?</h2>
+  <div class="quiz" data-type="single" data-lo="LO4" data-id="check-entry-point-q1">
+    <p class="lead">A library fines late returns. Evening students are fined twice as often. A return is logged when staff scan the book; the desk closes before evening classes end, and the drop box is scanned the next morning. Where does the gap come from?</p>
+    <div class="opts">
+      <div class="opt" data-ok data-k="A">Recording: the return time is logged later than the true return for one group</div>
+      <div class="opt" data-why="Jumps to behaviour before checking the record: the data cannot yet tell late returns from late scans" data-k="B">Outcome: evening students return books later</div>
+      <div class="opt" data-why="Looks for a threshold problem when the input itself is wrong: no limit fixes a timestamp that is a day late" data-k="C">Thresholds: the loan period is too short for evening students</div>
+      <div class="opt" data-why="Blames the report: reporting one rate hides a gap, it does not create one" data-k="D">Reporting: the fine rate is reported for all students together</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The recorded time is systematically later than the true one for evening students: a measurement problem. The check compares drop-box times with scan times.</div>
+  </div>
+  <aside class="notes"><p>Answer: the first option. The second option may also be partly true; the point is the order of work. Rule out the record before explaining behaviour. Ask what audit would separate the two: a time stamp on the drop box.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-2-2" data-auto="lab" data-lab="2.2" data-label="Lab 2.2" data-n="26" data-session="2">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 2.2 · 25 min</div><h2>Four entry points</h2><p class="lead small">Mark four points where bias can enter the referral data, and measure two of them.</p><a class="nb" href="../labs/D2_2_bias_entry_points.ipynb">D2_2_bias_entry_points.ipynb</a></div><ul class="checklist"><li>Trace Awn's data from the event to the referral <span class="min">5 min</span></li><li>Mark four points where bias can enter <span class="min">8 min</span></li><li>Measure the attendance record against the roll-call audit <span class="min">6 min</span></li><li>Measure missing midterm marks by group <span class="min">4 min</span></li><li>Rank which entry point to check first <span class="min">2 min</span></li><li class="stretch">✱ Stretch: Find a fifth entry point after the referral: who takes up the support that is offered</li></ul></div>
+  <aside class="notes"><p>Task 2 is written work: push for entries specific enough to measure. Typical weak answer: "attendance may be biased". Good answer names the mechanism and the group. Tasks 3 and 4 are short joins. The lab starts from the supplied extract and the audit file; no earlier lab is needed.</p></aside>
+</section>
+
+<!-- Session 3 -->
+
+<section class="slide section" id="s3" data-auto="section" data-session="3" data-n="27">
+  <div class="kicker">Session 3</div>
+  <h1>Comparing groups</h1>
+  <ul class="bullets outcomes"><li>Compute referral, false-referral and missed-student rates by group</li><li>Report each rate and each difference with a confidence interval</li><li>Check whether a gap survives inside colleges before explaining it</li></ul>
+  <div class="sess-no">03</div>
+</section>
+
+<section class="slide" id="three-rates" data-lo="LO4" data-n="28" data-session="3">
+  <div class="kicker">What to compare</div>
+  <h2>One rule, four outcomes, three rates</h2>
+  <div class="cols cols-2 mid">
+    <table class="t">
+      <tr><th></th><th>Struggled</th><th>Did not struggle</th></tr>
+      <tr><td><b>Referred</b></td><td>caught: 1,209</td><td>false referral: 831</td></tr>
+      <tr><td><b>Not referred</b></td><td>missed: 982</td><td>left alone: 14,978</td></tr>
+    </table>
+    <ul class="bullets">
+      <li><b>Referral rate</b> = referred / all = 11.3%</li>
+      <li><b>False-referral rate</b> = false referrals / did not struggle = 5.3%</li>
+      <li><b>Missed rate</b> = missed / struggled = 44.8%</li>
+    </ul>
+  </div>
+  <div class="callout note mt"><b>Not "accuracy".</b> Awn is right for 90% of students, and misses 45% of those it exists for.</div>
+  <aside class="notes"><p>Counts from Lab 2.3, all 18,000 students. The false-referral rate is the false positive rate and the missed rate the false negative rate; use the plain names with sponsors. Accuracy here is (1,209 + 14,978) / 18,000 = 89.9%: true and useless.</p></aside>
+</section>
+
+<section class="slide" id="two-errors" data-lo="LO4" data-n="29" data-session="3">
+  <div class="kicker">Why two error rates</div>
+  <h2>The two errors hurt different students in different ways</h2>
+  <div class="cols cols-2">
+    <div class="card c-amber"><h4>A false referral</h4><p class="small mb0">A student who was fine is contacted, labelled "at risk" in a system, and takes an advisor's hour from someone else. Mild once; not mild if the label travels.</p></div>
+    <div class="card c-coral"><h4>A miss</h4><p class="small mb0">A student who is struggling hears from nobody. The rule existed for this student.</p></div>
+  </div>
+  <ul class="bullets mt">
+    <li>A group can be worse off in <b>one</b> error and not the other, so one combined number hides it</li>
+    <li>The ethics principles ask that metrics be chosen by the <b>effect of the decision</b> and the harm of each kind of error</li>
+  </ul>
+  <aside class="notes"><p>The two gaps found in the lab are in different errors: false referrals for one group, misses for another. A single fairness score would have averaged them.</p><p>Sources: AI Ethics Principles, principle 1 (fairness assessment and choice of metrics).</p></aside>
+</section>
+
+<section class="slide" id="intervals" data-lo="LO4" data-n="30" data-session="3">
+  <div class="kicker">Uncertainty</div>
+  <h2>A rate without its interval hides how many students it rests on</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Missed rate</th><th class="num">Struggling students</th><th>Rate (95% interval)</th></tr>
+      <tr><td>Saudi</td><td class="num">1,971</td><td>42.9% (40.8 to 45.1)</td></tr>
+      <tr><td>non-Saudi</td><td class="num">220</td><td>61.8% (55.2 to 68.0)</td></tr>
+      <tr><td>Registered disability</td><td class="num">61</td><td>13.1% (6.8 to 23.8)</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>The <b>denominator</b> of a missed rate is the struggling students of the group, not the group</li>
+      <li>Use the <b>Wilson interval</b>: it behaves for small counts and rates near 0 or 1</li>
+      <li>For a difference, an interval on the difference itself</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>The prerequisite covers the interval; here the point is the denominator. 429 students have a registered disability, 61 of them struggled, and 8 of those were missed: the rate of 13% spans 17 points. The lab's helper <code>U.wilson</code> is ten lines; statsmodels offers the same method.</p><p>Sources: statsmodels documentation, confidence intervals for a proportion (Wilson).</p></aside>
+</section>
+
+<section class="slide" id="rate-table" data-lo="LO4" data-n="31" data-session="3">
+  <div class="kicker">From the lab's run</div>
+  <h2>Two groups stand out, in two different errors</h2>
+  <table class="t small">
+    <tr><th>Group</th><th class="num">Students</th><th class="num">Referral rate</th><th class="num">False-referral rate</th><th class="num">Missed rate</th></tr>
+    <tr><td>Women</td><td class="num">8,218</td><td class="num">12.3%</td><td class="num">5.5%</td><td class="num">43.2%</td></tr>
+    <tr><td>Men</td><td class="num">9,782</td><td class="num">10.5%</td><td class="num">5.1%</td><td class="num">46.4%</td></tr>
+    <tr><td>Saudi</td><td class="num">16,063</td><td class="num">11.8%</td><td class="num">5.4%</td><td class="num">42.9%</td></tr>
+    <tr class="hl"><td>non-Saudi</td><td class="num">1,937</td><td class="num">7.8%</td><td class="num">3.9%</td><td class="num">61.8%</td></tr>
+    <tr><td>No registered disability</td><td class="num">17,571</td><td class="num">10.6%</td><td class="num">4.6%</td><td class="num">45.7%</td></tr>
+    <tr class="hl"><td>Registered disability</td><td class="num">429</td><td class="num">41.7%</td><td class="num">34.2%</td><td class="num">13.1%</td></tr>
+  </table>
+  <aside class="notes"><p>The rate table of Lab 2.3 without the intervals, which are on the next slide for the differences. Ask the room to find the two rows before you point. First-generation students are in the lab and show no clear difference.</p></aside>
+</section>
+
+<section class="slide" id="gaps-with-intervals" data-lo="LO4" data-n="32" data-session="3">
+  <div class="kicker">Differences</div>
+  <h2>Report every comparison you made, with its interval</h2>
+  <table class="t small">
+    <tr><th>Comparison</th><th>Rate</th><th class="num">Difference</th><th>95% interval</th><th>Reading</th></tr>
+    <tr class="hl"><td>Registered disability minus none</td><td>false referral</td><td class="num">+29.7 points</td><td>+25.0 to +34.7</td><td>clear</td></tr>
+    <tr class="hl"><td>non-Saudi minus Saudi</td><td>missed</td><td class="num">+18.9 points</td><td>+12.0 to +25.4</td><td>clear</td></tr>
+    <tr><td>Women minus men</td><td>referral</td><td class="num">+1.9 points</td><td>+0.9 to +2.8</td><td>clear, see next slide</td></tr>
+    <tr><td>First generation minus not</td><td>missed</td><td class="num">+1.1 points</td><td>-3.3 to +5.6</td><td>could be zero</td></tr>
+    <tr><td>First generation minus not</td><td>false referral</td><td class="num">+0.6 points</td><td>-0.2 to +1.4</td><td>could be zero</td></tr>
+  </table>
+  <div class="callout tip mt"><b>The two rows at the bottom belong in the report.</b> Leaving out comparisons that found nothing makes the others look selected.</div>
+  <aside class="notes"><p>Task 3 of the lab. Selective reporting has its own entry in the guide: reporting bias. With five comparisons at 95%, one "clear" result by chance would not be surprising; the two large gaps are far beyond that, the gender gap is small.</p><p>Sources: AI Bias Reference Guide, reporting bias.</p></aside>
+</section>
+
+<section class="slide" id="gap-inside-colleges" data-lo="LO4" data-n="33" data-session="3">
+  <div class="kicker">Before explaining a gap</div>
+  <h2>The gender gap vanishes inside every college</h2>
+  <div class="cols cols-21">
+    <table class="t small">
+      <tr><th>College</th><th class="num">Share of women</th><th class="num">Referral rate</th><th>Women minus men (95% interval)</th></tr>
+      <tr><td>Health Sciences</td><td class="num">76%</td><td class="num">20.0%</td><td>-1.2 points (-5.1 to +2.5)</td></tr>
+      <tr><td>Science</td><td class="num">59%</td><td class="num">14.4%</td><td>-1.1 points (-3.9 to +1.6)</td></tr>
+      <tr><td>Arts and Humanities</td><td class="num">50%</td><td class="num">10.6%</td><td>+0.3 points (-1.9 to +2.5)</td></tr>
+      <tr><td>Business</td><td class="num">39%</td><td class="num">7.8%</td><td>-0.8 points (-2.5 to +1.0)</td></tr>
+      <tr><td>Computing</td><td class="num">37%</td><td class="num">9.0%</td><td>0.0 points (-2.3 to +2.4)</td></tr>
+      <tr><td>Engineering</td><td class="num">25%</td><td class="num">9.2%</td><td>-0.3 points (-2.3 to +2.0)</td></tr>
+    </table>
+    <div class="callout warn"><b>Overall: +1.9 points.</b> Women study more often in the colleges where everyone is referred more. The rule treats women and men in the same college alike.</div>
+  </div>
+  <aside class="notes"><p>Task 4 of the lab. An overall number that is true and misleading. The habit to build: before explaining a gap, check it inside the obvious strata. The reverse also happens, a gap that appears only inside strata, which is why you look both ways.</p></aside>
+</section>
+
+<section class="slide" id="tools-for-groups" data-lo="LO4" data-n="34" data-session="3">
+  <div class="kicker">Tools</div>
+  <h2>A library computes the rates; you choose the comparisons</h2>
+  <div class="cols cols-2">
+    <pre class="code s"><code class="language-python">g = df.groupby(<span class="hljs-string">&quot;nationality_group&quot;</span>)
+missed = g.apply(<span class="hljs-keyword">lambda</span> d:
+    (~d.referred &amp; d.struggled).<span class="hljs-built_in">sum</span>()
+    / d.struggled.<span class="hljs-built_in">sum</span>())</code></pre>
+    <ul class="bullets">
+      <li><b>Grouped metrics in pandas or SQL:</b> a group-by and three ratios</li>
+      <li><b>A fairness library</b> (Fairlearn's <code>MetricFrame</code>): the same table in one call, for many metrics</li>
+      <li>Neither chooses the groups, the strata, the intervals or the question</li>
+    </ul>
+  </div>
+  <div class="callout note mt"><b>Small groups twice.</b> A rate on 8 students is too uncertain to interpret and too small to publish. Both rules apply.</div>
+  <aside class="notes"><p>The lab uses pandas only, so that every step is visible. Fairlearn's documentation calls its false positive and false negative rates by those names. For intersections (the lab's stretch) the counts shrink fast: check the release threshold before putting any intersection in a report.</p><p>Sources: Fairlearn documentation, common fairness metrics.</p></aside>
+</section>
+
+<section class="slide" id="check-compare" data-lo="LO4" data-n="35" data-session="3">
+  <div class="kicker">Checkpoint</div>
+  <h2>What can the analyst claim?</h2>
+  <div class="quiz" data-type="single" data-lo="LO4" data-id="check-compare-q1">
+    <p class="lead">Awn missed 8 of 61 struggling students with a registered disability (13%, interval 7% to 24%) and 974 of 2,130 others (46%, interval 44% to 48%). Which sentence is supported?</p>
+    <div class="opts">
+      <div class="opt" data-why="Reads a low miss rate as good performance without looking at the other error: this group has a false-referral rate of 34%" data-k="A">The rule works better for students with a registered disability</div>
+      <div class="opt" data-why="Treats an interval on 61 students as too weak to say anything: the two intervals do not come near each other" data-k="B">Nothing can be said: 61 students are too few</div>
+      <div class="opt" data-ok data-k="C">Fewer of this group were missed, by an uncertain margin; read the false-referral rate beside it</div>
+      <div class="opt" data-why="Turns a difference in one error rate into a verdict on fairness, which no single rate can give" data-k="D">The rule is biased in favour of students with a registered disability</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The difference is clear, its size uncertain. A rule that refers 42% of a group misses few of them; the cost is in false referrals.</div>
+  </div>
+  <aside class="notes"><p>Answer: the third option. This checkpoint sets up session 4: the low miss rate and the high false-referral rate have one cause, a record that makes most of the group look absent.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-2-3" data-auto="lab" data-lab="2.3" data-label="Lab 2.3" data-n="36" data-session="3">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 2.3 · 25 min</div><h2>Rates with intervals</h2><p class="lead small">Compare referral and error rates by group with intervals.</p><a class="nb" href="../labs/D2_3_group_rates.ipynb">D2_3_group_rates.ipynb</a></div><ul class="checklist"><li>Build the four outcome counts by group <span class="min">5 min</span></li><li>Compute the three rates with Wilson intervals <span class="min">8 min</span></li><li>Compute the differences with their intervals <span class="min">5 min</span></li><li>Check the gender gap inside each college <span class="min">5 min</span></li><li>Write the result in one sentence per gap <span class="min">2 min</span></li><li class="stretch">✱ Stretch: Compute the rates for one intersection of two groups and say what the interval allows you to claim</li></ul></div>
+  <aside class="notes"><p>Watch the denominators in task 2: the commonest error is dividing misses by the size of the group. Task 4 produces the table of the previous slides; give it its five minutes. The lab starts from the supplied extract; no earlier lab is needed.</p></aside>
+</section>
+
+<!-- Session 4 -->
+
+<section class="slide section" id="s4" data-auto="section" data-session="4" data-n="37">
+  <div class="kicker">Session 4</div>
+  <h1>Naming the bias</h1>
+  <ul class="bullets outcomes"><li>Match an observed gap to candidate bias types in the AI Bias Reference Guide</li><li>Design the check that separates two candidate causes</li><li>State what a fairness metric cannot settle and who decides the rest</li></ul>
+  <div class="sess-no">04</div>
+</section>
+
+<section class="slide" id="gap-is-not-cause" data-lo="LO4" data-n="38" data-session="4">
+  <div class="kicker">The idea of this session</div>
+  <h2>A gap is an observation; a bias type is an explanation</h2>
+  <div class="flow">
+    <div class="step c-teal"><b>1 · Observe</b>a gap with its interval</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>2 · Name two candidates</b>that would need different fixes</div>
+    <div class="arrow">→</div>
+    <div class="step c-purple"><b>3 · Design a check</b>on which they disagree</div>
+    <div class="arrow">→</div>
+    <div class="step c-coral"><b>4 · Run it</b>and say what stays open</div>
+  </div>
+  <div class="callout warn mt"><b>What goes wrong.</b> Naming the first bias type that fits and stopping. One gap usually fits several names, and each name points to a different repair.</div>
+  <aside class="notes"><p>This is the evidence the course outcome asks for: two possible bias types and the check that separates them. The discipline is the same as differential diagnosis: a name is useful when it changes what you do next.</p></aside>
+</section>
+
+<section class="slide" id="the-guide" data-lo="LO4" data-n="39" data-session="4">
+  <div class="kicker">The national reference</div>
+  <h2>The AI Bias Reference Guide gives each type a definition, an example and a mitigation</h2>
+  <table class="t small">
+    <tr><th>Type</th><th>In one line (our wording)</th></tr>
+    <tr><td>Measurement bias</td><td>Recorded values are systematically too high or too low</td></tr>
+    <tr><td>Coverage bias</td><td>The data does not adequately represent part of the population</td></tr>
+    <tr><td>Aggregation bias</td><td>Groups that differ are combined; the result fits the largest</td></tr>
+    <tr><td>Historical bias</td><td>Past assumptions or conditions no longer fit the present</td></tr>
+    <tr><td>Feedback loop bias</td><td>Outputs return as inputs and magnify an early skew</td></tr>
+    <tr><td>Automation bias</td><td>People favour a system's output over other evidence</td></tr>
+  </table>
+  <aside class="notes"><p>Six of the ten entries the lab offers. The one-line versions are ours; before a name goes into a report, read the guide's own entry. The guide is alphabetical with more than a hundred entries, first edition May 2026.</p><p>Sources: AI Bias Reference Guide (entries named on the slide).</p></aside>
+</section>
+
+<section class="slide" id="gap-a-candidates" data-lo="LO4" data-n="40" data-session="4">
+  <div class="kicker">Gap A · false referrals, registered disability</div>
+  <h2>Is the record wrong, or does one limit not fit?</h2>
+  <div class="cols cols-2">
+    <div class="card c-coral"><h4>Measurement bias</h4><p class="small mb0">Attendance is <b>recorded</b> too low for these students. Prediction: the record is far below the roll call, and the gap is confined to students with a remote accommodation. Fix the record.</p></div>
+    <div class="card c-purple"><h4>Aggregation bias</h4><p class="small mb0">Attendance is recorded correctly and one limit of 75% does not fit this group. Prediction: record matches roll call, and the gap covers all students with a registered disability. Fix the rule.</p></div>
+  </div>
+  <div class="callout tip mt"><b>The check.</b> Roll call against record, and the false-referral rate with and without a remote accommodation.</div>
+  <aside class="notes"><p>Ask the room for the predictions before showing the next slide. A check is only worth running if the two candidates predict different results.</p></aside>
+</section>
+
+<section class="slide" id="gap-a-result" data-lo="LO4" data-n="41" data-session="4">
+  <div class="kicker">Gap A · the check's result</div>
+  <h2>The gap is confined to students whose attendance is under-recorded</h2>
+  <div class="cols cols-2 mid">
+    <div class="bars">
+      <div class="row"><span>Registered, remote accommodation</span><div class="bar c-coral" style="--w:100%"></div><span class="val">59.4%</span></div>
+      <div class="row"><span>Registered, no remote accommodation</span><div class="bar c-teal" style="--w:6%"></div><span class="val">3.6%</span></div>
+      <div class="row"><span>No registered disability</span><div class="bar c-teal" style="--w:8%"></div><span class="val">4.6%</span></div>
+    </div>
+    <ul class="bullets">
+      <li>False-referral rates, Lab 2.4</li>
+      <li>Intervals: 52.5 to 65.9; 1.7 to 7.7; 4.2 to 4.9</li>
+      <li>The record is 16.8 points below the roll call for the first group</li>
+      <li><b>Measurement bias.</b> Fix the feed of remote attendance</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>What stays open: the 187 students with a registered disability and no remote accommodation are a small group, and their interval is wide enough to hide a moderate gap. Say it; do not round it away.</p></aside>
+</section>
+
+<section class="slide" id="gap-b-result" data-lo="LO4" data-n="42" data-session="4">
+  <div class="kicker">Gap B · missed students, non-Saudi</div>
+  <h2>Compare like with like and the gap moves to where the marks are missing</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Missed rate</th><th>Saudi</th><th>non-Saudi</th></tr>
+      <tr><td>Mark present</td><td>41.6% (39.4 to 43.9)</td><td>45.9% (37.6 to 54.3)</td></tr>
+      <tr class="hl"><td>Mark missing</td><td>76.7% (65.8 to 84.9)</td><td>86.2% (77.4 to 91.9)</td></tr>
+    </table>
+    <ul class="bullets">
+      <li><b>Candidates:</b> coverage bias (no marks) or aggregation bias (limits that do not fit)</li>
+      <li>With a mark, both groups are missed at similar rates</li>
+      <li>Without one, both are missed three times in four or more</li>
+      <li><b>Coverage bias.</b> Bring the bridging programme's marks into the registry</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>Results of Lab 2.4. Saudi bridging-year entrants are missed too: the cause is the route. What stays open: whether the limits fit bridging-year entrants once their marks exist cannot be known before the marks exist.</p></aside>
+</section>
+
+<section class="slide" id="name-decides-fix" data-lo="LO4" data-n="43" data-session="4">
+  <div class="kicker">Why the name matters</div>
+  <h2>The name decides the fix, and a wrong name produces a harmful one</h2>
+  <table class="t small">
+    <tr><th>If you had concluded</th><th>You would have</th><th>And then</th></tr>
+    <tr><td>"The limit does not fit students with a disability"</td><td>Lowered their attendance limit</td><td>Missed those who truly stop attending, and left the record wrong</td></tr>
+    <tr><td>"The rule does not fit non-Saudi students"</td><td>Set separate limits by nationality</td><td>Treated students by a protected characteristic, and still missed Saudi bridging-year entrants</td></tr>
+    <tr class="hl"><td>Measurement and coverage</td><td>Repaired two data feeds</td><td>Fixed it for everyone the feeds had failed</td></tr>
+  </table>
+  <aside class="notes"><p>This is the argument for the checks. Both wrong fixes sound reasonable and would have passed a meeting. Neither would have survived the split tables.</p></aside>
+</section>
+
+<section class="slide" id="what-metrics-cannot-settle" data-lo="LO4" data-n="44" data-session="4">
+  <div class="kicker">The limit of the numbers</div>
+  <h2>A fairness metric cannot tell you which fairness to want</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>When groups differ in how often the outcome occurs, a rule <b>cannot</b> equalise every error rate and every hit rate at once</li>
+      <li>Lowering false referrals for a group raises its misses, or the reverse</li>
+      <li>How large a remaining gap is acceptable is not a statistical question</li>
+    </ul>
+    <div class="card c-teal"><h4>Who decides</h4><p class="small mb0">The director of the unit owns the rule; the data protection officer owns the impact on students. You bring the rates, the intervals, the cause you could establish and what stays open. They choose.</p></div>
+  </div>
+  <aside class="notes"><p>The impossibility results are for risk scores and classifiers; the trade between the two errors applies to any rule with a threshold. In the case the outcome rates do differ a little: 14.2% of students with a registered disability struggled against 12.1% of others. The lab's stretch makes the trade visible.</p><p>Sources: Kleinberg, Mullainathan and Raghavan, Inherent Trade-Offs in the Fair Determination of Risk Scores; Chouldechova, Fair prediction with disparate impact.</p></aside>
+</section>
+
+<section class="slide" id="check-name-bias" data-lo="LO4" data-n="45" data-session="4">
+  <div class="kicker">Checkpoint</div>
+  <h2>Which check separates the two candidates?</h2>
+  <div class="quiz" data-type="single" data-lo="LO4" data-id="check-name-bias-q1">
+    <p class="lead">A training centre flags trainees with fewer than three logged sessions a week. One branch is flagged three times as often. Either its sessions are logged too low (measurement), or one limit does not fit a branch with fewer, longer sessions (aggregation). Which check separates the two?</p>
+    <div class="opts">
+      <div class="opt" data-why="Repeats the observation with more precision: a tighter interval on the gap says nothing about its cause" data-k="A">Recompute the flag rates with confidence intervals</div>
+      <div class="opt" data-ok data-k="B">Compare logged sessions with the branch's attendance sheets</div>
+      <div class="opt" data-why="Changes the rule before knowing the cause: it would hide the gap whichever candidate is true" data-k="C">Lower the limit for that branch and see whether the gap closes</div>
+      <div class="opt" data-why="Asks an opinion where a comparison is available: staff views do not distinguish a wrong record from a wrong limit" data-k="D">Ask the branch's trainers whether the rule seems fair</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The candidates disagree about whether the record is right. Only comparing the record with the truth can tell them apart.</div>
+  </div>
+  <aside class="notes"><p>Answer: the second option. The third option is the tempting one for people who like to act: it changes the rule before the cause is known, and it would make the gap disappear under either explanation.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-2-4" data-auto="lab" data-lab="2.4" data-label="Lab 2.4" data-n="46" data-session="4">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 2.4 · 25 min</div><h2>Two gaps, two names</h2><p class="lead small">Match two observed gaps to bias types in the national guide and run the check that separates them.</p><a class="nb" href="../labs/D2_4_name_the_bias.ipynb">D2_4_name_the_bias.ipynb</a></div><ul class="checklist"><li>Read the two gaps and their intervals <span class="min">3 min</span></li><li>Pick two candidate bias types for each gap <span class="min">6 min</span></li><li>Design the check that separates them <span class="min">6 min</span></li><li>Run the two checks <span class="min">7 min</span></li><li>Record the conclusion and what stays open <span class="min">3 min</span></li><li class="stretch">✱ Stretch: Change the rule to equalise false referrals and report what happens to missed students</li></ul></div>
+  <aside class="notes"><p>The lab loads the gaps from a supplied file, <code>labs/data/reference/lab23_gaps.json</code>, so nobody depends on finishing Lab 2.3. Task 3 is written work and the heart of the lab: insist on two different predictions before any code runs. The lab writes its findings to <code>labs/artifacts/</code>.</p></aside>
+</section>
+
+<section class="slide" id="wrap-up" data-lo="LO3 LO4" data-n="47" data-session="4">
+  <div class="kicker">Day 2</div>
+  <h2>Three things to keep</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>Attack your own table</h4><p class="small mb0">Small cells, then totals, then earlier releases. When suppression eats the table, redesign it.</p></div>
+    <div class="card c-cyan"><h4>Rates by group, with intervals</h4><p class="small mb0">Referral, false referral, missed. Every comparison reported, each inside the strata that matter.</p></div>
+    <div class="card c-coral"><h4>Two candidates and a check</h4><p class="small mb0">A gap is not a cause. The name decides the fix, so earn the name.</p></div>
+  </div>
+  <aside class="notes"><p>Ask: which of today's findings would the director of the unit most want to hear, and which would he least want to hear? Both go into the documents of tomorrow.</p></aside>
+</section>
+
+<section class="slide dark" id="next" data-lo="LO5 LO6" data-n="48" data-session="4">
+  <div class="kicker">Tomorrow</div>
+  <h1>Day 3: professional conduct</h1>
+  <p class="lead">The work so far lives in your head and your notebook. Tomorrow it becomes something others can check, and you hold three conversations.</p>
+  <ul class="bullets">
+    <li>You will role-play in threes: analyst, sponsor, observer</li>
+    <li>No AI assistant in the role-plays</li>
+  </ul>
+  <aside class="notes"><p>Form the groups of three before people leave, so the first role-play starts on time. Mix backgrounds within each group. Day 3 starts from supplied files.</p></aside>
+</section>
+</div>
+<script type="application/json" id="academy-data">{"v":1,"engine":"1.0.0","build":{"at":"2026-11-15T10:43:05Z","version":"2027.1.0","commit":"e8058f5"},"course":{"id":"ds-207","code":"DS-207","title":"Responsible Data Practice and Conduct in Analytical Work","track":"data-science","lang":"en","dir":"ltr","url":"https://sdaiaacademy.github.io/ds-207/","repo":"SDAIAAcademy/ds-207","home":"../index.html"},"deck":{"id":"day2","kind":"day","day":2,"label":"Day 2","title":"Fair and safe outputs","prev":"day1.html","next":"day3.html","md":"day2.md","alt":{}},"sessions":[{"n":1,"label":"Session 1","title":"Aggregate release and small cells","slide":"s1","outcomes":["Explain how a small cell, a total or a second release singles out a student","Apply a threshold rule with complementary suppression and log each suppressed cell","Test a release for recovery by subtraction and by differencing before it leaves"],"minutes":50,"lab":{"id":"2.1","title":"Suppress, then attack","minutes":25,"href":"../labs/D2_1_small_cells.ipynb"}},{"n":2,"label":"Session 2","title":"Where bias enters","slide":"s2","outcomes":["Trace a rule's data from the event to the decision and mark where bias can enter","Distinguish a recording problem, a coverage problem, a label problem and a use problem","Measure one entry point with data instead of arguing about it"],"minutes":50,"lab":{"id":"2.2","title":"Four entry points","minutes":25,"href":"../labs/D2_2_bias_entry_points.ipynb"}},{"n":3,"label":"Session 3","title":"Comparing groups","slide":"s3","outcomes":["Compute referral, false-referral and missed-student rates by group","Report each rate and each difference with a confidence interval","Check whether a gap survives inside colleges before explaining it"],"minutes":50,"lab":{"id":"2.3","title":"Rates with intervals","minutes":25,"href":"../labs/D2_3_group_rates.ipynb"}},{"n":4,"label":"Session 4","title":"Naming the bias","slide":"s4","outcomes":["Match an observed gap to candidate bias types in the AI Bias Reference Guide","Design the check that separates two candidate causes","State what a fairness metric cannot settle and who decides the rest"],"minutes":50,"lab":{"id":"2.4","title":"Two gaps, two names","minutes":25,"href":"../labs/D2_4_name_the_bias.ipynb"}}],"slides":[{"id":"title","n":1,"title":"Fair and safe outputs","kind":"title","session":0,"hash":"6fdbd36e","md":"#### [day2#title] Fair and safe outputs\n\n*SDAIA Academy · Responsible Data Practice and Conduct in Analytical Work*\n\nDay 2: Release tables that single nobody out, and compare groups with honest uncertainty\n\nData Science Track · 3 teaching days + capstone day · 4 sessions · 4 labs · DS-207","notes":"Yesterday was about what may be done with the data. Today is about what comes out of it: tables that must not point at a student, and comparisons that must not mislead. Every lab today starts from supplied files, so nobody is blocked by yesterday.","minutes":null,"lo":[]},{"id":"agenda","n":2,"title":"Fair and safe outputs","kind":"content","session":0,"hash":"6b922b63","md":"#### [day2#agenda] Fair and safe outputs\n\n*Today*\n\n- **Session 1 · Aggregate release and small cells**: An aggregate table can still point at one student\n- **Session 2 · Where bias enters**: Bias enters in recording, coverage, labels and use, before any metric\n- **Session 3 · Comparing groups**: Referral and error rates by group, each with its interval\n- **Session 4 · Naming the bias**: Two candidate bias types for a gap, and the check that separates them","notes":"","minutes":null,"lo":[]},{"id":"review-day1","n":3,"title":"Which statement about the pseudonymised extract is right?","kind":"quiz","session":0,"hash":"9d79718f","md":"#### [day2#review-day1] Which statement about the pseudonymised extract is right?\n\n*Review of Day 1*\n\n**Question:** The analysis extract has 13 columns per student under a project pseudonym, with no names or identity numbers. A colleague wants to paste 500 rows into a hosted AI assistant to get plotting code.\n\n- A. Fine: without names the rows are anonymous\n- B. Not allowed: the extract is personal data classified Restricted; describe the columns and ask for code\n- C. Fine if the assistant's history is switched off\n- D. Not allowed: student data is classified Secret","notes":"Answer: the second option. It joins three ideas of Day 1: pseudonymised is not anonymised, the level follows the impact, and the rule for AI tools. If the room is unsure, give two minutes to the Day 1 wrap-up before going on.","minutes":null,"lo":["LO1","LO2"]},{"id":"approved-extract","n":4,"title":"The group comparison is a separate decision, already approved and logged","kind":"content","session":0,"hash":"32c56aea","md":"#### [day2#approved-extract] The group comparison is a separate decision, already approved and logged\n\n*Where today starts*\n\n- Yesterday's extract dropped gender, nationality and disability status: its purpose did not need them\n- Checking the rule's errors by group **does** need them\n- Disability status is health data, so the data protection officer decided\n\n- **Log entry L002, approved by Shatha Al-Omair.** Gender, nationality group, disability status and remote accommodation are added to the extract for the group comparison. It runs only on the pseudonymised extract inside the unit and is reported in aggregate.","notes":"The file is `labs/data/analysis_extract.csv`, 18,000 rows and 13 columns. Nationality has been coarsened to Saudi and non-Saudi. Make the point that measuring fairness needs the sensitive fields; refusing to hold them does not make a rule fair, it makes its errors invisible. The approval is in `labs/data/analysis_log_seed.json`, which Day 3 extends.","minutes":null,"lo":["LO4","LO5"]},{"id":"s1","n":5,"title":"Aggregate release and small cells","kind":"section","session":1,"hash":"4abb0270","md":"#### [day2#s1] Aggregate release and small cells\n\n*Session 1*\n\n- Explain how a small cell, a total or a second release singles out a student\n- Apply a threshold rule with complementary suppression and log each suppressed cell\n- Test a release for recovery by subtraction and by differencing before it leaves","notes":"","minutes":null,"lo":["LO3"]},{"id":"aggregates-disclose","n":6,"title":"An aggregate table can point at one student in three ways","kind":"content","session":1,"hash":"32774438","md":"#### [day2#aggregates-disclose] An aggregate table can point at one student in three ways\n\n*The idea of this session*\n\n- **A small cell.** A count of 1 in \"Computing, non-Saudi, registered disability\" is a person, to anyone who knows that college.\n- **A total.** Hide the 1 and print the row total: the reader subtracts and has it back.\n- **A second table.** Two tables that each look safe differ by exactly the students one of them leaves out.\n\n> **Singling out** means a reader can tell that a cell is one particular person, and so learns what the table says about that person.","notes":"The three ways are the three attacks of Lab 2.1. Ask who the attacker is: not a hacker, a classmate, a lecturer, a journalist with the earlier report. The US Department of Education's guidance uses a \"reasonable person in the school community\" as the standard.\n\nSources: Privacy Technical Assistance Center, Frequently Asked Questions: Disclosure Avoidance.","minutes":null,"lo":["LO3"]},{"id":"threshold-rule","n":7,"title":"A threshold rule: no count from 1 to 9 leaves the unit","kind":"content","session":1,"hash":"e159b5e0","md":"#### [day2#threshold-rule] A threshold rule: no count from 1 to 9 leaves the unit\n\n*The rule*\n\n- The unit's release policy sets **10**. It is the University's own choice\n- **No national instrument sets a number.** The national guideline requires that aggregated data cannot be used to identify a person\n- Practice elsewhere: 3 as an absolute floor, 5 or 10 as common minimums\n\n- **Choosing a threshold.** Higher when the attribute is sensitive (health), when the population is small and people know each other (a college), and when more tables on the same population will follow.","notes":"Be exact about what is law and what is house policy: the PDPL and its guideline give the goal, the number is the unit's. The 3, 5 and 10 come from the US Department of Education's guidance for education data and are cited as practice, not as a Saudi rule. The policy text is `labs/data/release_policy.md`.\n\nSources: Personal Data Destruction, Anonymization and Pseudonymisation Guideline; Privacy Technical Assistance Center, Frequently Asked Questions: Disclosure Avoidance.","minutes":null,"lo":["LO3"]},{"id":"draft-table","n":8,"title":"The draft: students with a registered disability, by college and nationality group","kind":"content","session":1,"hash":"69309d40","md":"#### [day2#draft-table] The draft: students with a registered disability, by college and nationality group\n\n*From the lab's run*\n\n| College | Saudi | non-Saudi | Total |\n| --- | --- | --- | --- |\n| Arts and Humanities | 65 | 8 | 73 |\n| Business | 92 | 8 | 100 |\n| Computing | 54 | 1 | 55 |\n| Engineering | 81 | 12 | 93 |\n| Health Sciences | 51 | 3 | 54 |\n| Science | 50 | 4 | 54 |\n\n**5** cells from 1 to 9\n\n> **One student.** The cell of 1 states a health fact about a person a whole college can name.","notes":"This is table T3 of Lab 2.1, computed from the synthetic registry. Ask the room to find the problem before you highlight it. Then ask: is 8 a problem? Under the unit's rule, yes.","minutes":null,"lo":["LO3"]},{"id":"subtraction-attack","n":9,"title":"Suppress the small cells, keep the totals, and all five come back","kind":"content","session":1,"hash":"4e79a702","md":"#### [day2#subtraction-attack] Suppress the small cells, keep the totals, and all five come back\n\n*Attack one*\n\n| College | Saudi | non-Saudi | Total |\n| --- | --- | --- | --- |\n| Arts and Humanities | 65 | c | 73 |\n| Business | 92 | c | 100 |\n| Computing | 54 | c | 55 |\n| Engineering | 81 | 12 | 93 |\n| Health Sciences | 51 | c | 54 |\n| Science | 50 | c | 54 |\n\n```python\n55 - 54   # Computing, non-Saudi: 1\n54 - 51   # Health Sciences: 3\n```\n\n> **What changed.** How the table looks. Not what it reveals.","notes":"Demonstration: run task 3 of the lab. The function recovers every cell that is the only suppressed one in its row or column. This is the most common real mistake in published tables: a \"c\" beside an exact total.","minutes":null,"lo":["LO3"]},{"id":"complementary","n":10,"title":"Complementary suppression protects the cell and can eat the table","kind":"content","session":1,"hash":"91a94c25","md":"#### [day2#complementary] Complementary suppression protects the cell and can eat the table\n\n*The repair, and its price*\n\n- Where one hidden cell can be subtracted back, hide a **second** cell in the same row and column\n- Repeat until no row or column has exactly one hidden cell\n- In the draft: **10 of 12 cells** end up hidden, including counts of 50 to 92 nobody needed to hide\n\n- **Redesign beats repair.** Two one-way tables: by college (54 to 100) and by nationality group (393 and 36). Every cell is 10 or more, no suppression, and almost the same message.","notes":"Numbers from task 4 of the lab. The lesson analysts resist: when suppression removes most of a table, the breakdown is too fine for the population. Coarsen the categories or split the table.\n\nSources: Privacy Technical Assistance Center, Frequently Asked Questions: Disclosure Avoidance (complementary suppression).","minutes":null,"lo":["LO3"]},{"id":"differencing","n":11,"title":"Two safe tables can differ by one student","kind":"content","session":1,"hash":"f099711c","md":"#### [day2#differencing] Two safe tables can differ by one student\n\n*Attack two*\n\n| Registered disability | Published last month, all | Asked for now, Saudi only | Difference |\n| --- | --- | --- | --- |\n| Arts and Humanities | 73 | 65 | 8 |\n| Business | 100 | 92 | 8 |\n| Computing | 55 | 54 | 1 |\n| Health Sciences | 54 | 51 | 3 |\n| Science | 54 | 50 | 4 |\n\n- Each table passes the threshold alone: every count is 50 or more\n- The difference is the group the second table left out\n- **The check:** before a release, compare it with every earlier table on the same population","notes":"Task 5 of the lab. The decision recorded there: the Saudi-only table by college is not released; the University-level split by nationality group is offered. Differencing needs a register of releases: you cannot check against a table nobody remembers publishing.","minutes":null,"lo":["LO3"]},{"id":"other-methods","n":12,"title":"Suppression is one of four tools","kind":"content","session":1,"hash":"05edf2c8","md":"#### [day2#other-methods] Suppression is one of four tools\n\n*Beyond suppression*\n\n| Method | What it does | What the reader loses |\n| --- | --- | --- |\n| Coarsen the categories | Merge colleges, or nationalities into two groups | Detail; usually the cheapest loss |\n| Suppress | Hide small cells and their complements | Cells, sometimes most of them |\n| Round or band | Counts to a base of 5; \"fewer than 10\" | Exactness of every cell |\n| Perturb | Small random changes to counts | Trust that a number is the number |\n\n> **Later.** Noise with a mathematical guarantee (differential privacy) and measured re-identification risk are in DS-309.","notes":"The lab's stretch is rounding. For public accountability tables, perturbation is often judged unsuitable because readers can no longer trust a figure. Whatever the method, published exact totals reopen the subtraction attack.\n\nSources: Privacy Technical Assistance Center, Frequently Asked Questions: Disclosure Avoidance (suppression, blurring, perturbation).","minutes":null,"lo":["LO3"]},{"id":"zeros-and-hundreds","n":13,"title":"A cell of zero or of everyone can disclose too","kind":"content","session":1,"hash":"7e62dafb","md":"#### [day2#zeros-and-hundreds] A cell of zero or of everyone can disclose too\n\n*Not only small counts*\n\n- **Everyone in a group.** \"All 14 students of programme X were referred.\" No small cell, and you now know the referral status of each of the 14.\n- **Nobody in a group.** \"0 of 14 were not referred\" is the same sentence. A zero that tells you about everyone else is not harmless.\n\n- Check **rates of 0% and 100%** in small groups as well as counts\n- The unit's rule covers counts of 1 to 9; this case needs your judgement and a line in the log","notes":"This is group disclosure: nobody is singled out, yet everyone in the group is described. The illustration of 14 students is an example, not a number from the data. Ask where it could occur in the Awn tables: a small programme where every student was referred.\n\nSources: Privacy Technical Assistance Center, Frequently Asked Questions: Disclosure Avoidance.","minutes":null,"lo":["LO3"]},{"id":"suppression-log","n":14,"title":"Every suppressed cell has a line in the log, and every release a line in the register","kind":"content","session":1,"hash":"6f8edd95","md":"#### [day2#suppression-log] Every suppressed cell has a line in the log, and every release a line in the register\n\n*The evidence*\n\n| Table | Row | Column | Kind | Reason |\n| --- | --- | --- | --- | --- |\n| T3 | Computing | non-Saudi | primary | count of 1 to 9 |\n| T3 | Computing | Saudi | complementary | protects a suppressed cell from subtraction |\n| Saudi-only by college | all | all | not released | differencing against the release of 2026-10 reveals counts of 1 to 9 |\n\n> **Second person.** The unit's policy: a table with a suppressed cell is checked by someone who did not make it, before it is proposed as Public.","notes":"Three of the eleven lines the lab writes. The log is the evidence for the course outcome and a file of the capstone pack. The register of releases (population, breakdown, date, version) is what makes next month's differencing check possible.","minutes":null,"lo":["LO3","LO5"]},{"id":"check-small-cells","n":15,"title":"Is this table ready for release?","kind":"quiz","session":1,"hash":"f087cfa6","md":"#### [day2#check-small-cells] Is this table ready for release?\n\n*Checkpoint*\n\n**Question:** A table of referred students by college and level has one cell of 4. The analyst replaces it with \"c\" and keeps the row and column totals. The threshold is 10. What is the state of the table?\n\n- A. Ready: the only small cell is suppressed\n- B. Not ready: all totals must be removed from every table\n- C. Ready, provided the cell is shown as \"fewer than 10\"\n- D. Not ready: the 4 is recovered from its row total until a second cell in that row and column is suppressed","notes":"Answer: the fourth option. The third option is worth a minute: \"fewer than 10\" beside a row total that leaves exactly 4 unexplained is the same leak with a different label.","minutes":null,"lo":["LO3"]},{"id":"lab-2-1","n":16,"title":"Suppress, then attack","kind":"lab","session":1,"hash":"9acd6016","md":"#### [day2#lab-2-1] Suppress, then attack\n\nLab 2.1 · 25 min\n\nApply a threshold rule and test for singling out by differencing.\n\n[D2_1_small_cells.ipynb](https://sdaiaacademy.github.io/ds-207/labs/D2_1_small_cells.ipynb)\n\n- [ ] Count the cells under the threshold in three draft tables (4 min)\n- [ ] Suppress them and log each cell with its reason (6 min)\n- [ ] Recover a suppressed cell from the totals (4 min)\n- [ ] Add complementary suppression and test again (6 min)\n- [ ] Difference the table against an earlier release (5 min)\n- [ ] ✱ Stretch: Round the counts to a base of 5 in place of suppression and compare what a reader loses","notes":"Task 4 is the hard one; participants who are stuck on the loop can read the solution's function and spend their time on the \"look at\" that follows. Typical error: forgetting the column direction. The lab writes the suppression log to `labs/artifacts/`. It starts from the registry and last month's published table; no earlier lab is needed.","minutes":null,"lo":[]},{"id":"s2","n":17,"title":"Where bias enters","kind":"section","session":2,"hash":"7fe70d5f","md":"#### [day2#s2] Where bias enters\n\n*Session 2*\n\n- Trace a rule's data from the event to the decision and mark where bias can enter\n- Distinguish a recording problem, a coverage problem, a label problem and a use problem\n- Measure one entry point with data instead of arguing about it","notes":"","minutes":null,"lo":["LO4"]},{"id":"bias-is-systematic","n":18,"title":"Bias is a systematic error that falls on some groups more than others","kind":"content","session":2,"hash":"e14903a2","md":"#### [day2#bias-is-systematic] Bias is a systematic error that falls on some groups more than others\n\n*A working definition*\n\n- It needs **no intent**: a process that records or covers people unequally is enough\n- It is **not noise**: more data of the same kind does not remove it\n- It enters **before** any metric is computed\n\n- **The national frame.** Fairness is the first of SDAIA's AI Ethics Principles: act to eliminate bias in the data, the design and the use of a system. The AI Bias Reference Guide names more than a hundred types, with how each arises and how to mitigate it.","notes":"Awn is a two-line rule, not a trained model. Everything the guide says about data applies to it all the same: the rule's inputs are recorded data and its thresholds were set on historical data.\n\nSources: AI Ethics Principles, principle 1 (fairness); AI Bias Reference Guide, introduction.","minutes":null,"lo":["LO4"]},{"id":"six-stages","n":19,"title":"Awn's data passes six stages, and each is an entry point","kind":"content","session":2,"hash":"219be9b6","md":"#### [day2#six-stages] Awn's data passes six stages, and each is an entry point\n\n*Walk the path*\n\n- **1 · Recording.** A card read at the door of a teaching room\n- **2 · Marks.** Midterm marks entered in the registry\n- **3 · Thresholds.** 75% and 2.5, set in 2023 on two colleges\n- **4 · Outcome label.** \"Struggled\": a term average below 2.5\n- **5 · Use.** An advisor contacts the referred student\n- **6 · Reporting.** One rate for the whole University\n\n> **The question at each stage.** For whom could this step go wrong more often than for others?","notes":"The stages are in `labs/data/awn_pipeline.json`, with one sentence each. The framework behind the walk is the life-cycle view of sources of harm: historical, representation, measurement, aggregation, evaluation and deployment.\n\nSources: Suresh and Guttag, A Framework for Understanding Sources of Harm throughout the Machine Learning Life Cycle.","minutes":null,"lo":["LO4"]},{"id":"recording-gap","n":20,"title":"The card record is 17 points too low for students who attend remotely","kind":"content","session":2,"hash":"2b213d9d","md":"#### [day2#recording-gap] The card record is 17 points too low for students who attend remotely\n\n*Entry point 1, measured*\n\n| Item | Value |\n| --- | --- |\n| Remote accommodation | 16.8 points |\n| Other students | -0.1 points |\n\n- Roll call minus card record, from an audit of 1,600 students\n- Of 300 students with a remote accommodation, **191** are below the 75% limit on the card record\n- On the roll call, **14** are","notes":"Task 3 of Lab 2.2. A remote session leaves no card reading. 242 of the 300 students with a remote accommodation have a registered disability, which is why the effect will show up tomorrow morning under \"disability\" in the group table. The guide's name for a record that is systematically too low is measurement bias.\n\nSources: AI Bias Reference Guide, measurement bias.","minutes":null,"lo":["LO4"]},{"id":"coverage-gap","n":21,"title":"Over a third of non-Saudi students have no midterm mark in the registry","kind":"content","session":2,"hash":"a2d5a033","md":"#### [day2#coverage-gap] Over a third of non-Saudi students have no midterm mark in the registry\n\n*Entry point 2, measured*\n\n| Item | Value |\n| --- | --- |\n| Non-Saudi students | 36.2% |\n| Saudi students | 3.4% |\n\n- 1,244 students have no mark; **every one** is a bridging-year entrant\n- Their marks are in the bridging programme's own system\n- For them, half of the rule cannot fire\n\n> **Where you see it is not where it comes from.** The effect appears under nationality; the cause is the admission route.","notes":"Task 4 of Lab 2.2. Data that does not adequately represent part of the population is what the guide calls coverage bias. Hold the callout for session 4: the fix follows the cause, not the column where the gap showed.\n\nSources: AI Bias Reference Guide, coverage bias.","minutes":null,"lo":["LO4"]},{"id":"thresholds-and-labels","n":22,"title":"Thresholds carry their history, and labels carry a definition","kind":"content","session":2,"hash":"feb10f8c","md":"#### [day2#thresholds-and-labels] Thresholds carry their history, and labels carry a definition\n\n*Entry points 3 and 4*\n\n- **Thresholds from 2023, two colleges.** A limit tuned on Business and Engineering may not fit Health Sciences, where one student in five ends the term struggling. Past conditions built into today's rule: the guide's historical bias.\n- **\"Struggled\" is a choice.** A term average below 2.5. A student who withdraws after two courses keeps a good average and counts as \"ok\". Change the label and every error rate changes with it.\n\n> **What goes wrong.** Treating the outcome column as the truth. It is one more measurement, with its own blind spots.","notes":"Neither of these is measured in the lab; they are marked as entry points and stated as limits on Day 3. The share of one in five for Health Sciences is from the course data (20.3% struggled).\n\nSources: AI Bias Reference Guide, historical bias.","minutes":null,"lo":["LO4"]},{"id":"use-and-feedback","n":23,"title":"What happens after the referral changes what the data says about it","kind":"content","session":2,"hash":"640e947b","md":"#### [day2#use-and-feedback] What happens after the referral changes what the data says about it\n\n*Entry points 5 and 6*\n\n- **Support that works hides itself.** A referred student who is helped and passes counts as a referral that was \"not needed\"\n- **Take-up differs.** Who answers an advisor's call, who can come during working hours?\n- **One number for everyone** hides a rule that fails a small group\n\n- **The loop.** If next year's thresholds are tuned on this year's outcomes, colleges with good advisors will look as if they need fewer referrals. The guide's feedback loop bias.","notes":"The unit cannot separate \"false alarm\" from \"helped\" without a comparison group, and it has none. That sentence goes into the limits statement of Lab 3.4. Combining groups that differ so that the result fits the largest one is the guide's aggregation bias.\n\nSources: AI Bias Reference Guide, feedback loop bias and aggregation bias.","minutes":null,"lo":["LO4"]},{"id":"measure-not-argue","n":24,"title":"An entry point is a hypothesis until someone measures it","kind":"content","session":2,"hash":"5c80c442","md":"#### [day2#measure-not-argue] An entry point is a hypothesis until someone measures it\n\n*Method*\n\n- **An opinion.** \"Attendance data is probably unfair to some students.\" Nobody can act on it, and nobody can refute it.\n- **A measurement.** \"For 300 students with a remote accommodation the record is 17 points below the roll call; 191 fall under the limit on paper, 14 in fact.\" A size, a group, a consequence.\n\n- The audit sampled **all 300** students of the small group and 1,300 others at random: a small group needs all its members to be measured at all","notes":"The design point matters for participants' own work: a simple random sample of 1,600 from 18,000 would have held about 27 students with a remote accommodation. Sampling the small group in full is what makes the comparison possible.","minutes":null,"lo":["LO4"]},{"id":"check-entry-point","n":25,"title":"Where did the bias enter?","kind":"quiz","session":2,"hash":"db7779d0","md":"#### [day2#check-entry-point] Where did the bias enter?\n\n*Checkpoint*\n\n**Question:** A library fines late returns. Evening students are fined twice as often. A return is logged when staff scan the book; the desk closes before evening classes end, and the drop box is scanned the next morning. Where does the gap come from?\n\n- A. Recording: the return time is logged later than the true return for one group\n- B. Outcome: evening students return books later\n- C. Thresholds: the loan period is too short for evening students\n- D. Reporting: the fine rate is reported for all students together","notes":"Answer: the first option. The second option may also be partly true; the point is the order of work. Rule out the record before explaining behaviour. Ask what audit would separate the two: a time stamp on the drop box.","minutes":null,"lo":["LO4"]},{"id":"lab-2-2","n":26,"title":"Four entry points","kind":"lab","session":2,"hash":"f1f97423","md":"#### [day2#lab-2-2] Four entry points\n\nLab 2.2 · 25 min\n\nMark four points where bias can enter the referral data, and measure two of them.\n\n[D2_2_bias_entry_points.ipynb](https://sdaiaacademy.github.io/ds-207/labs/D2_2_bias_entry_points.ipynb)\n\n- [ ] Trace Awn's data from the event to the referral (5 min)\n- [ ] Mark four points where bias can enter (8 min)\n- [ ] Measure the attendance record against the roll-call audit (6 min)\n- [ ] Measure missing midterm marks by group (4 min)\n- [ ] Rank which entry point to check first (2 min)\n- [ ] ✱ Stretch: Find a fifth entry point after the referral: who takes up the support that is offered","notes":"Task 2 is written work: push for entries specific enough to measure. Typical weak answer: \"attendance may be biased\". Good answer names the mechanism and the group. Tasks 3 and 4 are short joins. The lab starts from the supplied extract and the audit file; no earlier lab is needed.","minutes":null,"lo":[]},{"id":"s3","n":27,"title":"Comparing groups","kind":"section","session":3,"hash":"41020d39","md":"#### [day2#s3] Comparing groups\n\n*Session 3*\n\n- Compute referral, false-referral and missed-student rates by group\n- Report each rate and each difference with a confidence interval\n- Check whether a gap survives inside colleges before explaining it","notes":"","minutes":null,"lo":["LO4"]},{"id":"three-rates","n":28,"title":"One rule, four outcomes, three rates","kind":"content","session":3,"hash":"3b31269a","md":"#### [day2#three-rates] One rule, four outcomes, three rates\n\n*What to compare*\n\n|  | Struggled | Did not struggle |\n| --- | --- | --- |\n| **Referred** | caught: 1,209 | false referral: 831 |\n| **Not referred** | missed: 982 | left alone: 14,978 |\n\n- **Referral rate** = referred / all = 11.3%\n- **False-referral rate** = false referrals / did not struggle = 5.3%\n- **Missed rate** = missed / struggled = 44.8%\n\n> **Not \"accuracy\".** Awn is right for 90% of students, and misses 45% of those it exists for.","notes":"Counts from Lab 2.3, all 18,000 students. The false-referral rate is the false positive rate and the missed rate the false negative rate; use the plain names with sponsors. Accuracy here is (1,209 + 14,978) / 18,000 = 89.9%: true and useless.","minutes":null,"lo":["LO4"]},{"id":"two-errors","n":29,"title":"The two errors hurt different students in different ways","kind":"content","session":3,"hash":"d6e82928","md":"#### [day2#two-errors] The two errors hurt different students in different ways\n\n*Why two error rates*\n\n- **A false referral.** A student who was fine is contacted, labelled \"at risk\" in a system, and takes an advisor's hour from someone else. Mild once; not mild if the label travels.\n- **A miss.** A student who is struggling hears from nobody. The rule existed for this student.\n\n- A group can be worse off in **one** error and not the other, so one combined number hides it\n- The ethics principles ask that metrics be chosen by the **effect of the decision** and the harm of each kind of error","notes":"The two gaps found in the lab are in different errors: false referrals for one group, misses for another. A single fairness score would have averaged them.\n\nSources: AI Ethics Principles, principle 1 (fairness assessment and choice of metrics).","minutes":null,"lo":["LO4"]},{"id":"intervals","n":30,"title":"A rate without its interval hides how many students it rests on","kind":"content","session":3,"hash":"901ee004","md":"#### [day2#intervals] A rate without its interval hides how many students it rests on\n\n*Uncertainty*\n\n| Missed rate | Struggling students | Rate (95% interval) |\n| --- | --- | --- |\n| Saudi | 1,971 | 42.9% (40.8 to 45.1) |\n| non-Saudi | 220 | 61.8% (55.2 to 68.0) |\n| Registered disability | 61 | 13.1% (6.8 to 23.8) |\n\n- The **denominator** of a missed rate is the struggling students of the group, not the group\n- Use the **Wilson interval**: it behaves for small counts and rates near 0 or 1\n- For a difference, an interval on the difference itself","notes":"The prerequisite covers the interval; here the point is the denominator. 429 students have a registered disability, 61 of them struggled, and 8 of those were missed: the rate of 13% spans 17 points. The lab's helper `U.wilson` is ten lines; statsmodels offers the same method.\n\nSources: statsmodels documentation, confidence intervals for a proportion (Wilson).","minutes":null,"lo":["LO4"]},{"id":"rate-table","n":31,"title":"Two groups stand out, in two different errors","kind":"content","session":3,"hash":"9417cc11","md":"#### [day2#rate-table] Two groups stand out, in two different errors\n\n*From the lab's run*\n\n| Group | Students | Referral rate | False-referral rate | Missed rate |\n| --- | --- | --- | --- | --- |\n| Women | 8,218 | 12.3% | 5.5% | 43.2% |\n| Men | 9,782 | 10.5% | 5.1% | 46.4% |\n| Saudi | 16,063 | 11.8% | 5.4% | 42.9% |\n| non-Saudi | 1,937 | 7.8% | 3.9% | 61.8% |\n| No registered disability | 17,571 | 10.6% | 4.6% | 45.7% |\n| Registered disability | 429 | 41.7% | 34.2% | 13.1% |","notes":"The rate table of Lab 2.3 without the intervals, which are on the next slide for the differences. Ask the room to find the two rows before you point. First-generation students are in the lab and show no clear difference.","minutes":null,"lo":["LO4"]},{"id":"gaps-with-intervals","n":32,"title":"Report every comparison you made, with its interval","kind":"content","session":3,"hash":"28da5873","md":"#### [day2#gaps-with-intervals] Report every comparison you made, with its interval\n\n*Differences*\n\n| Comparison | Rate | Difference | 95% interval | Reading |\n| --- | --- | --- | --- | --- |\n| Registered disability minus none | false referral | +29.7 points | +25.0 to +34.7 | clear |\n| non-Saudi minus Saudi | missed | +18.9 points | +12.0 to +25.4 | clear |\n| Women minus men | referral | +1.9 points | +0.9 to +2.8 | clear, see next slide |\n| First generation minus not | missed | +1.1 points | -3.3 to +5.6 | could be zero |\n| First generation minus not | false referral | +0.6 points | -0.2 to +1.4 | could be zero |\n\n> **The two rows at the bottom belong in the report.** Leaving out comparisons that found nothing makes the others look selected.","notes":"Task 3 of the lab. Selective reporting has its own entry in the guide: reporting bias. With five comparisons at 95%, one \"clear\" result by chance would not be surprising; the two large gaps are far beyond that, the gender gap is small.\n\nSources: AI Bias Reference Guide, reporting bias.","minutes":null,"lo":["LO4"]},{"id":"gap-inside-colleges","n":33,"title":"The gender gap vanishes inside every college","kind":"content","session":3,"hash":"67e10d22","md":"#### [day2#gap-inside-colleges] The gender gap vanishes inside every college\n\n*Before explaining a gap*\n\n| College | Share of women | Referral rate | Women minus men (95% interval) |\n| --- | --- | --- | --- |\n| Health Sciences | 76% | 20.0% | -1.2 points (-5.1 to +2.5) |\n| Science | 59% | 14.4% | -1.1 points (-3.9 to +1.6) |\n| Arts and Humanities | 50% | 10.6% | +0.3 points (-1.9 to +2.5) |\n| Business | 39% | 7.8% | -0.8 points (-2.5 to +1.0) |\n| Computing | 37% | 9.0% | 0.0 points (-2.3 to +2.4) |\n| Engineering | 25% | 9.2% | -0.3 points (-2.3 to +2.0) |\n\n> **Overall: +1.9 points.** Women study more often in the colleges where everyone is referred more. The rule treats women and men in the same college alike.","notes":"Task 4 of the lab. An overall number that is true and misleading. The habit to build: before explaining a gap, check it inside the obvious strata. The reverse also happens, a gap that appears only inside strata, which is why you look both ways.","minutes":null,"lo":["LO4"]},{"id":"tools-for-groups","n":34,"title":"A library computes the rates; you choose the comparisons","kind":"content","session":3,"hash":"21505757","md":"#### [day2#tools-for-groups] A library computes the rates; you choose the comparisons\n\n*Tools*\n\n```python\ng = df.groupby(\"nationality_group\")\nmissed = g.apply(lambda d:\n    (~d.referred & d.struggled).sum()\n    / d.struggled.sum())\n```\n\n- **Grouped metrics in pandas or SQL:** a group-by and three ratios\n- **A fairness library** (Fairlearn's `MetricFrame`): the same table in one call, for many metrics\n- Neither chooses the groups, the strata, the intervals or the question\n\n> **Small groups twice.** A rate on 8 students is too uncertain to interpret and too small to publish. Both rules apply.","notes":"The lab uses pandas only, so that every step is visible. Fairlearn's documentation calls its false positive and false negative rates by those names. For intersections (the lab's stretch) the counts shrink fast: check the release threshold before putting any intersection in a report.\n\nSources: Fairlearn documentation, common fairness metrics.","minutes":null,"lo":["LO4"]},{"id":"check-compare","n":35,"title":"What can the analyst claim?","kind":"quiz","session":3,"hash":"c15a5f8a","md":"#### [day2#check-compare] What can the analyst claim?\n\n*Checkpoint*\n\n**Question:** Awn missed 8 of 61 struggling students with a registered disability (13%, interval 7% to 24%) and 974 of 2,130 others (46%, interval 44% to 48%). Which sentence is supported?\n\n- A. The rule works better for students with a registered disability\n- B. Nothing can be said: 61 students are too few\n- C. Fewer of this group were missed, by an uncertain margin; read the false-referral rate beside it\n- D. The rule is biased in favour of students with a registered disability","notes":"Answer: the third option. This checkpoint sets up session 4: the low miss rate and the high false-referral rate have one cause, a record that makes most of the group look absent.","minutes":null,"lo":["LO4"]},{"id":"lab-2-3","n":36,"title":"Rates with intervals","kind":"lab","session":3,"hash":"c12ca9e3","md":"#### [day2#lab-2-3] Rates with intervals\n\nLab 2.3 · 25 min\n\nCompare referral and error rates by group with intervals.\n\n[D2_3_group_rates.ipynb](https://sdaiaacademy.github.io/ds-207/labs/D2_3_group_rates.ipynb)\n\n- [ ] Build the four outcome counts by group (5 min)\n- [ ] Compute the three rates with Wilson intervals (8 min)\n- [ ] Compute the differences with their intervals (5 min)\n- [ ] Check the gender gap inside each college (5 min)\n- [ ] Write the result in one sentence per gap (2 min)\n- [ ] ✱ Stretch: Compute the rates for one intersection of two groups and say what the interval allows you to claim","notes":"Watch the denominators in task 2: the commonest error is dividing misses by the size of the group. Task 4 produces the table of the previous slides; give it its five minutes. The lab starts from the supplied extract; no earlier lab is needed.","minutes":null,"lo":[]},{"id":"s4","n":37,"title":"Naming the bias","kind":"section","session":4,"hash":"d60bae82","md":"#### [day2#s4] Naming the bias\n\n*Session 4*\n\n- Match an observed gap to candidate bias types in the AI Bias Reference Guide\n- Design the check that separates two candidate causes\n- State what a fairness metric cannot settle and who decides the rest","notes":"","minutes":null,"lo":["LO4"]},{"id":"gap-is-not-cause","n":38,"title":"A gap is an observation; a bias type is an explanation","kind":"content","session":4,"hash":"f9752cfb","md":"#### [day2#gap-is-not-cause] A gap is an observation; a bias type is an explanation\n\n*The idea of this session*\n\n1. **1 · Observe** a gap with its interval\n2. **2 · Name two candidates** that would need different fixes\n3. **3 · Design a check** on which they disagree\n4. **4 · Run it** and say what stays open\n\n> **What goes wrong.** Naming the first bias type that fits and stopping. One gap usually fits several names, and each name points to a different repair.","notes":"This is the evidence the course outcome asks for: two possible bias types and the check that separates them. The discipline is the same as differential diagnosis: a name is useful when it changes what you do next.","minutes":null,"lo":["LO4"]},{"id":"the-guide","n":39,"title":"The AI Bias Reference Guide gives each type a definition, an example and a mitigation","kind":"content","session":4,"hash":"390c4943","md":"#### [day2#the-guide] The AI Bias Reference Guide gives each type a definition, an example and a mitigation\n\n*The national reference*\n\n| Type | In one line (our wording) |\n| --- | --- |\n| Measurement bias | Recorded values are systematically too high or too low |\n| Coverage bias | The data does not adequately represent part of the population |\n| Aggregation bias | Groups that differ are combined; the result fits the largest |\n| Historical bias | Past assumptions or conditions no longer fit the present |\n| Feedback loop bias | Outputs return as inputs and magnify an early skew |\n| Automation bias | People favour a system's output over other evidence |","notes":"Six of the ten entries the lab offers. The one-line versions are ours; before a name goes into a report, read the guide's own entry. The guide is alphabetical with more than a hundred entries, first edition May 2026.\n\nSources: AI Bias Reference Guide (entries named on the slide).","minutes":null,"lo":["LO4"]},{"id":"gap-a-candidates","n":40,"title":"Is the record wrong, or does one limit not fit?","kind":"content","session":4,"hash":"9022618f","md":"#### [day2#gap-a-candidates] Is the record wrong, or does one limit not fit?\n\n*Gap A · false referrals, registered disability*\n\n- **Measurement bias.** Attendance is **recorded** too low for these students. Prediction: the record is far below the roll call, and the gap is confined to students with a remote accommodation. Fix the record.\n- **Aggregation bias.** Attendance is recorded correctly and one limit of 75% does not fit this group. Prediction: record matches roll call, and the gap covers all students with a registered disability. Fix the rule.\n\n> **The check.** Roll call against record, and the false-referral rate with and without a remote accommodation.","notes":"Ask the room for the predictions before showing the next slide. A check is only worth running if the two candidates predict different results.","minutes":null,"lo":["LO4"]},{"id":"gap-a-result","n":41,"title":"The gap is confined to students whose attendance is under-recorded","kind":"content","session":4,"hash":"deca8b95","md":"#### [day2#gap-a-result] The gap is confined to students whose attendance is under-recorded\n\n*Gap A · the check's result*\n\n| Item | Value |\n| --- | --- |\n| Registered, remote accommodation | 59.4% |\n| Registered, no remote accommodation | 3.6% |\n| No registered disability | 4.6% |\n\n- False-referral rates, Lab 2.4\n- Intervals: 52.5 to 65.9; 1.7 to 7.7; 4.2 to 4.9\n- The record is 16.8 points below the roll call for the first group\n- **Measurement bias.** Fix the feed of remote attendance","notes":"What stays open: the 187 students with a registered disability and no remote accommodation are a small group, and their interval is wide enough to hide a moderate gap. Say it; do not round it away.","minutes":null,"lo":["LO4"]},{"id":"gap-b-result","n":42,"title":"Compare like with like and the gap moves to where the marks are missing","kind":"content","session":4,"hash":"9f638473","md":"#### [day2#gap-b-result] Compare like with like and the gap moves to where the marks are missing\n\n*Gap B · missed students, non-Saudi*\n\n| Missed rate | Saudi | non-Saudi |\n| --- | --- | --- |\n| Mark present | 41.6% (39.4 to 43.9) | 45.9% (37.6 to 54.3) |\n| Mark missing | 76.7% (65.8 to 84.9) | 86.2% (77.4 to 91.9) |\n\n- **Candidates:** coverage bias (no marks) or aggregation bias (limits that do not fit)\n- With a mark, both groups are missed at similar rates\n- Without one, both are missed three times in four or more\n- **Coverage bias.** Bring the bridging programme's marks into the registry","notes":"Results of Lab 2.4. Saudi bridging-year entrants are missed too: the cause is the route. What stays open: whether the limits fit bridging-year entrants once their marks exist cannot be known before the marks exist.","minutes":null,"lo":["LO4"]},{"id":"name-decides-fix","n":43,"title":"The name decides the fix, and a wrong name produces a harmful one","kind":"content","session":4,"hash":"4ee3deaa","md":"#### [day2#name-decides-fix] The name decides the fix, and a wrong name produces a harmful one\n\n*Why the name matters*\n\n| If you had concluded | You would have | And then |\n| --- | --- | --- |\n| \"The limit does not fit students with a disability\" | Lowered their attendance limit | Missed those who truly stop attending, and left the record wrong |\n| \"The rule does not fit non-Saudi students\" | Set separate limits by nationality | Treated students by a protected characteristic, and still missed Saudi bridging-year entrants |\n| Measurement and coverage | Repaired two data feeds | Fixed it for everyone the feeds had failed |","notes":"This is the argument for the checks. Both wrong fixes sound reasonable and would have passed a meeting. Neither would have survived the split tables.","minutes":null,"lo":["LO4"]},{"id":"what-metrics-cannot-settle","n":44,"title":"A fairness metric cannot tell you which fairness to want","kind":"content","session":4,"hash":"91e5c77f","md":"#### [day2#what-metrics-cannot-settle] A fairness metric cannot tell you which fairness to want\n\n*The limit of the numbers*\n\n- When groups differ in how often the outcome occurs, a rule **cannot** equalise every error rate and every hit rate at once\n- Lowering false referrals for a group raises its misses, or the reverse\n- How large a remaining gap is acceptable is not a statistical question\n\n- **Who decides.** The director of the unit owns the rule; the data protection officer owns the impact on students. You bring the rates, the intervals, the cause you could establish and what stays open. They choose.","notes":"The impossibility results are for risk scores and classifiers; the trade between the two errors applies to any rule with a threshold. In the case the outcome rates do differ a little: 14.2% of students with a registered disability struggled against 12.1% of others. The lab's stretch makes the trade visible.\n\nSources: Kleinberg, Mullainathan and Raghavan, Inherent Trade-Offs in the Fair Determination of Risk Scores; Chouldechova, Fair prediction with disparate impact.","minutes":null,"lo":["LO4"]},{"id":"check-name-bias","n":45,"title":"Which check separates the two candidates?","kind":"quiz","session":4,"hash":"0b9c681d","md":"#### [day2#check-name-bias] Which check separates the two candidates?\n\n*Checkpoint*\n\n**Question:** A training centre flags trainees with fewer than three logged sessions a week. One branch is flagged three times as often. Either its sessions are logged too low (measurement), or one limit does not fit a branch with fewer, longer sessions (aggregation). Which check separates the two?\n\n- A. Recompute the flag rates with confidence intervals\n- B. Compare logged sessions with the branch's attendance sheets\n- C. Lower the limit for that branch and see whether the gap closes\n- D. Ask the branch's trainers whether the rule seems fair","notes":"Answer: the second option. The third option is the tempting one for people who like to act: it changes the rule before the cause is known, and it would make the gap disappear under either explanation.","minutes":null,"lo":["LO4"]},{"id":"lab-2-4","n":46,"title":"Two gaps, two names","kind":"lab","session":4,"hash":"1e1b01e6","md":"#### [day2#lab-2-4] Two gaps, two names\n\nLab 2.4 · 25 min\n\nMatch two observed gaps to bias types in the national guide and run the check that separates them.\n\n[D2_4_name_the_bias.ipynb](https://sdaiaacademy.github.io/ds-207/labs/D2_4_name_the_bias.ipynb)\n\n- [ ] Read the two gaps and their intervals (3 min)\n- [ ] Pick two candidate bias types for each gap (6 min)\n- [ ] Design the check that separates them (6 min)\n- [ ] Run the two checks (7 min)\n- [ ] Record the conclusion and what stays open (3 min)\n- [ ] ✱ Stretch: Change the rule to equalise false referrals and report what happens to missed students","notes":"The lab loads the gaps from a supplied file, `labs/data/reference/lab23_gaps.json`, so nobody depends on finishing Lab 2.3. Task 3 is written work and the heart of the lab: insist on two different predictions before any code runs. The lab writes its findings to `labs/artifacts/`.","minutes":null,"lo":[]},{"id":"wrap-up","n":47,"title":"Three things to keep","kind":"content","session":4,"hash":"7456da85","md":"#### [day2#wrap-up] Three things to keep\n\n*Day 2*\n\n- **Attack your own table.** Small cells, then totals, then earlier releases. When suppression eats the table, redesign it.\n- **Rates by group, with intervals.** Referral, false referral, missed. Every comparison reported, each inside the strata that matter.\n- **Two candidates and a check.** A gap is not a cause. The name decides the fix, so earn the name.","notes":"Ask: which of today's findings would the director of the unit most want to hear, and which would he least want to hear? Both go into the documents of tomorrow.","minutes":null,"lo":["LO3","LO4"]},{"id":"next","n":48,"title":"Day 3: professional conduct","kind":"content","session":4,"hash":"7dc22840","md":"#### [day2#next] Day 3: professional conduct\n\n*Tomorrow*\n\nThe work so far lives in your head and your notebook. Tomorrow it becomes something others can check, and you hold three conversations.\n\n- You will role-play in threes: analyst, sponsor, observer\n- No AI assistant in the role-plays","notes":"Form the groups of three before people leave, so the first role-play starts on time. Mix backgrounds within each group. Day 3 starts from supplied files.","minutes":null,"lo":["LO5","LO6"]}],"activities":[{"id":"review-day1-q1","slide":"review-day1","type":"single","prompt":"The analysis extract has 13 columns per student under a project pseudonym, with no names or identity numbers. A colleague wants to paste 500 rows into a hosted AI assistant to get plotting code.","options":[{"key":"A","text":"Fine: without names the rows are anonymous"},{"key":"B","text":"Not allowed: the extract is personal data classified Restricted; describe the columns and ask for code"},{"key":"C","text":"Fine if the assistant's history is switched off"},{"key":"D","text":"Not allowed: student data is classified Secret"}],"correct":[1],"explanation":"Pseudonymised data is personal data, its level is Restricted, and only Public data goes into a generative AI tool.","misconceptions":["Equates removing names with anonymising: the key exists and each row is one student","","Looks for a technical fix to a classification rule: the level of the data does not change with the channel","Over-classifies: the impact is on individuals' privacy, which the policy places at low impact, so Restricted"],"lo":["LO2"]},{"id":"check-small-cells-q1","slide":"check-small-cells","type":"single","prompt":"A table of referred students by college and level has one cell of 4. The analyst replaces it with \"c\" and keeps the row and column totals. The threshold is 10. What is the state of the table?","options":[{"key":"A","text":"Ready: the only small cell is suppressed"},{"key":"B","text":"Not ready: all totals must be removed from every table"},{"key":"C","text":"Ready, provided the cell is shown as \"fewer than 10\""},{"key":"D","text":"Not ready: the 4 is recovered from its row total until a second cell in that row and column is suppressed"}],"correct":[3],"explanation":"One hidden cell beside exact totals is a subtraction. Complementary suppression, or a coarser table, closes it.","misconceptions":["Stops at primary suppression: the totals give the cell back by subtraction","Believes totals are the problem in themselves: removing them destroys the table's use when a second suppressed cell would do","Reads the threshold as a rule about the smallest value shown, not about what can be derived",""],"lo":["LO3"]},{"id":"check-entry-point-q1","slide":"check-entry-point","type":"single","prompt":"A library fines late returns. Evening students are fined twice as often. A return is logged when staff scan the book; the desk closes before evening classes end, and the drop box is scanned the next morning. Where does the gap come from?","options":[{"key":"A","text":"Recording: the return time is logged later than the true return for one group"},{"key":"B","text":"Outcome: evening students return books later"},{"key":"C","text":"Thresholds: the loan period is too short for evening students"},{"key":"D","text":"Reporting: the fine rate is reported for all students together"}],"correct":[0],"explanation":"The recorded time is systematically later than the true one for evening students: a measurement problem. The check compares drop-box times with scan times.","misconceptions":["","Jumps to behaviour before checking the record: the data cannot yet tell late returns from late scans","Looks for a threshold problem when the input itself is wrong: no limit fixes a timestamp that is a day late","Blames the report: reporting one rate hides a gap, it does not create one"],"lo":["LO4"]},{"id":"check-compare-q1","slide":"check-compare","type":"single","prompt":"Awn missed 8 of 61 struggling students with a registered disability (13%, interval 7% to 24%) and 974 of 2,130 others (46%, interval 44% to 48%). Which sentence is supported?","options":[{"key":"A","text":"The rule works better for students with a registered disability"},{"key":"B","text":"Nothing can be said: 61 students are too few"},{"key":"C","text":"Fewer of this group were missed, by an uncertain margin; read the false-referral rate beside it"},{"key":"D","text":"The rule is biased in favour of students with a registered disability"}],"correct":[2],"explanation":"The difference is clear, its size uncertain. A rule that refers 42% of a group misses few of them; the cost is in false referrals.","misconceptions":["Reads a low miss rate as good performance without looking at the other error: this group has a false-referral rate of 34%","Treats an interval on 61 students as too weak to say anything: the two intervals do not come near each other","","Turns a difference in one error rate into a verdict on fairness, which no single rate can give"],"lo":["LO4"]},{"id":"check-name-bias-q1","slide":"check-name-bias","type":"single","prompt":"A training centre flags trainees with fewer than three logged sessions a week. One branch is flagged three times as often. Either its sessions are logged too low (measurement), or one limit does not fit a branch with fewer, longer sessions (aggregation). Which check separates the two?","options":[{"key":"A","text":"Recompute the flag rates with confidence intervals"},{"key":"B","text":"Compare logged sessions with the branch's attendance sheets"},{"key":"C","text":"Lower the limit for that branch and see whether the gap closes"},{"key":"D","text":"Ask the branch's trainers whether the rule seems fair"}],"correct":[1],"explanation":"The candidates disagree about whether the record is right. Only comparing the record with the truth can tell them apart.","misconceptions":["Repeats the observation with more precision: a tighter interval on the gap says nothing about its cause","","Changes the rule before knowing the cause: it would hide the gap whichever candidate is true","Asks an opinion where a comparison is available: staff views do not distinguish a wrong record from a wrong limit"],"lo":["LO4"]}],"ai":{"context":{"course":"../context/course.md","courseJs":"../context/course.js","day":"day2.md","llms":"../llms.txt"},"tasks":[],"tools":[]},"bridge":{"allowedOrigins":[]},"features":{},"strings":{}}</script>
+<script src="../_engine/academy.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+ "A": [
+  "measurement bias",
+  "aggregation bias"
+ ],
+ "B": [
+  "coverage bias",
+  "aggregation bias"
+ ]
+}

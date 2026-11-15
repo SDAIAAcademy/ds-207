@@ -1,0 +1,38 @@
+{
+ "Arts and Humanities": {
+  "students": 3000,
+  "referred": 317,
+  "struggled": 363,
+  "missed": 181
+ },
+ "Business": {
+  "students": 3900,
+  "referred": 306,
+  "struggled": 310,
+  "missed": 153
+ },
+ "Computing": {
+  "students": 2400,
+  "referred": 216,
+  "struggled": 238,
+  "missed": 119
+ },
+ "Engineering": {
+  "students": 3600,
+  "referred": 332,
+  "struggled": 354,
+  "missed": 172
+ },
+ "Health Sciences": {
+  "students": 2400,
+  "referred": 479,
+  "struggled": 488,
+  "missed": 165
+ },
+ "Science": {
+  "students": 2700,
+  "referred": 390,
+  "struggled": 438,
+  "missed": 192
+ }
+}

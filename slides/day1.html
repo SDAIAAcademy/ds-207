@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-ax="deck" data-track="data-science">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Day 1 · Lawful analysis · Responsible Data Practice and Conduct in Analytical Work</title>
+<meta name="generator" content="SDAIA Academy engine 1.0.0">
+<link rel="icon" href="../_engine/icon.svg">
+<link rel="alternate" type="text/markdown" href="day1.md">
+<link rel="describedby" href="../llms.txt">
+<link rel="stylesheet" href="../_engine/academy.css">
+</head>
+<body>
+<div class="deck" data-course="Responsible Data Practice and Conduct in Analytical Work" data-track="data-science" data-day="Day 1">
+<section class="slide title" id="title" data-auto="title" data-label="Welcome" data-n="1">
+  <div class="kicker">SDAIA Academy · Responsible Data Practice and Conduct in Analytical Work</div>
+  <h1>Lawful analysis</h1>
+  <p class="lead mt">Day 1: Test the request, cut the data, classify it and decide what a partner may have</p>
+  <div class="meta"><span class="track">Data Science Track</span><span>3 teaching days + capstone day</span><span>4 sessions · 4 labs</span><span>DS-207</span></div>
+  <aside class="notes"><p>Welcome. Ask the room: who has been asked for data they were not sure they could hand over, and what did they do? Take two answers; they calibrate the pace. Rhythm of the day: four sessions, each about 25 minutes of concepts, one checkpoint, then a 25-minute lab. Press B for a break.</p><p>This course assumes FN-106: the law and the policies were introduced there. Here they are applied to analytical work.</p></aside>
+</section>
+
+<section class="slide" id="agenda" data-auto="agenda" data-label="Agenda" data-n="2">
+  <div class="kicker">Today</div>
+  <h2>Lawful analysis</h2>
+  <div class="agenda"><div class="item"><div><b>Session 1 · What the law asks of an analyst</b><small>Name the rules a request engages, and know when to ask before touching data</small></div></div><div class="item"><div><b>Session 2 · Purpose, minimisation and secondary use</b><small>The purpose decides the fields; a new purpose is a new decision</small></div></div><div class="item"><div><b>Session 3 · Classifying data and outputs</b><small>Tables, charts and lists get a level, and the level sets the controls</small></div></div><div class="item"><div><b>Session 4 · Sharing requests</b><small>Judge a partner's request, then answer with a form of release and conditions</small></div></div></div>
+</section>
+
+<section class="slide" id="the-case" data-lo="LO1" data-n="3">
+  <div class="kicker">The case</div>
+  <h2>One unit, one rule, one analyst and a week of requests</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li><b>Al-Qimam University</b>: a fictional public university, six colleges, 18,000 students</li>
+      <li><b>The Student Success Unit</b> runs <b>Awn</b>, a rule that refers students to academic support</li>
+      <li><b>You are Ohoud Al-Lihyani</b>, the unit's analyst</li>
+      <li>Every record is synthetic, made with a fixed seed</li>
+    </ul>
+    <table class="t small">
+      <tr><th>Who</th><th>Role</th></tr>
+      <tr><td>Jassim Al-Nuaimi</td><td>Director of the unit</td></tr>
+      <tr><td>Dr. Ibtisam Al-Khayyat</td><td>Vice-rector, a sponsor</td></tr>
+      <tr><td>Dr. Nabil Al-Faraj</td><td>Dean of engineering</td></tr>
+      <tr><td>Rami Al-Tuwaijri</td><td>Registrar, data owner</td></tr>
+      <tr><td>Shatha Al-Omair</td><td>Data protection officer</td></tr>
+      <tr><td>Hazza Al-Marri</td><td>Liaison of a government partner</td></tr>
+    </table>
+  </div>
+  <aside class="notes"><p>Introduce the people now; they return in every lab and in the role-plays of Day 3. The university is public on purpose: the national data policies apply to it directly, and the partner on Day 1 is another government body.</p></aside>
+</section>
+
+<section class="slide" id="awn-rule" data-lo="LO4" data-n="4">
+  <div class="kicker">The rule under study</div>
+  <h2>Awn refers a student on two signals</h2>
+  <div class="flow">
+    <div class="step c-teal"><b>Attendance</b>recorded rate below 75%</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>or midterm mark</b>below 2.5 out of 5</div>
+    <div class="arrow">→</div>
+    <div class="step c-coral"><b>Referral</b>an advisor contacts the student</div>
+  </div>
+  <div class="cols cols-3 mt">
+    <div class="stat center"><div class="big">18,000</div><div class="lbl">students this term</div></div>
+    <div class="stat center"><div class="big">2,040</div><div class="lbl">referred by Awn</div></div>
+    <div class="stat center"><div class="big">2,191</div><div class="lbl">ended the term struggling</div></div>
+  </div>
+  <aside class="notes"><p>"Struggling" is a term grade average below 2.5. The two counts are close and the two groups are not the same students: that gap is Day 2. Today the question is narrower: what may the analyst do with these records at all? Numbers are from the course data, <code>labs/data/students.csv</code>.</p></aside>
+</section>
+
+<section class="slide" id="setup-check" data-n="5">
+  <div class="kicker">Before the first lab</div>
+  <h2>Prove your setup in two minutes</h2>
+  <div class="cols cols-2">
+    <div class="card c-teal"><h4>Google Colab</h4><p class="small mb0">Open <code>00_setup_check.ipynb</code> from the course page and run every cell. The first cell clones the course repository.</p></div>
+    <div class="card c-cyan"><h4>Your laptop</h4><p class="small mb0">Clone the repository, then in <code>labs/</code> run <code>uv run jupyter lab</code> and open the same notebook.</p></div>
+  </div>
+  <div class="callout tip mt"><b>What you need.</b> Python and pandas. No lab calls a model, needs a key or downloads anything beyond the repository.</div>
+  <aside class="notes"><p>Run it now, together. The notebook prints the pandas version, reads the student file and reports 18,000 rows and 30 columns. If a laptop fails, move that participant to Colab and carry on; do not debug environments during session 1.</p></aside>
+</section>
+
+<section class="slide" id="from-fn106" data-lo="LO1" data-n="6">
+  <div class="kicker">Where you start</div>
+  <h2>The pre-work gave you the instruments; this course is about using them at a desk</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>You know</h4><p class="small mb0">The PDPL's vocabulary, the four classification levels, the eight sharing principles, what a pseudonym does and does not hide.</p></div>
+    <div class="card c-cyan"><h4>You practise here</h4><p class="small mb0">Testing a request, cutting an extract, classifying outputs, releasing tables, comparing groups, documenting, saying no with an alternative.</p></div>
+    <div class="card c-purple"><h4>Later, in DS-309</h4><p class="small mb0">Measured re-identification risk, differential privacy, synthetic data, fairness audits of models, model cards.</p></div>
+  </div>
+  <aside class="notes"><p>Ask for a show of hands on the entry quiz: which question was hardest? If most missed the classification question, slow down in session 3. Do not reteach FN-106; refer to it by name when a participant needs the basics.</p></aside>
+</section>
+
+<!-- Session 1 -->
+
+<section class="slide section" id="s1" data-auto="section" data-session="1" data-n="7">
+  <div class="kicker">Session 1</div>
+  <h1>What the law asks of an analyst</h1>
+  <ul class="bullets outcomes"><li>Name the PDPL rules an analysis request engages, from lawful basis to transfer</li><li>Distinguish analysis inside the collection purpose from a new purpose, a disclosure and a transfer</li><li>Decide which requests go to the data protection officer before any data is touched</li></ul>
+  <div class="sess-no">01</div>
+</section>
+
+<section class="slide" id="analysis-is-processing" data-lo="LO1" data-n="8" data-session="1">
+  <div class="kicker">The first idea</div>
+  <h2>Every step of an analysis is "processing" in the law</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>The PDPL's definition lists <b>collecting, storing, linking, using, disclosing, sharing, publishing and destroying</b></li>
+      <li>A query, a join, a chart and an email attachment are each on that list</li>
+      <li>The <b>University is the controller</b>: it sets the purpose. You act for it</li>
+      <li>So the question is never "is this analysis?" but <b>"which rules does this step engage?"</b></li>
+    </ul>
+    <div class="card c-teal"><h4>At Al-Qimam</h4><p class="small mb0">Pulling 30 columns "to have a look" is collecting and storing. Joining the counselling register is linking. Sending a table to a dean is disclosing inside the controller; sending it to the Observatory is disclosing outside it.</p></div>
+  </div>
+  <aside class="notes"><p>Read the definition of processing in Article 1 aloud once. The point is that there is no neutral, pre-legal phase called "exploration".</p><p>Sources: Personal Data Protection Law, Article 1.</p></aside>
+</section>
+
+<section class="slide" id="four-kinds" data-lo="LO1" data-n="9" data-session="1">
+  <div class="kicker">Sort the request first</div>
+  <h2>Four kinds of request, four gates</h2>
+  <table class="t">
+    <tr><th>The request is</th><th>The gate</th><th>In the case</th></tr>
+    <tr><td>Inside the collection purpose</td><td>The purpose students were told</td><td>Does Awn reach struggling students?</td></tr>
+    <tr><td>A new internal purpose</td><td>Only the cases Article 10 lists</td><td>A dean wants names with counselling visits</td></tr>
+    <tr><td>A disclosure to another entity</td><td>Only the cases Article 15 lists</td><td>The Observatory wants records</td></tr>
+    <tr><td>A transfer outside the Kingdom</td><td>Article 29 and the transfer regulation</td><td>An upload to a notebook service abroad</td></tr>
+  </table>
+  <div class="callout tip mt"><b>Method.</b> Name the kind before you argue about the data. The kind tells you which article to open.</div>
+  <aside class="notes"><p>This table is the spine of Lab 1.1. Ask the room for one request from their own work and have them place it. Many "internal" requests turn out to be new purposes.</p><p>Sources: Personal Data Protection Law, Articles 10, 15 and 29.</p></aside>
+</section>
+
+<section class="slide" id="lawful-basis" data-lo="LO1" data-n="10" data-session="1">
+  <div class="kicker">Lawful basis</div>
+  <h2>A university's analysis rarely rests on consent</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>Consent is the default, and Article 6 lists cases that need none</li>
+      <li><b>An agreement the student is party to</b>, or another law: enrolment, teaching, assessment, support</li>
+      <li><b>Legitimate interest</b> of the controller: never for sensitive data</li>
+      <li><b>Advertising</b> sent to a person needs prior consent, whatever else is true</li>
+    </ul>
+    <div class="callout warn"><b>What goes wrong.</b> "They agreed to the terms at registration" used as a basis for anything. The basis covers the purposes in the notice. A new purpose needs its own gate.</div>
+  </div>
+  <aside class="notes"><p>Show the privacy notice of the case (<code>labs/data/privacy_notice.md</code>): teaching, assessment, advice and support, stipends, legal reporting, and the sentence "does not use your data for advertising". Request R4 in the lab dies on that sentence and on Article 25.</p><p>Sources: Personal Data Protection Law, Articles 5, 6, 25 and 26.</p></aside>
+</section>
+
+<section class="slide" id="statistics-without-consent" data-lo="LO1" data-n="11" data-session="1">
+  <div class="kicker">The analyst's own article</div>
+  <h2>Statistics without consent are allowed, on four duties</h2>
+  <div class="cols cols-2">
+    <div class="card c-teal"><h4>The law allows it when</h4><p class="small mb0">the data does not specifically identify the person, or the evidence of identity is destroyed before the data is disclosed (not for sensitive data), or another law or an agreement requires it.</p></div>
+    <ol class="bullets">
+      <li>State the purpose in the <b>record of processing</b></li>
+      <li>Collect only the <b>minimum</b> the purpose needs</li>
+      <li><b>Pseudonymise</b> wherever the purpose can still be met</li>
+      <li>Make sure the work has <b>no negative impact</b> on the people in the data</li>
+    </ol>
+  </div>
+  <aside class="notes"><p>This is the article that makes most of the unit's work possible, and its duties are today's first two labs: minimum data and a pseudonym. Duty four is Day 2 and Day 3: a result that singles out a student, or a list that follows a student into grading, is a negative impact.</p><p>Sources: Personal Data Protection Law, Article 27; Implementing Regulation, Article 30.</p></aside>
+</section>
+
+<section class="slide" id="sensitive-data" data-lo="LO1" data-n="12" data-session="1">
+  <div class="kicker">Sensitive data</div>
+  <h2>Health data sits in three ordinary-looking columns</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Column</th><th>Why it is health data</th></tr>
+      <tr><td><code>disability_type</code></td><td>A health condition, stated</td></tr>
+      <tr><td><code>counselling_visits</code></td><td>A health service received</td></tr>
+      <tr><td><code>advisor_note</code></td><td>Free text: surgery, treatment, a hearing aid</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>The PDPL's sensitive kinds include <b>health data</b>, ethnic origin, beliefs, criminal and biometric data</li>
+      <li>Health data: access for the <b>fewest staff</b> who need it to provide the service</li>
+      <li>Legitimate interest never covers it</li>
+      <li>A <b>registered or none</b> flag is still health data</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>Nationality is not on the PDPL's sensitive list by name; racial or ethnic origin is. Treat nationality with care in small groups all the same: Day 2 shows a table where nationality and disability together point at one student.</p><p>Sources: Personal Data Protection Law, Articles 1, 6 and 23.</p></aside>
+</section>
+
+<section class="slide" id="rights-and-retention" data-lo="LO1" data-n="13" data-session="1">
+  <div class="kicker">Rights and retention</div>
+  <h2>A student can ask what you hold, and the extract has an end date</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li><b>Rights:</b> to be informed, to access, to get a copy, to correct, to have data destroyed when no longer needed</li>
+      <li>The University answers within <b>30 days</b></li>
+      <li><b>Retention:</b> destroy personal data when the purpose is met; data that no longer identifies anyone may be kept</li>
+    </ul>
+    <div class="card c-cyan"><h4>What this means at your desk</h4><p class="small mb0">Know where every copy of an extract is. Give each extract a destruction date in the log. Keep the pseudonym key in the unit, so a student's rows can be found for an access request and nowhere else.</p></div>
+  </div>
+  <aside class="notes"><p>The stretch of Lab 1.1 is an access request from a student who heard about the Awn study. The answer goes through the data protection officer; the analyst's part is being able to find the rows.</p><p>Sources: Personal Data Protection Law, Articles 4, 18 and 21; Implementing Regulation (time to respond).</p></aside>
+</section>
+
+<section class="slide" id="disclosure-transfer-breach" data-lo="LO1" data-n="14" data-session="1">
+  <div class="kicker">When data leaves</div>
+  <h2>Three words that are not synonyms: disclosure, transfer, breach</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>Disclosure</h4><p class="small mb0">Someone outside the controller gets access. Allowed only in listed cases, such as a public entity asking for a public-interest purpose.</p></div>
+    <div class="card c-coral"><h4>Transfer</h4><p class="small mb0">The data is processed outside the Kingdom. Needs an adequate level of protection or approved safeguards, and the minimum data.</p></div>
+    <div class="card c-purple"><h4>Breach</h4><p class="small mb0">Access nobody allowed: a lost laptop, a file sent to the wrong list. The University notifies the authority within 72 hours where harm is expected.</p></div>
+  </div>
+  <div class="callout warn mt"><b>Your part in a breach.</b> Tell the data protection officer at once. The 72 hours run from when the University knows, and you are the University.</div>
+  <aside class="notes"><p>A free online notebook hosted abroad is a transfer even when nobody else ever opens the file. That is request R5 in the lab. Safeguards named in the transfer regulation include standard contractual clauses and binding common rules; an analyst does not arrange these alone.</p><p>Sources: Personal Data Protection Law, Articles 15, 20 and 29; Regulation on Personal Data Transfer outside the Kingdom; Implementing Regulation (breach notification).</p></aside>
+</section>
+
+<section class="slide" id="ask-the-dpo" data-lo="LO1" data-n="15" data-session="1">
+  <div class="kicker">Who decides</div>
+  <h2>The analyst prepares the decision; the data protection officer owns the hard ones</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>She monitors how the law is applied and supervises impact assessments</li>
+      <li>She receives data subjects' requests and reports breaches</li>
+      <li>She keeps the <b>record of processing</b> up to date</li>
+    </ul>
+    <div class="card c-teal"><h4>Rule of thumb</h4><p class="small mb0">Inside the collection purpose: proceed, minimise, record. Anything else (a new purpose, sensitive data, a disclosure, a transfer, advertising): to her <b>before</b> any data is touched, with your note attached.</p></div>
+  </div>
+  <aside class="notes"><p>The note is the lab's last task: what was asked, the kind of processing, the rules engaged, what happens next. A data protection officer who receives that note can answer in minutes; one who receives "can I send this?" cannot.</p><p>Sources: Implementing Regulation, Article 32.</p></aside>
+</section>
+
+<section class="slide" id="check-kind-of-request" data-lo="LO1" data-n="16" data-session="1">
+  <div class="kicker">Checkpoint</div>
+  <h2>Which gate does this request pass through?</h2>
+  <div class="quiz" data-type="single" data-lo="LO1" data-id="check-kind-of-request-q1">
+    <p class="lead">The alumni office asks the analyst for the grade averages of last year's graduates, to invite the top tenth to a paid executive programme run with a private partner. Which rule decides the answer?</p>
+    <div class="opts">
+      <div class="opt" data-why="Treats any use by the same university as the original purpose: selling a programme is not teaching or support" data-k="A">Purpose limitation is satisfied, because the data stays inside the University</div>
+      <div class="opt" data-why="Confuses a grade with a sensitive kind: grades are personal data, not on the sensitive list" data-k="B">The sensitive-data rule, because grades are sensitive data</div>
+      <div class="opt" data-ok data-k="C">Purpose limitation and marketing consent: a new purpose that is advertising</div>
+      <div class="opt" data-why="Assumes every request from outside the unit is a disclosure: the alumni office is part of the same controller" data-k="D">The disclosure rule, because the alumni office is another entity</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The data was collected to teach, assess and support. An invitation to a paid programme is a new purpose and it is advertising sent to a person, which needs that person's prior consent.</div>
+  </div>
+  <aside class="notes"><p>Answer: the third option. If the room splits between the first and the third, ask what the privacy notice told these students. If someone argues legitimate interest, accept the argument for a non-commercial alumni newsletter and ask what changes when a private partner and a fee appear.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-1-1" data-auto="lab" data-lab="1.1" data-label="Lab 1.1" data-n="17" data-session="1">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 1.1 · 25 min</div><h2>Five requests, which rules</h2><p class="lead small">Map five requests to the PDPL principles they engage, and write the note that says so for one of them.</p><a class="nb" href="../labs/D1_1_five_requests.ipynb">D1_1_five_requests.ipynb</a></div><ul class="checklist"><li>Read the five requests and the privacy notice <span class="min">4 min</span></li><li>Name the kind of processing each request is <span class="min">5 min</span></li><li>Mark the rules each request engages <span class="min">8 min</span></li><li>Flag the requests that go to the data protection officer <span class="min">3 min</span></li><li>Write the note for one request <span class="min">5 min</span></li><li class="stretch">✱ Stretch: Add a sixth request: a student asks for a copy of her data used in the analysis</li></ul></div>
+  <aside class="notes"><p>Watch for participants who mark all nine rules for every request: the lab asks for the deciding ones. Typical error: R3 marked "refuse"; it is a lawful disclosure that needs minimising. Collect two notes for R2 at the end and read them aloud. No earlier lab is needed.</p></aside>
+</section>
+
+<!-- Session 2 -->
+
+<section class="slide section" id="s2" data-auto="section" data-session="2" data-n="18">
+  <div class="kicker">Session 2</div>
+  <h1>Purpose, minimisation and secondary use</h1>
+  <ul class="bullets outcomes"><li>Write a purpose precise enough to decide each field against</li><li>Cut an extract to the fields the purpose needs, keeping, coarsening or dropping each with a reason</li><li>Recognise a secondary use and name what the law and the national rules require before it starts</li></ul>
+  <div class="sess-no">02</div>
+</section>
+
+<section class="slide" id="purpose-sentence" data-lo="LO1" data-n="19" data-session="2">
+  <div class="kicker">Purpose</div>
+  <h2>A purpose is precise enough when it can reject a column</h2>
+  <div class="cols cols-2">
+    <div class="card c-coral"><h4>Too loose to decide anything</h4><p class="small mb0">"Understand student success." Every one of the 30 columns might help with that.</p></div>
+    <div class="card c-teal"><h4>Precise enough to cut with</h4><p class="small mb0">"Evaluate whether Awn's referrals in term 1 reached the students who ended the term struggling, by college and level, to decide whether to extend the rule."</p></div>
+  </div>
+  <ul class="bullets mt">
+    <li>It names the <b>decision</b>, the <b>population</b>, the <b>measure</b> and the <b>breakdown</b></li>
+    <li>The law: collect for purposes directly related to the controller's own, and process only for those</li>
+  </ul>
+  <aside class="notes"><p>Have the room test the second sentence against three columns: home address (no), level (yes), nationality (no, not for this purpose). The same four parts return on Day 3 as the scope note.</p><p>Sources: Personal Data Protection Law, Articles 10 and 11.</p></aside>
+</section>
+
+<section class="slide" id="keep-coarsen-drop" data-lo="LO1 LO2" data-n="20" data-session="2">
+  <div class="kicker">Minimisation</div>
+  <h2>Every field gets one of three verdicts</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>Keep</h4><p class="small mb0">The purpose needs it as it is: the rule's inputs, its output, the outcome, the breakdown.</p></div>
+    <div class="card c-amber"><h4>Coarsen</h4><p class="small mb0">The purpose needs a rougher form: a band for a date, a flag for a grade, a pseudonym for a student number.</p></div>
+    <div class="card c-coral"><h4>Drop</h4><p class="small mb0">The purpose does not need it. "It might be useful" is not a need.</p></div>
+  </div>
+  <div class="callout note mt"><b>The legal test.</b> Content limited to the minimum necessary for the purpose, and nothing that identifies a person once the purpose is achieved.</div>
+  <aside class="notes"><p>Coarsening is the verdict people forget. Date of birth to birth year, exact grade to struggled or not, registry number to a project pseudonym. The national guideline names generalisation and aggregation as techniques.</p><p>Sources: Personal Data Protection Law, Article 11; Personal Data Destruction, Anonymization and Pseudonymisation Guideline.</p></aside>
+</section>
+
+<section class="slide" id="thirty-to-eight" data-lo="LO2" data-n="21" data-session="2">
+  <div class="kicker">From the lab's run</div>
+  <h2>The Awn evaluation needs 8 of the registry's 30 columns</h2>
+  <div class="cols cols-2 mid">
+    <div class="bars">
+      <div class="row"><span>Dropped</span><div class="bar c-coral" style="--w:100%"></div><span class="val">22</span></div>
+      <div class="row"><span>Kept</span><div class="bar c-teal" style="--w:32%"></div><span class="val">7</span></div>
+      <div class="row"><span>Coarsened</span><div class="bar c-amber" style="--w:5%"></div><span class="val">1</span></div>
+    </div>
+    <ul class="bullets">
+      <li><b>Kept:</b> college, level, admission route, attendance, midterm mark, referral, outcome</li>
+      <li><b>Coarsened:</b> the student number, into a project pseudonym</li>
+      <li><b>Dropped:</b> names, identity numbers, contacts, addresses, bank accounts, health fields, notes, and the exact term grade</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>These are the counts of the solution of Lab 1.2. A participant who keeps the exact term grade or the login count is not wrong in law if the reason is written; the log is the point. Gender, nationality and disability status are dropped here because this purpose does not need them: the group comparison of Day 2 is a separate decision, approved by the data protection officer.</p></aside>
+</section>
+
+<section class="slide" id="free-text" data-lo="LO1" data-n="22" data-session="2">
+  <div class="kicker">Personal data detection</div>
+  <h2>Pattern rules find the identifiers that have a shape, and miss the rest</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>In 2,400 advisor notes</th><th class="num">Notes</th><th>Found by a pattern?</th></tr>
+      <tr><td>A mobile number</td><td class="num">180</td><td>Yes</td></tr>
+      <tr><td>An identity number</td><td class="num">70</td><td>Yes</td></tr>
+      <tr><td>A health remark</td><td class="num">210</td><td>No</td></tr>
+      <tr><td>Another student's name</td><td class="num">80</td><td>No</td></tr>
+    </table>
+    <div>
+      <pre class="code s"><code class="language-python">re.search(<span class="hljs-string">r&quot;\b05\d{8}\b&quot;</span>, note)     <span class="hljs-comment"># phone</span>
+re.search(<span class="hljs-string">r&quot;\b[12]\d{9}\b&quot;</span>, note)   <span class="hljs-comment"># identity</span></code></pre>
+      <div class="callout warn mt-s"><b>So.</b> A free-text column is dropped whole, not cleaned. Detection tools (regular expressions, Presidio) lower the risk; they do not certify a text.</div>
+    </div>
+  </div>
+  <aside class="notes"><p>Demonstration: run task 3 of Lab 1.2 and then the "look at" cell, which prints a dialysis note and a note that accuses a named student. Neither has a pattern. The counts are planted by the data generator and found by the lab.</p></aside>
+</section>
+
+<section class="slide" id="pseudonym-is-personal" data-lo="LO1 LO2" data-n="23" data-session="2">
+  <div class="kicker">A word used loosely</div>
+  <h2>"Anonymised" has a legal meaning, and your extract does not meet it</h2>
+  <div class="cols cols-2">
+    <div class="card c-amber"><h4>Pseudonymised</h4><p class="small mb0">Identifiers replaced by a code. Someone holds the key, and each row is still one student. <b>Still personal data.</b> Every rule still applies.</p></div>
+    <div class="card c-teal"><h4>Anonymised</h4><p class="small mb0">Re-identification is <b>impossible</b>, the controller has assessed that, and keeps assessing it as methods change. Only then is it no longer personal data.</p></div>
+  </div>
+  <div class="callout tip mt"><b>At your desk.</b> Say "pseudonymised extract". Use a keyed hash with a key for this project only, so two extracts cannot be joined.</div>
+  <aside class="notes"><p>FN-106 attacked a pseudonymised file by linkage; do not repeat it, recall it. The measured version (k-anonymity, uniqueness) is in DS-309. Here the participant only needs the vocabulary to be exact, because the classification in session 3 depends on it.</p><p>Sources: Implementing Regulation, Article 9; Personal Data Destruction, Anonymization and Pseudonymisation Guideline.</p></aside>
+</section>
+
+<section class="slide" id="secondary-use" data-lo="LO1 LO2" data-n="24" data-session="2">
+  <div class="kicker">Secondary use</div>
+  <h2>A new purpose for old data is a new decision</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li><b>Secondary use:</b> using data for a purpose other than the one it was collected for</li>
+      <li>The PDPL allows it only in listed cases: consent, a public entity acting in the public interest, data that no longer identifies anyone, and a few more</li>
+      <li>The <b>General Rules for Secondary Use of Data</b> govern requests between entities for the public interest or for research</li>
+    </ul>
+    <div class="card c-cyan"><h4>What the Rules ask of an applicant</h4><p class="small mb0">A legitimate purpose that is not profit-seeking. Only the minimum data for it. A request to the entity that is the source of the data, or proof of its approval. A rejection must give its reasons.</p></div>
+  </div>
+  <aside class="notes"><p>The Rules complement the Data Sharing Policy; session 4 uses both. Inside the University the same idea holds without the Rules: the dean's request and the communications office's request are secondary uses, and neither fits a listed case.</p><p>Sources: Personal Data Protection Law, Article 10; General Rules for Secondary Use of Data.</p></aside>
+</section>
+
+<section class="slide" id="minimisation-log" data-lo="LO2 LO5" data-n="25" data-session="2">
+  <div class="kicker">Recording why</div>
+  <h2>The cut is a decision, so it leaves a log</h2>
+  <table class="t small">
+    <tr><th>Field</th><th>Decision</th><th>Reason</th></tr>
+    <tr><td><code>student_id</code></td><td>coarsen</td><td>A project pseudonym keeps one row per student without the registry number</td></tr>
+    <tr><td><code>admission_route</code></td><td>keep</td><td>Bridging-year entrants have no midterm mark; needed to read the rule's result</td></tr>
+    <tr><td><code>term_gpa</code></td><td>drop</td><td>The outcome flag already says struggled or not</td></tr>
+    <tr><td><code>advisor_note</code></td><td>drop</td><td>Free text: cannot be checked field by field</td></tr>
+  </table>
+  <div class="callout tip mt"><b>Who reads it.</b> The data owner who approves the extract, the reviewer who audits it, and you, six months later.</div>
+  <aside class="notes"><p>Four rows of the solution's log. The log returns on Day 3 as part of the analysis log, with an approver beside each decision. Ask: which of these reasons would you be least comfortable defending? Usually the admission route; it is kept because without it the rule's misses cannot be read.</p></aside>
+</section>
+
+<section class="slide" id="check-minimise" data-lo="LO1 LO2" data-n="26" data-session="2">
+  <div class="kicker">Checkpoint</div>
+  <h2>Which extract fits the purpose?</h2>
+  <div class="quiz" data-type="single" data-lo="LO2" data-id="check-minimise-q1">
+    <p class="lead">Purpose: "report the share of first-year students who end the term struggling, by college". Which extract is the minimum that serves it?</p>
+    <div class="opts">
+      <div class="opt" data-ok data-k="A">A pseudonym, the college, the level and the outcome flag, for first-year students</div>
+      <div class="opt" data-why="Keeps identifiers 'in case of follow-up': follow-up is a different purpose with its own approval" data-k="B">The same, plus the student number and email in case a college wants to follow up</div>
+      <div class="opt" data-why="Treats precision as harmless: the exact grade and birth date add detail the question never uses" data-k="C">The college, the level, the exact term grade and the date of birth</div>
+      <div class="opt" data-why="Assumes more rows cannot hurt: students outside the population are outside the purpose" data-k="D">The college, the level and the outcome flag for all 18,000 students, filtered later</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The purpose names first-year students, colleges and one outcome. Rows and fields beyond that are data the purpose does not need.</div>
+  </div>
+  <aside class="notes"><p>Answer: the first option. The fourth option is the one experienced analysts choose; minimisation applies to rows as well as columns. If someone asks whether even the pseudonym is needed: only if the same student must not be counted twice; for a single clean table it could go too.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-1-2" data-auto="lab" data-lab="1.2" data-label="Lab 1.2" data-n="27" data-session="2">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 1.2 · 25 min</div><h2>Cut the extract</h2><p class="lead small">Cut an extract to the fields the purpose needs, recording why, and find the identifiers hiding in free text.</p><a class="nb" href="../labs/D1_2_cut_extract.ipynb">D1_2_cut_extract.ipynb</a></div><ul class="checklist"><li>Read the purpose and the 30 columns of the registry <span class="min">3 min</span></li><li>Decide keep, coarsen or drop for each field, with a reason <span class="min">8 min</span></li><li>Scan the advisor notes for identifiers with rules <span class="min">5 min</span></li><li>Build the extract with a project pseudonym <span class="min">6 min</span></li><li>Write the minimisation log <span class="min">3 min</span></li><li class="stretch">✱ Stretch: Decide the fields again for a second purpose, the partner's study, and say what makes it a secondary use</li></ul></div>
+  <aside class="notes"><p>Task 2 is where the time goes: thirty decisions in eight minutes means deciding by family (identity, contact, health, programme, the rule). Typical problem: keeping the group fields "for fairness later"; point to the "look at" note. The lab writes its log to <code>labs/artifacts/</code>. No earlier lab is needed.</p></aside>
+</section>
+
+<!-- Session 3 -->
+
+<section class="slide section" id="s3" data-auto="section" data-session="3" data-n="28">
+  <div class="kicker">Session 3</div>
+  <h1>Classifying data and outputs</h1>
+  <ul class="bullets outcomes"><li>Classify a dataset or an output with the impact questions of the Data Classification Policy</li><li>Apply the highest-level rule to combined data and say when an aggregate can be Public</li><li>Name the control each level requires, including what may be entered into an AI tool</li></ul>
+  <div class="sess-no">03</div>
+</section>
+
+<section class="slide" id="outputs-are-data" data-lo="LO2" data-n="29" data-session="3">
+  <div class="kicker">The idea of this session</div>
+  <h2>A table, a chart and a list are data, and each needs a level</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>The policy covers all data a public entity <b>receives, produces or manages</b>, in any form</li>
+      <li>An output does <b>not inherit</b> the level of its source</li>
+      <li>Classify <b>when you create it</b>: until someone does, it is treated as Restricted</li>
+    </ul>
+    <div class="card c-teal"><h4>In the Awn evaluation</h4><p class="small mb0">One Restricted registry produces a Restricted extract, a Restricted worklist, a Restricted draft table and, after approval, a Public table of referral rates by college.</p></div>
+  </div>
+  <aside class="notes"><p>Analysts classify sources and forget outputs. The slide deck you send to a dean is data; so is the screenshot in a chat. Ask the room what they produced last week that nobody classified.</p><p>Sources: Data Classification Policy, scope and principle 3; classification controls.</p></aside>
+</section>
+
+<section class="slide" id="four-levels-recap" data-lo="LO2" data-n="30" data-session="3">
+  <div class="kicker">Recap from the pre-work</div>
+  <h2>The level follows the impact of disclosure</h2>
+  <table class="t">
+    <tr><th>Level</th><th>Impact</th><th>What it looks like at a university</th></tr>
+    <tr><td>Top Secret</td><td>High</td><td>Not in a student-success unit</td></tr>
+    <tr><td>Secret</td><td>Medium</td><td>Not in a student-success unit</td></tr>
+    <tr class="hl"><td>Restricted</td><td>Low</td><td>Student records, the extract, a named worklist, a draft with small cells</td></tr>
+    <tr><td>Public</td><td>None</td><td>The timetable, a released table of rates by college</td></tr>
+  </table>
+  <div class="callout note mt"><b>Why not Secret?</b> The policy rates the disclosure of an individual's personal information as a low impact. Low impact leads to Restricted or Public.</div>
+  <aside class="notes"><p>One slide of recap; the levels and impact categories were a session of FN-106. The common mistake in this room will be over-classifying student data as Secret because it feels serious. The level is about impact on national interests, entities, individuals and the environment, and the table of the policy places individual privacy at low.</p><p>Sources: Data Classification Policy, classification levels and Table 2.</p></aside>
+</section>
+
+<section class="slide" id="low-impact-route" data-lo="LO2" data-n="31" data-session="3">
+  <div class="kicker">Restricted or Public?</div>
+  <h2>Low impact needs two more questions</h2>
+  <div class="flow">
+    <div class="step c-teal"><b>Impact is low</b>harm to individuals is limited and short-term</div>
+    <div class="arrow">→</div>
+    <div class="step c-coral"><b>Would disclosure conflict with a law?</b>Yes: Restricted</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>Do the benefits of openness outweigh the harm?</b>Yes: Public. No: Restricted</div>
+  </div>
+  <div class="cols cols-2 mt">
+    <div class="card c-coral"><h4>The extract</h4><p class="small mb0">Rows about single students. Disclosure would break the PDPL. Restricted at the first question.</p></div>
+    <div class="card c-teal"><h4>Rates by college</h4><p class="small mb0">Nobody is identified, no law is broken, publishing helps students and the public. Public.</p></div>
+  </div>
+  <aside class="notes"><p>These are steps 4 and 5 of the policy's process. The policy's first principle is open by default in the development sector: the aim of the two questions is to publish what can be published, not to find a reason to restrict.</p><p>Sources: Data Classification Policy, classification process, steps 3 to 5.</p></aside>
+</section>
+
+<section class="slide" id="highest-level" data-lo="LO2" data-n="32" data-session="3">
+  <div class="kicker">Combined data</div>
+  <h2>A joined file takes the highest level of its parts</h2>
+  <div class="cols cols-2 mid">
+    <div class="flow v">
+      <div class="step c-teal"><b>Timetable</b>Public</div>
+      <div class="arrow">↓</div>
+      <div class="step c-coral"><b>joined to the registry</b>Restricted</div>
+      <div class="arrow">↓</div>
+      <div class="step c-coral"><b>Attendance by time of day, per student</b>Restricted</div>
+    </div>
+    <ul class="bullets">
+      <li>The policy's fourth principle: the <b>highest level of protection</b> for an integrated dataset</li>
+      <li>The reverse also happens: an <b>aggregate</b> of Restricted rows can be Public</li>
+      <li>So the level is set for each output, by what that output would reveal</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>In the lab this is one line of code. The teaching point is the second bullet: aggregation can lower the level, but only when no cell points at a person. The draft table in the lab has a cell of 1; it stays Restricted until Day 2 fixes it.</p><p>Sources: Data Classification Policy, principle 4.</p></aside>
+</section>
+
+<section class="slide" id="controls-by-level" data-lo="LO2" data-n="33" data-session="3">
+  <div class="kicker">Controls</div>
+  <h2>The level tells you how to mark, open, store, send and end the data</h2>
+  <table class="t small">
+    <tr><th>Control</th><th>Restricted item</th><th>Public item</th></tr>
+    <tr><td>Protective marking</td><td>Marked on the file and in the email</td><td>None needed</td></tr>
+    <tr><td>Access</td><td>Need to know, least privilege</td><td>Open</td></tr>
+    <tr><td>Storage</td><td>Not left unattended; encrypted</td><td>Anywhere</td></tr>
+    <tr><td>Sharing</td><td>An agreed secure channel</td><td>Any channel</td></tr>
+    <tr><td>Retention and disposal</td><td>On the schedule, disposal logged</td><td>On the schedule</td></tr>
+    <tr><td>Before release</td><td>Second-person check, owner's approval</td><td>Done</td></tr>
+  </table>
+  <aside class="notes"><p>The first five rows are the policy's control families. The last row is the unit's own release policy (<code>labs/data/release_policy.md</code>): a table with a suppressed cell is checked by a second person and approved by the data owner before it becomes Public. Health data adds a rule from the PDPL: the fewest staff who need it.</p><p>Sources: Data Classification Policy, classification controls; Personal Data Protection Law, Article 23.</p></aside>
+</section>
+
+<section class="slide" id="ai-tools" data-lo="LO2" data-n="34" data-session="3">
+  <div class="kicker">What may go into AI tools</div>
+  <h2>Only Public data goes into a generative AI tool</h2>
+  <div class="cols cols-2">
+    <div class="chat">
+      <div class="msg user"><span class="who">Analyst</span>Here are 200 rows of the extract. Summarise the patterns by college.</div>
+      <div class="msg ai bad"><span class="who">Hosted assistant</span>Happy to help. I have stored your file...</div>
+    </div>
+    <ul class="bullets">
+      <li>Government employees enter <b>nothing classified Restricted or higher</b>, and nothing unclassified</li>
+      <li>A pseudonymised extract is Restricted: <b>no</b></li>
+      <li>A released table of rates: <b>yes</b></li>
+      <li>Asking for <b>code</b> without pasting data: yes</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>The guideline for government is explicit. The practical route for an analyst: describe the columns, ask for the code, run it locally. A hosted tool abroad adds the transfer problem of session 1 on top of the classification problem.</p><p>Sources: Generative AI Guidelines for Government.</p></aside>
+</section>
+
+<section class="slide" id="who-classifies" data-lo="LO2" data-n="35" data-session="3">
+  <div class="kicker">Roles and time</div>
+  <h2>You propose a level; the data owner classifies; a reviewer checks</h2>
+  <div class="flow">
+    <div class="step c-teal"><b>Analyst</b>proposes a level and controls for each output</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>Data owner</b>(the registrar) classifies</div>
+    <div class="arrow">→</div>
+    <div class="step c-purple"><b>Reviewer</b>in the data management office checks within a month</div>
+  </div>
+  <div class="callout tip mt"><b>Levels change.</b> Set the trigger when you classify: "Restricted until the release is approved", "Public from the publication date". Record it in the register.</div>
+  <aside class="notes"><p>The policy calls the classifier the Business Data Executive. In the case that is Rami Al-Tuwaijri for student records. Declassification triggers can be a period after creation, a period after last use, a date or an event. The lab's stretch asks for one.</p><p>Sources: Data Classification Policy, classification process (steps 2, 6 and 7), roles, declassification.</p></aside>
+</section>
+
+<section class="slide" id="check-classify-output" data-lo="LO2" data-n="36" data-session="3">
+  <div class="kicker">Checkpoint</div>
+  <h2>What level is this output today?</h2>
+  <div class="quiz" data-type="single" data-lo="LO2" data-id="check-classify-output-q1">
+    <p class="lead">You compute a table of registered-disability counts by college and nationality group from the pseudonymised extract. Two cells are under 10 and one is 1. Nobody has reviewed it. What is its level now?</p>
+    <div class="opts">
+      <div class="opt" data-why="Assumes an aggregate cannot identify: a cell of 1 points at one student's health data" data-k="A">Public, because it is an aggregate with no names</div>
+      <div class="opt" data-why="Assumes an output inherits its source's handling in full: the level is set by what the output itself reveals, and here that happens to agree, but for a different reason" data-k="B">Restricted, because every output of a Restricted source stays Restricted</div>
+      <div class="opt" data-why="Rates the harm by how serious health data feels: the policy's scale places individual privacy at low impact" data-k="C">Secret, because it contains health data</div>
+      <div class="opt" data-ok data-k="D">Restricted, because a cell of 1 can single out a student, until it is suppressed and checked</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The level follows what the output would reveal. A count of 1 is one student's disability status. After suppression and a second-person check the table may be proposed as Public.</div>
+  </div>
+  <aside class="notes"><p>Answer: the fourth option. The second option has the right level and the wrong reason; spend a minute on it, because the wrong reason would also keep the rates-by-college table Restricted for ever.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-1-3" data-auto="lab" data-lab="1.3" data-label="Lab 1.3" data-n="37" data-session="3">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 1.3 · 25 min</div><h2>Classify and control</h2><p class="lead small">Classify four datasets and three outputs and name each control.</p><a class="nb" href="../labs/D1_3_classify_control.ipynb">D1_3_classify_control.ipynb</a></div><ul class="checklist"><li>Run the impact questions on the four datasets <span class="min">7 min</span></li><li>Classify the three outputs <span class="min">6 min</span></li><li>Apply the highest-level rule to a joined file <span class="min">3 min</span></li><li>Name the controls for each item <span class="min">6 min</span></li><li>Decide what may be entered into an AI tool <span class="min">3 min</span></li><li class="stretch">✱ Stretch: Set a declassification trigger for the referral table and say who approves it</li></ul></div>
+  <aside class="notes"><p>Watch task 2: participants argue about whether the rates table is Public "today". Both answers pass the check if the reason is right; the register must say what turns it Public. Typical error in task 4: choosing every control for every item. No earlier lab is needed.</p></aside>
+</section>
+
+<!-- Session 4 -->
+
+<section class="slide section" id="s4" data-auto="section" data-session="4" data-n="38">
+  <div class="kicker">Session 4</div>
+  <h1>Sharing requests</h1>
+  <ul class="bullets outcomes"><li>Assess a sharing request against the tests of the Data Sharing Policy and the rules for secondary use</li><li>Choose the form of release: record level, pseudonymised or aggregate</li><li>Draft approval conditions under the policy's control headings and name who signs</li></ul>
+  <div class="sess-no">04</div>
+</section>
+
+<section class="slide" id="sharing-is-expected" data-lo="LO2" data-n="39" data-session="4">
+  <div class="kicker">The starting point</div>
+  <h2>The policy expects you to share, and tells you how</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>Its first principle is a <b>data sharing culture</b>: entities share what they produce</li>
+      <li>The other seven principles are the conditions: legitimate purpose, authorised access, transparency, accountability, security, ethical use, one source of truth</li>
+      <li>For personal data the <b>PDPL's disclosure cases</b> apply on top</li>
+    </ul>
+    <div class="card c-teal"><h4>The analyst's part</h4><p class="small mb0">You will be the person who knows what the data contains. You prepare the assessment and the conditions. The data management office decides, with the data protection officer.</p></div>
+  </div>
+  <aside class="notes"><p>The eight principles were taught in FN-106; one line of recap is enough. The attitude matters: a unit that answers every request with "no" teaches partners to stop asking and start finding another way.</p><p>Sources: Data Sharing Policy, main principles and roles (clause Eighth, paragraph 6).</p></aside>
+</section>
+
+<section class="slide" id="parties-and-route" data-lo="LO2" data-n="40" data-session="4">
+  <div class="kicker">Parties and route</div>
+  <h2>A request has three roles and one front door</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Role</th><th>In the case</th></tr>
+      <tr><td>Data requester</td><td>Masarat Labour Market Observatory</td></tr>
+      <tr><td>Data sharing entity</td><td>Al-Qimam University</td></tr>
+      <tr><td>Data source entity</td><td>The University for marks; another entity for identity numbers</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>The front door is the <b>data management office</b>, never an analyst's inbox</li>
+      <li>Requests for analytical purposes go to the <b>National Data Bank</b> first</li>
+      <li>Between government entities: the <b>controls template</b>. With a private entity: a <b>data sharing agreement</b></li>
+    </ul>
+  </div>
+  <aside class="notes"><p>The request in the lab arrived by email to the analyst. The first correct act is to forward it to the office and say so to the requester. Whether a field's source is the University matters: the policy asks for the source entity's consent when the sharing entity is not the source.</p><p>Sources: Data Sharing Policy, definitions; general rules (clause Third, paragraphs 5, 7 and 13); clause Sixth.</p></aside>
+</section>
+
+<section class="slide" id="three-tests" data-lo="LO2" data-n="41" data-session="4">
+  <div class="kicker">The assessment</div>
+  <h2>Three tests decide whether sharing can go ahead</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>1 · Legitimate purpose</h4><p class="small mb0">A legal basis or a justified operational need. For the Observatory: its mandate, a public-interest purpose. <b>Met.</b></p></div>
+    <div class="card c-coral"><h4>2 · Minimum data</h4><p class="small mb0">Only what the purpose needs. It asked for 11 fields of all 18,000 students. <b>Not met.</b></p></div>
+    <div class="card c-amber"><h4>3 · The source's consent</h4><p class="small mb0">Needed for fields the University is not the source of. <b>Met with conditions.</b></p></div>
+  </div>
+  <div class="callout note mt"><b>Time.</b> The office assesses within 10 business days and gives its reasons in writing. A rejected request may be corrected and sent again.</div>
+  <aside class="notes"><p>The verdicts are the solution of Lab 1.4. A failed test is not the end: the office says what must change, the requester resubmits, and the office decides again within five business days.</p><p>Sources: Data Sharing Policy, clause Sixth (paragraph 3) and clause Seventh.</p></aside>
+</section>
+
+<section class="slide" id="form-of-release" data-lo="LO2" data-n="42" data-session="4">
+  <div class="kicker">In what form</div>
+  <h2>Choose the least revealing form that still serves the purpose</h2>
+  <table class="t">
+    <tr><th>Form</th><th>What leaves</th><th>Serves a linkage study?</th></tr>
+    <tr><td>Aggregate</td><td>Counts and averages by programme</td><td>No</td></tr>
+    <tr><td>Pseudonymised</td><td>Rows under a code only the University can reverse</td><td>No</td></tr>
+    <tr class="hl"><td>Record level, minimised</td><td>Rows with the identity number and the few fields needed</td><td>Yes</td></tr>
+  </table>
+  <div class="cols cols-2 mt">
+    <div class="stat center"><div class="big">11 × 18,000</div><div class="lbl">fields and students asked for</div></div>
+    <div class="stat center"><div class="big">5 × 3,612</div><div class="lbl">offered: final-year students, five fields</div></div>
+  </div>
+  <aside class="notes"><p>Aggregates are not always the answer; a participant who says "aggregates only" has refused the purpose without saying so. The purpose is linkage to employment records, and employment follows graduation: final-year students, the identity number, college, programme, level and a grade band. Numbers from the solution of Lab 1.4.</p></aside>
+</section>
+
+<section class="slide" id="eight-headings" data-lo="LO2" data-n="43" data-session="4">
+  <div class="kicker">The conditions</div>
+  <h2>Eight headings turn "yes, but" into something signable</h2>
+  <div class="cols cols-2">
+    <ol class="bullets tight">
+      <li><b>Legal basis:</b> the purpose, and no other use</li>
+      <li><b>Authorisation:</b> named people, need to know</li>
+      <li><b>Data type:</b> the fields, the format, the detail</li>
+      <li><b>Pre-processing:</b> masking, aggregation before or after</li>
+    </ol>
+    <ol class="bullets tight" start="5">
+      <li><b>Sharing means:</b> the channel; retention and destruction</li>
+      <li><b>Usage and protection:</b> the level, limits, onward use</li>
+      <li><b>Duration and termination:</b> end date, what happens then</li>
+      <li><b>Liability:</b> who answers for what</li>
+    </ol>
+  </div>
+  <div class="callout warn mt"><b>Read the request for its weak points.</b> "By email", "and its contractors", "a consulting firm", "kept for future studies": each one becomes a condition.</div>
+  <aside class="notes"><p>These are the eight control groups of the policy's fifth clause. In the lab each heading gets one sentence. Read two of the solution's conditions aloud: the channel (the Government Service Bus or another approved channel, never an attachment) and the destruction of identity numbers after linkage.</p><p>Sources: Data Sharing Policy, clause Fifth.</p></aside>
+</section>
+
+<section class="slide" id="who-signs" data-lo="LO2" data-n="44" data-session="4">
+  <div class="kicker">The decision record</div>
+  <h2>The level of the data decides who signs</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Level of the shared data</th><th>Who signs for the sharing entity</th></tr>
+      <tr><td>Secret, Top Secret</td><td>The head of the entity or a delegate</td></tr>
+      <tr class="hl"><td>Restricted</td><td>The director of the data management office</td></tr>
+      <tr><td>Public</td><td>No assessment or agreement needed</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>The record names the decision, the level, the signatory and who was consulted</li>
+      <li>It goes into the <b>record of processing</b> and the office's log of requests</li>
+      <li>Sharing records are kept for <b>five years</b> after the request ends</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>The analyst's name is on the record as "prepared by". That line is a protection as well as a duty: it shows the analyst did not decide alone. Day 3 builds the same habit into the analysis log.</p><p>Sources: Data Sharing Policy, clause Third (paragraph 12), clause Sixth (paragraph 8), clause Eighth (paragraph 7); Personal Data Protection Law, Article 31.</p></aside>
+</section>
+
+<section class="slide" id="a-fact-changes" data-lo="LO2" data-n="45" data-session="4">
+  <div class="kicker">Decisions move</div>
+  <h2>Change one fact and the decision changes with it</h2>
+  <table class="t small">
+    <tr><th>If the request changed to</th><th>What now applies</th></tr>
+    <tr><td>A private company as requester</td><td>A data sharing agreement, a licence under the secondary-use rules, no profit-seeking purpose, and a different PDPL disclosure case</td></tr>
+    <tr><td>Analysts outside the Kingdom</td><td>The transfer rules: adequate protection or approved safeguards</td></tr>
+    <tr><td>Disability status added</td><td>Sensitive data: the narrowest reading of every test</td></tr>
+    <tr><td>Aggregates only</td><td>Small-cell rules, and perhaps a Public table</td></tr>
+  </table>
+  <div class="callout tip mt"><b>In the capstone.</b> The assessor changes one fact of your partner's request and you revise the decision aloud.</div>
+  <aside class="notes"><p>Use this slide to rehearse the capstone's authenticity check. Pick one row, give the room one minute in pairs, and ask one pair to say which condition they would rewrite. The lab's stretch is the second row.</p><p>Sources: Data Sharing Policy; General Rules for Secondary Use of Data; Personal Data Protection Law, Articles 15 and 29.</p></aside>
+</section>
+
+<section class="slide" id="check-sharing" data-lo="LO2" data-n="46" data-session="4">
+  <div class="kicker">Checkpoint</div>
+  <h2>What is the right first answer to this request?</h2>
+  <div class="quiz" data-type="single" data-lo="LO2" data-id="check-sharing-q1">
+    <p class="lead">A government health authority emails the analyst: "For a wellbeing study, send names and counselling visit counts of all students." What comes first?</p>
+    <div class="opts">
+      <div class="opt" data-why="Treats a government requester as an automatic yes: the purpose may be lawful, the minimum-data test and the route still apply" data-k="A">Send it: a public entity asked, for the public interest</div>
+      <div class="opt" data-ok data-k="B">Forward it to the data management office and the data protection officer, with your assessment</div>
+      <div class="opt" data-why="Treats sensitive data as unshareable in any form: counts by college with suppression could serve the study" data-k="C">Refuse: counselling data is health data and is never shared</div>
+      <div class="opt" data-why="Makes the decision alone and changes the request without the office: the analyst prepares, the office decides" data-k="D">Send pseudonymised rows instead, which removes the names</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The request has a front door. The analyst routes it there with an assessment: a legitimate purpose, no need for names, counts by college may be enough.</div>
+  </div>
+  <aside class="notes"><p>Answer: the second option. The fourth option is tempting because it sounds careful; it is still the analyst deciding to disclose health data about single students. If the room chooses refusal, ask what the health authority does next: it finds someone less careful.</p></aside>
+</section>
+
+<section class="slide lab top" id="lab-1-4" data-auto="lab" data-lab="1.4" data-label="Lab 1.4" data-n="47" data-session="4">
+  <div class="cols cols-2 mid"><div><div class="lab-tag">Lab 1.4 · 25 min</div><h2>The Observatory's request</h2><p class="lead small">Assess a partner's sharing request and draft the approval conditions.</p><a class="nb" href="../labs/D1_4_sharing_request.ipynb">D1_4_sharing_request.ipynb</a></div><ul class="checklist"><li>Read the request and name the parties and the route <span class="min">4 min</span></li><li>Assess it against the three tests <span class="min">6 min</span></li><li>Choose the form of release <span class="min">5 min</span></li><li>Draft the conditions under the eight control headings <span class="min">7 min</span></li><li>Fill the decision record and name who signs <span class="min">3 min</span></li><li class="stretch">✱ Stretch: The partner adds a consultant outside the Kingdom: revise the decision</li></ul></div>
+  <aside class="notes"><p>Watch task 3: some participants answer "aggregate" by reflex. Ask them how the Observatory would link aggregates to employment records. Task 4 needs the request open beside the headings. The lab writes the decision to <code>labs/artifacts/</code>. No earlier lab is needed.</p></aside>
+</section>
+
+<section class="slide" id="wrap-up" data-lo="LO1 LO2" data-n="48" data-session="4">
+  <div class="kicker">Day 1</div>
+  <h2>Three things to keep</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>Name the kind first</h4><p class="small mb0">Inside the purpose, a new purpose, a disclosure, a transfer. The kind tells you which rule to open and who decides.</p></div>
+    <div class="card c-cyan"><h4>The purpose cuts the data</h4><p class="small mb0">Keep, coarsen or drop, with a reason in a log. Thirty columns became eight.</p></div>
+    <div class="card c-coral"><h4>Outputs get a level and requests get conditions</h4><p class="small mb0">Classify what you produce. Answer a partner with a form of release and eight conditions.</p></div>
+  </div>
+  <aside class="notes"><p>Ask each participant for one sentence: which of today's four labs would have changed something they did last month? Collect three answers.</p></aside>
+</section>
+
+<section class="slide dark" id="next" data-lo="LO3 LO4" data-n="49" data-session="4">
+  <div class="kicker">Tomorrow</div>
+  <h1>Day 2: fair and safe outputs</h1>
+  <p class="lead">A table that looks harmless and points at one student. A rule that looks neutral and is wrong more often for two groups.</p>
+  <ul class="bullets">
+    <li>Bring: your setup, working</li>
+    <li>Recall: a confidence interval for a proportion</li>
+  </ul>
+  <aside class="notes"><p>Day 2 starts from supplied files, so nobody is blocked by an unfinished lab of today. Remind participants of the prerequisite: rates and an interval for a proportion by group.</p></aside>
+</section>
+</div>
+<script type="application/json" id="academy-data">{"v":1,"engine":"1.0.0","build":{"at":"2026-11-15T10:43:05Z","version":"2027.1.0","commit":"e8058f5"},"course":{"id":"ds-207","code":"DS-207","title":"Responsible Data Practice and Conduct in Analytical Work","track":"data-science","lang":"en","dir":"ltr","url":"https://sdaiaacademy.github.io/ds-207/","repo":"SDAIAAcademy/ds-207","home":"../index.html"},"deck":{"id":"day1","kind":"day","day":1,"label":"Day 1","title":"Lawful analysis","prev":null,"next":"day2.html","md":"day1.md","alt":{}},"sessions":[{"n":1,"label":"Session 1","title":"What the law asks of an analyst","slide":"s1","outcomes":["Name the PDPL rules an analysis request engages, from lawful basis to transfer","Distinguish analysis inside the collection purpose from a new purpose, a disclosure and a transfer","Decide which requests go to the data protection officer before any data is touched"],"minutes":50,"lab":{"id":"1.1","title":"Five requests, which rules","minutes":25,"href":"../labs/D1_1_five_requests.ipynb"}},{"n":2,"label":"Session 2","title":"Purpose, minimisation and secondary use","slide":"s2","outcomes":["Write a purpose precise enough to decide each field against","Cut an extract to the fields the purpose needs, keeping, coarsening or dropping each with a reason","Recognise a secondary use and name what the law and the national rules require before it starts"],"minutes":50,"lab":{"id":"1.2","title":"Cut the extract","minutes":25,"href":"../labs/D1_2_cut_extract.ipynb"}},{"n":3,"label":"Session 3","title":"Classifying data and outputs","slide":"s3","outcomes":["Classify a dataset or an output with the impact questions of the Data Classification Policy","Apply the highest-level rule to combined data and say when an aggregate can be Public","Name the control each level requires, including what may be entered into an AI tool"],"minutes":50,"lab":{"id":"1.3","title":"Classify and control","minutes":25,"href":"../labs/D1_3_classify_control.ipynb"}},{"n":4,"label":"Session 4","title":"Sharing requests","slide":"s4","outcomes":["Assess a sharing request against the tests of the Data Sharing Policy and the rules for secondary use","Choose the form of release: record level, pseudonymised or aggregate","Draft approval conditions under the policy's control headings and name who signs"],"minutes":50,"lab":{"id":"1.4","title":"The Observatory's request","minutes":25,"href":"../labs/D1_4_sharing_request.ipynb"}}],"slides":[{"id":"title","n":1,"title":"Lawful analysis","kind":"title","session":0,"hash":"b16059da","md":"#### [day1#title] Lawful analysis\n\n*SDAIA Academy · Responsible Data Practice and Conduct in Analytical Work*\n\nDay 1: Test the request, cut the data, classify it and decide what a partner may have\n\nData Science Track · 3 teaching days + capstone day · 4 sessions · 4 labs · DS-207","notes":"Welcome. Ask the room: who has been asked for data they were not sure they could hand over, and what did they do? Take two answers; they calibrate the pace. Rhythm of the day: four sessions, each about 25 minutes of concepts, one checkpoint, then a 25-minute lab. Press B for a break.\n\nThis course assumes FN-106: the law and the policies were introduced there. Here they are applied to analytical work.","minutes":null,"lo":[]},{"id":"agenda","n":2,"title":"Lawful analysis","kind":"content","session":0,"hash":"e388c611","md":"#### [day1#agenda] Lawful analysis\n\n*Today*\n\n- **Session 1 · What the law asks of an analyst**: Name the rules a request engages, and know when to ask before touching data\n- **Session 2 · Purpose, minimisation and secondary use**: The purpose decides the fields; a new purpose is a new decision\n- **Session 3 · Classifying data and outputs**: Tables, charts and lists get a level, and the level sets the controls\n- **Session 4 · Sharing requests**: Judge a partner's request, then answer with a form of release and conditions","notes":"","minutes":null,"lo":[]},{"id":"the-case","n":3,"title":"One unit, one rule, one analyst and a week of requests","kind":"content","session":0,"hash":"cc43ce73","md":"#### [day1#the-case] One unit, one rule, one analyst and a week of requests\n\n*The case*\n\n- **Al-Qimam University**: a fictional public university, six colleges, 18,000 students\n- **The Student Success Unit** runs **Awn**, a rule that refers students to academic support\n- **You are Ohoud Al-Lihyani**, the unit's analyst\n- Every record is synthetic, made with a fixed seed\n\n| Who | Role |\n| --- | --- |\n| Jassim Al-Nuaimi | Director of the unit |\n| Dr. Ibtisam Al-Khayyat | Vice-rector, a sponsor |\n| Dr. Nabil Al-Faraj | Dean of engineering |\n| Rami Al-Tuwaijri | Registrar, data owner |\n| Shatha Al-Omair | Data protection officer |\n| Hazza Al-Marri | Liaison of a government partner |","notes":"Introduce the people now; they return in every lab and in the role-plays of Day 3. The university is public on purpose: the national data policies apply to it directly, and the partner on Day 1 is another government body.","minutes":null,"lo":["LO1"]},{"id":"awn-rule","n":4,"title":"Awn refers a student on two signals","kind":"content","session":0,"hash":"09422e59","md":"#### [day1#awn-rule] Awn refers a student on two signals\n\n*The rule under study*\n\n1. **Attendance** recorded rate below 75%\n2. **or midterm mark** below 2.5 out of 5\n3. **Referral** an advisor contacts the student\n\n- **18,000** students this term\n- **2,040** referred by Awn\n- **2,191** ended the term struggling","notes":"\"Struggling\" is a term grade average below 2.5. The two counts are close and the two groups are not the same students: that gap is Day 2. Today the question is narrower: what may the analyst do with these records at all? Numbers are from the course data, `labs/data/students.csv`.","minutes":null,"lo":["LO4"]},{"id":"setup-check","n":5,"title":"Prove your setup in two minutes","kind":"content","session":0,"hash":"1bb0ca6d","md":"#### [day1#setup-check] Prove your setup in two minutes\n\n*Before the first lab*\n\n- **Google Colab.** Open `00_setup_check.ipynb` from the course page and run every cell. The first cell clones the course repository.\n- **Your laptop.** Clone the repository, then in `labs/` run `uv run jupyter lab` and open the same notebook.\n\n> **What you need.** Python and pandas. No lab calls a model, needs a key or downloads anything beyond the repository.","notes":"Run it now, together. The notebook prints the pandas version, reads the student file and reports 18,000 rows and 30 columns. If a laptop fails, move that participant to Colab and carry on; do not debug environments during session 1.","minutes":null,"lo":[]},{"id":"from-fn106","n":6,"title":"The pre-work gave you the instruments; this course is about using them at a desk","kind":"content","session":0,"hash":"fbc6b333","md":"#### [day1#from-fn106] The pre-work gave you the instruments; this course is about using them at a desk\n\n*Where you start*\n\n- **You know.** The PDPL's vocabulary, the four classification levels, the eight sharing principles, what a pseudonym does and does not hide.\n- **You practise here.** Testing a request, cutting an extract, classifying outputs, releasing tables, comparing groups, documenting, saying no with an alternative.\n- **Later, in DS-309.** Measured re-identification risk, differential privacy, synthetic data, fairness audits of models, model cards.","notes":"Ask for a show of hands on the entry quiz: which question was hardest? If most missed the classification question, slow down in session 3. Do not reteach FN-106; refer to it by name when a participant needs the basics.","minutes":null,"lo":["LO1"]},{"id":"s1","n":7,"title":"What the law asks of an analyst","kind":"section","session":1,"hash":"04a06745","md":"#### [day1#s1] What the law asks of an analyst\n\n*Session 1*\n\n- Name the PDPL rules an analysis request engages, from lawful basis to transfer\n- Distinguish analysis inside the collection purpose from a new purpose, a disclosure and a transfer\n- Decide which requests go to the data protection officer before any data is touched","notes":"","minutes":null,"lo":["LO1"]},{"id":"analysis-is-processing","n":8,"title":"Every step of an analysis is \"processing\" in the law","kind":"content","session":1,"hash":"8bba7dfc","md":"#### [day1#analysis-is-processing] Every step of an analysis is \"processing\" in the law\n\n*The first idea*\n\n- The PDPL's definition lists **collecting, storing, linking, using, disclosing, sharing, publishing and destroying**\n- A query, a join, a chart and an email attachment are each on that list\n- The **University is the controller**: it sets the purpose. You act for it\n- So the question is never \"is this analysis?\" but **\"which rules does this step engage?\"**\n\n- **At Al-Qimam.** Pulling 30 columns \"to have a look\" is collecting and storing. Joining the counselling register is linking. Sending a table to a dean is disclosing inside the controller; sending it to the Observatory is disclosing outside it.","notes":"Read the definition of processing in Article 1 aloud once. The point is that there is no neutral, pre-legal phase called \"exploration\".\n\nSources: Personal Data Protection Law, Article 1.","minutes":null,"lo":["LO1"]},{"id":"four-kinds","n":9,"title":"Four kinds of request, four gates","kind":"content","session":1,"hash":"1bf7b9e9","md":"#### [day1#four-kinds] Four kinds of request, four gates\n\n*Sort the request first*\n\n| The request is | The gate | In the case |\n| --- | --- | --- |\n| Inside the collection purpose | The purpose students were told | Does Awn reach struggling students? |\n| A new internal purpose | Only the cases Article 10 lists | A dean wants names with counselling visits |\n| A disclosure to another entity | Only the cases Article 15 lists | The Observatory wants records |\n| A transfer outside the Kingdom | Article 29 and the transfer regulation | An upload to a notebook service abroad |\n\n> **Method.** Name the kind before you argue about the data. The kind tells you which article to open.","notes":"This table is the spine of Lab 1.1. Ask the room for one request from their own work and have them place it. Many \"internal\" requests turn out to be new purposes.\n\nSources: Personal Data Protection Law, Articles 10, 15 and 29.","minutes":null,"lo":["LO1"]},{"id":"lawful-basis","n":10,"title":"A university's analysis rarely rests on consent","kind":"content","session":1,"hash":"5b112dee","md":"#### [day1#lawful-basis] A university's analysis rarely rests on consent\n\n*Lawful basis*\n\n- Consent is the default, and Article 6 lists cases that need none\n- **An agreement the student is party to**, or another law: enrolment, teaching, assessment, support\n- **Legitimate interest** of the controller: never for sensitive data\n- **Advertising** sent to a person needs prior consent, whatever else is true\n\n> **What goes wrong.** \"They agreed to the terms at registration\" used as a basis for anything. The basis covers the purposes in the notice. A new purpose needs its own gate.","notes":"Show the privacy notice of the case (`labs/data/privacy_notice.md`): teaching, assessment, advice and support, stipends, legal reporting, and the sentence \"does not use your data for advertising\". Request R4 in the lab dies on that sentence and on Article 25.\n\nSources: Personal Data Protection Law, Articles 5, 6, 25 and 26.","minutes":null,"lo":["LO1"]},{"id":"statistics-without-consent","n":11,"title":"Statistics without consent are allowed, on four duties","kind":"content","session":1,"hash":"c08a0805","md":"#### [day1#statistics-without-consent] Statistics without consent are allowed, on four duties\n\n*The analyst's own article*\n\n- **The law allows it when.** the data does not specifically identify the person, or the evidence of identity is destroyed before the data is disclosed (not for sensitive data), or another law or an agreement requires it.\n\n1. State the purpose in the **record of processing**\n2. Collect only the **minimum** the purpose needs\n3. **Pseudonymise** wherever the purpose can still be met\n4. Make sure the work has **no negative impact** on the people in the data","notes":"This is the article that makes most of the unit's work possible, and its duties are today's first two labs: minimum data and a pseudonym. Duty four is Day 2 and Day 3: a result that singles out a student, or a list that follows a student into grading, is a negative impact.\n\nSources: Personal Data Protection Law, Article 27; Implementing Regulation, Article 30.","minutes":null,"lo":["LO1"]},{"id":"sensitive-data","n":12,"title":"Health data sits in three ordinary-looking columns","kind":"content","session":1,"hash":"51bd5dc2","md":"#### [day1#sensitive-data] Health data sits in three ordinary-looking columns\n\n*Sensitive data*\n\n| Column | Why it is health data |\n| --- | --- |\n| `disability_type` | A health condition, stated |\n| `counselling_visits` | A health service received |\n| `advisor_note` | Free text: surgery, treatment, a hearing aid |\n\n- The PDPL's sensitive kinds include **health data**, ethnic origin, beliefs, criminal and biometric data\n- Health data: access for the **fewest staff** who need it to provide the service\n- Legitimate interest never covers it\n- A **registered or none** flag is still health data","notes":"Nationality is not on the PDPL's sensitive list by name; racial or ethnic origin is. Treat nationality with care in small groups all the same: Day 2 shows a table where nationality and disability together point at one student.\n\nSources: Personal Data Protection Law, Articles 1, 6 and 23.","minutes":null,"lo":["LO1"]},{"id":"rights-and-retention","n":13,"title":"A student can ask what you hold, and the extract has an end date","kind":"content","session":1,"hash":"7d043fa0","md":"#### [day1#rights-and-retention] A student can ask what you hold, and the extract has an end date\n\n*Rights and retention*\n\n- **Rights:** to be informed, to access, to get a copy, to correct, to have data destroyed when no longer needed\n- The University answers within **30 days**\n- **Retention:** destroy personal data when the purpose is met; data that no longer identifies anyone may be kept\n\n- **What this means at your desk.** Know where every copy of an extract is. Give each extract a destruction date in the log. Keep the pseudonym key in the unit, so a student's rows can be found for an access request and nowhere else.","notes":"The stretch of Lab 1.1 is an access request from a student who heard about the Awn study. The answer goes through the data protection officer; the analyst's part is being able to find the rows.\n\nSources: Personal Data Protection Law, Articles 4, 18 and 21; Implementing Regulation (time to respond).","minutes":null,"lo":["LO1"]},{"id":"disclosure-transfer-breach","n":14,"title":"Three words that are not synonyms: disclosure, transfer, breach","kind":"content","session":1,"hash":"448790de","md":"#### [day1#disclosure-transfer-breach] Three words that are not synonyms: disclosure, transfer, breach\n\n*When data leaves*\n\n- **Disclosure.** Someone outside the controller gets access. Allowed only in listed cases, such as a public entity asking for a public-interest purpose.\n- **Transfer.** The data is processed outside the Kingdom. Needs an adequate level of protection or approved safeguards, and the minimum data.\n- **Breach.** Access nobody allowed: a lost laptop, a file sent to the wrong list. The University notifies the authority within 72 hours where harm is expected.\n\n> **Your part in a breach.** Tell the data protection officer at once. The 72 hours run from when the University knows, and you are the University.","notes":"A free online notebook hosted abroad is a transfer even when nobody else ever opens the file. That is request R5 in the lab. Safeguards named in the transfer regulation include standard contractual clauses and binding common rules; an analyst does not arrange these alone.\n\nSources: Personal Data Protection Law, Articles 15, 20 and 29; Regulation on Personal Data Transfer outside the Kingdom; Implementing Regulation (breach notification).","minutes":null,"lo":["LO1"]},{"id":"ask-the-dpo","n":15,"title":"The analyst prepares the decision; the data protection officer owns the hard ones","kind":"content","session":1,"hash":"5f1350ed","md":"#### [day1#ask-the-dpo] The analyst prepares the decision; the data protection officer owns the hard ones\n\n*Who decides*\n\n- She monitors how the law is applied and supervises impact assessments\n- She receives data subjects' requests and reports breaches\n- She keeps the **record of processing** up to date\n\n- **Rule of thumb.** Inside the collection purpose: proceed, minimise, record. Anything else (a new purpose, sensitive data, a disclosure, a transfer, advertising): to her **before** any data is touched, with your note attached.","notes":"The note is the lab's last task: what was asked, the kind of processing, the rules engaged, what happens next. A data protection officer who receives that note can answer in minutes; one who receives \"can I send this?\" cannot.\n\nSources: Implementing Regulation, Article 32.","minutes":null,"lo":["LO1"]},{"id":"check-kind-of-request","n":16,"title":"Which gate does this request pass through?","kind":"quiz","session":1,"hash":"59a16556","md":"#### [day1#check-kind-of-request] Which gate does this request pass through?\n\n*Checkpoint*\n\n**Question:** The alumni office asks the analyst for the grade averages of last year's graduates, to invite the top tenth to a paid executive programme run with a private partner. Which rule decides the answer?\n\n- A. Purpose limitation is satisfied, because the data stays inside the University\n- B. The sensitive-data rule, because grades are sensitive data\n- C. Purpose limitation and marketing consent: a new purpose that is advertising\n- D. The disclosure rule, because the alumni office is another entity","notes":"Answer: the third option. If the room splits between the first and the third, ask what the privacy notice told these students. If someone argues legitimate interest, accept the argument for a non-commercial alumni newsletter and ask what changes when a private partner and a fee appear.","minutes":null,"lo":["LO1"]},{"id":"lab-1-1","n":17,"title":"Five requests, which rules","kind":"lab","session":1,"hash":"4cac70fc","md":"#### [day1#lab-1-1] Five requests, which rules\n\nLab 1.1 · 25 min\n\nMap five requests to the PDPL principles they engage, and write the note that says so for one of them.\n\n[D1_1_five_requests.ipynb](https://sdaiaacademy.github.io/ds-207/labs/D1_1_five_requests.ipynb)\n\n- [ ] Read the five requests and the privacy notice (4 min)\n- [ ] Name the kind of processing each request is (5 min)\n- [ ] Mark the rules each request engages (8 min)\n- [ ] Flag the requests that go to the data protection officer (3 min)\n- [ ] Write the note for one request (5 min)\n- [ ] ✱ Stretch: Add a sixth request: a student asks for a copy of her data used in the analysis","notes":"Watch for participants who mark all nine rules for every request: the lab asks for the deciding ones. Typical error: R3 marked \"refuse\"; it is a lawful disclosure that needs minimising. Collect two notes for R2 at the end and read them aloud. No earlier lab is needed.","minutes":null,"lo":[]},{"id":"s2","n":18,"title":"Purpose, minimisation and secondary use","kind":"section","session":2,"hash":"a047cd1e","md":"#### [day1#s2] Purpose, minimisation and secondary use\n\n*Session 2*\n\n- Write a purpose precise enough to decide each field against\n- Cut an extract to the fields the purpose needs, keeping, coarsening or dropping each with a reason\n- Recognise a secondary use and name what the law and the national rules require before it starts","notes":"","minutes":null,"lo":["LO1","LO2"]},{"id":"purpose-sentence","n":19,"title":"A purpose is precise enough when it can reject a column","kind":"content","session":2,"hash":"10d5f396","md":"#### [day1#purpose-sentence] A purpose is precise enough when it can reject a column\n\n*Purpose*\n\n- **Too loose to decide anything.** \"Understand student success.\" Every one of the 30 columns might help with that.\n- **Precise enough to cut with.** \"Evaluate whether Awn's referrals in term 1 reached the students who ended the term struggling, by college and level, to decide whether to extend the rule.\"\n\n- It names the **decision**, the **population**, the **measure** and the **breakdown**\n- The law: collect for purposes directly related to the controller's own, and process only for those","notes":"Have the room test the second sentence against three columns: home address (no), level (yes), nationality (no, not for this purpose). The same four parts return on Day 3 as the scope note.\n\nSources: Personal Data Protection Law, Articles 10 and 11.","minutes":null,"lo":["LO1"]},{"id":"keep-coarsen-drop","n":20,"title":"Every field gets one of three verdicts","kind":"content","session":2,"hash":"cdc19251","md":"#### [day1#keep-coarsen-drop] Every field gets one of three verdicts\n\n*Minimisation*\n\n- **Keep.** The purpose needs it as it is: the rule's inputs, its output, the outcome, the breakdown.\n- **Coarsen.** The purpose needs a rougher form: a band for a date, a flag for a grade, a pseudonym for a student number.\n- **Drop.** The purpose does not need it. \"It might be useful\" is not a need.\n\n> **The legal test.** Content limited to the minimum necessary for the purpose, and nothing that identifies a person once the purpose is achieved.","notes":"Coarsening is the verdict people forget. Date of birth to birth year, exact grade to struggled or not, registry number to a project pseudonym. The national guideline names generalisation and aggregation as techniques.\n\nSources: Personal Data Protection Law, Article 11; Personal Data Destruction, Anonymization and Pseudonymisation Guideline.","minutes":null,"lo":["LO1","LO2"]},{"id":"thirty-to-eight","n":21,"title":"The Awn evaluation needs 8 of the registry's 30 columns","kind":"content","session":2,"hash":"02c29587","md":"#### [day1#thirty-to-eight] The Awn evaluation needs 8 of the registry's 30 columns\n\n*From the lab's run*\n\n| Item | Value |\n| --- | --- |\n| Dropped | 22 |\n| Kept | 7 |\n| Coarsened | 1 |\n\n- **Kept:** college, level, admission route, attendance, midterm mark, referral, outcome\n- **Coarsened:** the student number, into a project pseudonym\n- **Dropped:** names, identity numbers, contacts, addresses, bank accounts, health fields, notes, and the exact term grade","notes":"These are the counts of the solution of Lab 1.2. A participant who keeps the exact term grade or the login count is not wrong in law if the reason is written; the log is the point. Gender, nationality and disability status are dropped here because this purpose does not need them: the group comparison of Day 2 is a separate decision, approved by the data protection officer.","minutes":null,"lo":["LO2"]},{"id":"free-text","n":22,"title":"Pattern rules find the identifiers that have a shape, and miss the rest","kind":"content","session":2,"hash":"82bbbe66","md":"#### [day1#free-text] Pattern rules find the identifiers that have a shape, and miss the rest\n\n*Personal data detection*\n\n| In 2,400 advisor notes | Notes | Found by a pattern? |\n| --- | --- | --- |\n| A mobile number | 180 | Yes |\n| An identity number | 70 | Yes |\n| A health remark | 210 | No |\n| Another student's name | 80 | No |\n\n```python\nre.search(r\"\\b05\\d{8}\\b\", note)     # phone\nre.search(r\"\\b[12]\\d{9}\\b\", note)   # identity\n```\n\n> **So.** A free-text column is dropped whole, not cleaned. Detection tools (regular expressions, Presidio) lower the risk; they do not certify a text.","notes":"Demonstration: run task 3 of Lab 1.2 and then the \"look at\" cell, which prints a dialysis note and a note that accuses a named student. Neither has a pattern. The counts are planted by the data generator and found by the lab.","minutes":null,"lo":["LO1"]},{"id":"pseudonym-is-personal","n":23,"title":"\"Anonymised\" has a legal meaning, and your extract does not meet it","kind":"content","session":2,"hash":"cddbaf45","md":"#### [day1#pseudonym-is-personal] \"Anonymised\" has a legal meaning, and your extract does not meet it\n\n*A word used loosely*\n\n- **Pseudonymised.** Identifiers replaced by a code. Someone holds the key, and each row is still one student. **Still personal data.** Every rule still applies.\n- **Anonymised.** Re-identification is **impossible**, the controller has assessed that, and keeps assessing it as methods change. Only then is it no longer personal data.\n\n> **At your desk.** Say \"pseudonymised extract\". Use a keyed hash with a key for this project only, so two extracts cannot be joined.","notes":"FN-106 attacked a pseudonymised file by linkage; do not repeat it, recall it. The measured version (k-anonymity, uniqueness) is in DS-309. Here the participant only needs the vocabulary to be exact, because the classification in session 3 depends on it.\n\nSources: Implementing Regulation, Article 9; Personal Data Destruction, Anonymization and Pseudonymisation Guideline.","minutes":null,"lo":["LO1","LO2"]},{"id":"secondary-use","n":24,"title":"A new purpose for old data is a new decision","kind":"content","session":2,"hash":"12f9fb68","md":"#### [day1#secondary-use] A new purpose for old data is a new decision\n\n*Secondary use*\n\n- **Secondary use:** using data for a purpose other than the one it was collected for\n- The PDPL allows it only in listed cases: consent, a public entity acting in the public interest, data that no longer identifies anyone, and a few more\n- The **General Rules for Secondary Use of Data** govern requests between entities for the public interest or for research\n\n- **What the Rules ask of an applicant.** A legitimate purpose that is not profit-seeking. Only the minimum data for it. A request to the entity that is the source of the data, or proof of its approval. A rejection must give its reasons.","notes":"The Rules complement the Data Sharing Policy; session 4 uses both. Inside the University the same idea holds without the Rules: the dean's request and the communications office's request are secondary uses, and neither fits a listed case.\n\nSources: Personal Data Protection Law, Article 10; General Rules for Secondary Use of Data.","minutes":null,"lo":["LO1","LO2"]},{"id":"minimisation-log","n":25,"title":"The cut is a decision, so it leaves a log","kind":"content","session":2,"hash":"762a4ce0","md":"#### [day1#minimisation-log] The cut is a decision, so it leaves a log\n\n*Recording why*\n\n| Field | Decision | Reason |\n| --- | --- | --- |\n| `student_id` | coarsen | A project pseudonym keeps one row per student without the registry number |\n| `admission_route` | keep | Bridging-year entrants have no midterm mark; needed to read the rule's result |\n| `term_gpa` | drop | The outcome flag already says struggled or not |\n| `advisor_note` | drop | Free text: cannot be checked field by field |\n\n> **Who reads it.** The data owner who approves the extract, the reviewer who audits it, and you, six months later.","notes":"Four rows of the solution's log. The log returns on Day 3 as part of the analysis log, with an approver beside each decision. Ask: which of these reasons would you be least comfortable defending? Usually the admission route; it is kept because without it the rule's misses cannot be read.","minutes":null,"lo":["LO2","LO5"]},{"id":"check-minimise","n":26,"title":"Which extract fits the purpose?","kind":"quiz","session":2,"hash":"c50da6ba","md":"#### [day1#check-minimise] Which extract fits the purpose?\n\n*Checkpoint*\n\n**Question:** Purpose: \"report the share of first-year students who end the term struggling, by college\". Which extract is the minimum that serves it?\n\n- A. A pseudonym, the college, the level and the outcome flag, for first-year students\n- B. The same, plus the student number and email in case a college wants to follow up\n- C. The college, the level, the exact term grade and the date of birth\n- D. The college, the level and the outcome flag for all 18,000 students, filtered later","notes":"Answer: the first option. The fourth option is the one experienced analysts choose; minimisation applies to rows as well as columns. If someone asks whether even the pseudonym is needed: only if the same student must not be counted twice; for a single clean table it could go too.","minutes":null,"lo":["LO1","LO2"]},{"id":"lab-1-2","n":27,"title":"Cut the extract","kind":"lab","session":2,"hash":"27995868","md":"#### [day1#lab-1-2] Cut the extract\n\nLab 1.2 · 25 min\n\nCut an extract to the fields the purpose needs, recording why, and find the identifiers hiding in free text.\n\n[D1_2_cut_extract.ipynb](https://sdaiaacademy.github.io/ds-207/labs/D1_2_cut_extract.ipynb)\n\n- [ ] Read the purpose and the 30 columns of the registry (3 min)\n- [ ] Decide keep, coarsen or drop for each field, with a reason (8 min)\n- [ ] Scan the advisor notes for identifiers with rules (5 min)\n- [ ] Build the extract with a project pseudonym (6 min)\n- [ ] Write the minimisation log (3 min)\n- [ ] ✱ Stretch: Decide the fields again for a second purpose, the partner's study, and say what makes it a secondary use","notes":"Task 2 is where the time goes: thirty decisions in eight minutes means deciding by family (identity, contact, health, programme, the rule). Typical problem: keeping the group fields \"for fairness later\"; point to the \"look at\" note. The lab writes its log to `labs/artifacts/`. No earlier lab is needed.","minutes":null,"lo":[]},{"id":"s3","n":28,"title":"Classifying data and outputs","kind":"section","session":3,"hash":"0f13e2a7","md":"#### [day1#s3] Classifying data and outputs\n\n*Session 3*\n\n- Classify a dataset or an output with the impact questions of the Data Classification Policy\n- Apply the highest-level rule to combined data and say when an aggregate can be Public\n- Name the control each level requires, including what may be entered into an AI tool","notes":"","minutes":null,"lo":["LO2"]},{"id":"outputs-are-data","n":29,"title":"A table, a chart and a list are data, and each needs a level","kind":"content","session":3,"hash":"f6791691","md":"#### [day1#outputs-are-data] A table, a chart and a list are data, and each needs a level\n\n*The idea of this session*\n\n- The policy covers all data a public entity **receives, produces or manages**, in any form\n- An output does **not inherit** the level of its source\n- Classify **when you create it**: until someone does, it is treated as Restricted\n\n- **In the Awn evaluation.** One Restricted registry produces a Restricted extract, a Restricted worklist, a Restricted draft table and, after approval, a Public table of referral rates by college.","notes":"Analysts classify sources and forget outputs. The slide deck you send to a dean is data; so is the screenshot in a chat. Ask the room what they produced last week that nobody classified.\n\nSources: Data Classification Policy, scope and principle 3; classification controls.","minutes":null,"lo":["LO2"]},{"id":"four-levels-recap","n":30,"title":"The level follows the impact of disclosure","kind":"content","session":3,"hash":"d9be3677","md":"#### [day1#four-levels-recap] The level follows the impact of disclosure\n\n*Recap from the pre-work*\n\n| Level | Impact | What it looks like at a university |\n| --- | --- | --- |\n| Top Secret | High | Not in a student-success unit |\n| Secret | Medium | Not in a student-success unit |\n| Restricted | Low | Student records, the extract, a named worklist, a draft with small cells |\n| Public | None | The timetable, a released table of rates by college |\n\n> **Why not Secret?** The policy rates the disclosure of an individual's personal information as a low impact. Low impact leads to Restricted or Public.","notes":"One slide of recap; the levels and impact categories were a session of FN-106. The common mistake in this room will be over-classifying student data as Secret because it feels serious. The level is about impact on national interests, entities, individuals and the environment, and the table of the policy places individual privacy at low.\n\nSources: Data Classification Policy, classification levels and Table 2.","minutes":null,"lo":["LO2"]},{"id":"low-impact-route","n":31,"title":"Low impact needs two more questions","kind":"content","session":3,"hash":"08fe0f5c","md":"#### [day1#low-impact-route] Low impact needs two more questions\n\n*Restricted or Public?*\n\n1. **Impact is low** harm to individuals is limited and short-term\n2. **Would disclosure conflict with a law?** Yes: Restricted\n3. **Do the benefits of openness outweigh the harm?** Yes: Public. No: Restricted\n\n- **The extract.** Rows about single students. Disclosure would break the PDPL. Restricted at the first question.\n- **Rates by college.** Nobody is identified, no law is broken, publishing helps students and the public. Public.","notes":"These are steps 4 and 5 of the policy's process. The policy's first principle is open by default in the development sector: the aim of the two questions is to publish what can be published, not to find a reason to restrict.\n\nSources: Data Classification Policy, classification process, steps 3 to 5.","minutes":null,"lo":["LO2"]},{"id":"highest-level","n":32,"title":"A joined file takes the highest level of its parts","kind":"content","session":3,"hash":"d5d3ccf6","md":"#### [day1#highest-level] A joined file takes the highest level of its parts\n\n*Combined data*\n\n1. **Timetable** Public\n2. **joined to the registry** Restricted\n3. **Attendance by time of day, per student** Restricted\n\n- The policy's fourth principle: the **highest level of protection** for an integrated dataset\n- The reverse also happens: an **aggregate** of Restricted rows can be Public\n- So the level is set for each output, by what that output would reveal","notes":"In the lab this is one line of code. The teaching point is the second bullet: aggregation can lower the level, but only when no cell points at a person. The draft table in the lab has a cell of 1; it stays Restricted until Day 2 fixes it.\n\nSources: Data Classification Policy, principle 4.","minutes":null,"lo":["LO2"]},{"id":"controls-by-level","n":33,"title":"The level tells you how to mark, open, store, send and end the data","kind":"content","session":3,"hash":"0d8ccd02","md":"#### [day1#controls-by-level] The level tells you how to mark, open, store, send and end the data\n\n*Controls*\n\n| Control | Restricted item | Public item |\n| --- | --- | --- |\n| Protective marking | Marked on the file and in the email | None needed |\n| Access | Need to know, least privilege | Open |\n| Storage | Not left unattended; encrypted | Anywhere |\n| Sharing | An agreed secure channel | Any channel |\n| Retention and disposal | On the schedule, disposal logged | On the schedule |\n| Before release | Second-person check, owner's approval | Done |","notes":"The first five rows are the policy's control families. The last row is the unit's own release policy (`labs/data/release_policy.md`): a table with a suppressed cell is checked by a second person and approved by the data owner before it becomes Public. Health data adds a rule from the PDPL: the fewest staff who need it.\n\nSources: Data Classification Policy, classification controls; Personal Data Protection Law, Article 23.","minutes":null,"lo":["LO2"]},{"id":"ai-tools","n":34,"title":"Only Public data goes into a generative AI tool","kind":"content","session":3,"hash":"91240cdc","md":"#### [day1#ai-tools] Only Public data goes into a generative AI tool\n\n*What may go into AI tools*\n\n**Analyst:** Here are 200 rows of the extract. Summarise the patterns by college.\n\n**Hosted assistant (weak example):** Happy to help. I have stored your file...\n\n- Government employees enter **nothing classified Restricted or higher**, and nothing unclassified\n- A pseudonymised extract is Restricted: **no**\n- A released table of rates: **yes**\n- Asking for **code** without pasting data: yes","notes":"The guideline for government is explicit. The practical route for an analyst: describe the columns, ask for the code, run it locally. A hosted tool abroad adds the transfer problem of session 1 on top of the classification problem.\n\nSources: Generative AI Guidelines for Government.","minutes":null,"lo":["LO2"]},{"id":"who-classifies","n":35,"title":"You propose a level; the data owner classifies; a reviewer checks","kind":"content","session":3,"hash":"682cb882","md":"#### [day1#who-classifies] You propose a level; the data owner classifies; a reviewer checks\n\n*Roles and time*\n\n1. **Analyst** proposes a level and controls for each output\n2. **Data owner** (the registrar) classifies\n3. **Reviewer** in the data management office checks within a month\n\n> **Levels change.** Set the trigger when you classify: \"Restricted until the release is approved\", \"Public from the publication date\". Record it in the register.","notes":"The policy calls the classifier the Business Data Executive. In the case that is Rami Al-Tuwaijri for student records. Declassification triggers can be a period after creation, a period after last use, a date or an event. The lab's stretch asks for one.\n\nSources: Data Classification Policy, classification process (steps 2, 6 and 7), roles, declassification.","minutes":null,"lo":["LO2"]},{"id":"check-classify-output","n":36,"title":"What level is this output today?","kind":"quiz","session":3,"hash":"e3a22a4d","md":"#### [day1#check-classify-output] What level is this output today?\n\n*Checkpoint*\n\n**Question:** You compute a table of registered-disability counts by college and nationality group from the pseudonymised extract. Two cells are under 10 and one is 1. Nobody has reviewed it. What is its level now?\n\n- A. Public, because it is an aggregate with no names\n- B. Restricted, because every output of a Restricted source stays Restricted\n- C. Secret, because it contains health data\n- D. Restricted, because a cell of 1 can single out a student, until it is suppressed and checked","notes":"Answer: the fourth option. The second option has the right level and the wrong reason; spend a minute on it, because the wrong reason would also keep the rates-by-college table Restricted for ever.","minutes":null,"lo":["LO2"]},{"id":"lab-1-3","n":37,"title":"Classify and control","kind":"lab","session":3,"hash":"c2045820","md":"#### [day1#lab-1-3] Classify and control\n\nLab 1.3 · 25 min\n\nClassify four datasets and three outputs and name each control.\n\n[D1_3_classify_control.ipynb](https://sdaiaacademy.github.io/ds-207/labs/D1_3_classify_control.ipynb)\n\n- [ ] Run the impact questions on the four datasets (7 min)\n- [ ] Classify the three outputs (6 min)\n- [ ] Apply the highest-level rule to a joined file (3 min)\n- [ ] Name the controls for each item (6 min)\n- [ ] Decide what may be entered into an AI tool (3 min)\n- [ ] ✱ Stretch: Set a declassification trigger for the referral table and say who approves it","notes":"Watch task 2: participants argue about whether the rates table is Public \"today\". Both answers pass the check if the reason is right; the register must say what turns it Public. Typical error in task 4: choosing every control for every item. No earlier lab is needed.","minutes":null,"lo":[]},{"id":"s4","n":38,"title":"Sharing requests","kind":"section","session":4,"hash":"df2c03c0","md":"#### [day1#s4] Sharing requests\n\n*Session 4*\n\n- Assess a sharing request against the tests of the Data Sharing Policy and the rules for secondary use\n- Choose the form of release: record level, pseudonymised or aggregate\n- Draft approval conditions under the policy's control headings and name who signs","notes":"","minutes":null,"lo":["LO2"]},{"id":"sharing-is-expected","n":39,"title":"The policy expects you to share, and tells you how","kind":"content","session":4,"hash":"621aabf1","md":"#### [day1#sharing-is-expected] The policy expects you to share, and tells you how\n\n*The starting point*\n\n- Its first principle is a **data sharing culture**: entities share what they produce\n- The other seven principles are the conditions: legitimate purpose, authorised access, transparency, accountability, security, ethical use, one source of truth\n- For personal data the **PDPL's disclosure cases** apply on top\n\n- **The analyst's part.** You will be the person who knows what the data contains. You prepare the assessment and the conditions. The data management office decides, with the data protection officer.","notes":"The eight principles were taught in FN-106; one line of recap is enough. The attitude matters: a unit that answers every request with \"no\" teaches partners to stop asking and start finding another way.\n\nSources: Data Sharing Policy, main principles and roles (clause Eighth, paragraph 6).","minutes":null,"lo":["LO2"]},{"id":"parties-and-route","n":40,"title":"A request has three roles and one front door","kind":"content","session":4,"hash":"d5f3d004","md":"#### [day1#parties-and-route] A request has three roles and one front door\n\n*Parties and route*\n\n| Role | In the case |\n| --- | --- |\n| Data requester | Masarat Labour Market Observatory |\n| Data sharing entity | Al-Qimam University |\n| Data source entity | The University for marks; another entity for identity numbers |\n\n- The front door is the **data management office**, never an analyst's inbox\n- Requests for analytical purposes go to the **National Data Bank** first\n- Between government entities: the **controls template**. With a private entity: a **data sharing agreement**","notes":"The request in the lab arrived by email to the analyst. The first correct act is to forward it to the office and say so to the requester. Whether a field's source is the University matters: the policy asks for the source entity's consent when the sharing entity is not the source.\n\nSources: Data Sharing Policy, definitions; general rules (clause Third, paragraphs 5, 7 and 13); clause Sixth.","minutes":null,"lo":["LO2"]},{"id":"three-tests","n":41,"title":"Three tests decide whether sharing can go ahead","kind":"content","session":4,"hash":"7ef6c418","md":"#### [day1#three-tests] Three tests decide whether sharing can go ahead\n\n*The assessment*\n\n- **1 · Legitimate purpose.** A legal basis or a justified operational need. For the Observatory: its mandate, a public-interest purpose. **Met.**\n- **2 · Minimum data.** Only what the purpose needs. It asked for 11 fields of all 18,000 students. **Not met.**\n- **3 · The source's consent.** Needed for fields the University is not the source of. **Met with conditions.**\n\n> **Time.** The office assesses within 10 business days and gives its reasons in writing. A rejected request may be corrected and sent again.","notes":"The verdicts are the solution of Lab 1.4. A failed test is not the end: the office says what must change, the requester resubmits, and the office decides again within five business days.\n\nSources: Data Sharing Policy, clause Sixth (paragraph 3) and clause Seventh.","minutes":null,"lo":["LO2"]},{"id":"form-of-release","n":42,"title":"Choose the least revealing form that still serves the purpose","kind":"content","session":4,"hash":"6e43dd93","md":"#### [day1#form-of-release] Choose the least revealing form that still serves the purpose\n\n*In what form*\n\n| Form | What leaves | Serves a linkage study? |\n| --- | --- | --- |\n| Aggregate | Counts and averages by programme | No |\n| Pseudonymised | Rows under a code only the University can reverse | No |\n| Record level, minimised | Rows with the identity number and the few fields needed | Yes |\n\n- **11 × 18,000** fields and students asked for\n- **5 × 3,612** offered: final-year students, five fields","notes":"Aggregates are not always the answer; a participant who says \"aggregates only\" has refused the purpose without saying so. The purpose is linkage to employment records, and employment follows graduation: final-year students, the identity number, college, programme, level and a grade band. Numbers from the solution of Lab 1.4.","minutes":null,"lo":["LO2"]},{"id":"eight-headings","n":43,"title":"Eight headings turn \"yes, but\" into something signable","kind":"content","session":4,"hash":"4a2ca47a","md":"#### [day1#eight-headings] Eight headings turn \"yes, but\" into something signable\n\n*The conditions*\n\n1. **Legal basis:** the purpose, and no other use\n2. **Authorisation:** named people, need to know\n3. **Data type:** the fields, the format, the detail\n4. **Pre-processing:** masking, aggregation before or after\n\n5. **Sharing means:** the channel; retention and destruction\n6. **Usage and protection:** the level, limits, onward use\n7. **Duration and termination:** end date, what happens then\n8. **Liability:** who answers for what\n\n> **Read the request for its weak points.** \"By email\", \"and its contractors\", \"a consulting firm\", \"kept for future studies\": each one becomes a condition.","notes":"These are the eight control groups of the policy's fifth clause. In the lab each heading gets one sentence. Read two of the solution's conditions aloud: the channel (the Government Service Bus or another approved channel, never an attachment) and the destruction of identity numbers after linkage.\n\nSources: Data Sharing Policy, clause Fifth.","minutes":null,"lo":["LO2"]},{"id":"who-signs","n":44,"title":"The level of the data decides who signs","kind":"content","session":4,"hash":"dfdf1f05","md":"#### [day1#who-signs] The level of the data decides who signs\n\n*The decision record*\n\n| Level of the shared data | Who signs for the sharing entity |\n| --- | --- |\n| Secret, Top Secret | The head of the entity or a delegate |\n| Restricted | The director of the data management office |\n| Public | No assessment or agreement needed |\n\n- The record names the decision, the level, the signatory and who was consulted\n- It goes into the **record of processing** and the office's log of requests\n- Sharing records are kept for **five years** after the request ends","notes":"The analyst's name is on the record as \"prepared by\". That line is a protection as well as a duty: it shows the analyst did not decide alone. Day 3 builds the same habit into the analysis log.\n\nSources: Data Sharing Policy, clause Third (paragraph 12), clause Sixth (paragraph 8), clause Eighth (paragraph 7); Personal Data Protection Law, Article 31.","minutes":null,"lo":["LO2"]},{"id":"a-fact-changes","n":45,"title":"Change one fact and the decision changes with it","kind":"content","session":4,"hash":"cf4b10e0","md":"#### [day1#a-fact-changes] Change one fact and the decision changes with it\n\n*Decisions move*\n\n| If the request changed to | What now applies |\n| --- | --- |\n| A private company as requester | A data sharing agreement, a licence under the secondary-use rules, no profit-seeking purpose, and a different PDPL disclosure case |\n| Analysts outside the Kingdom | The transfer rules: adequate protection or approved safeguards |\n| Disability status added | Sensitive data: the narrowest reading of every test |\n| Aggregates only | Small-cell rules, and perhaps a Public table |\n\n> **In the capstone.** The assessor changes one fact of your partner's request and you revise the decision aloud.","notes":"Use this slide to rehearse the capstone's authenticity check. Pick one row, give the room one minute in pairs, and ask one pair to say which condition they would rewrite. The lab's stretch is the second row.\n\nSources: Data Sharing Policy; General Rules for Secondary Use of Data; Personal Data Protection Law, Articles 15 and 29.","minutes":null,"lo":["LO2"]},{"id":"check-sharing","n":46,"title":"What is the right first answer to this request?","kind":"quiz","session":4,"hash":"5cae263a","md":"#### [day1#check-sharing] What is the right first answer to this request?\n\n*Checkpoint*\n\n**Question:** A government health authority emails the analyst: \"For a wellbeing study, send names and counselling visit counts of all students.\" What comes first?\n\n- A. Send it: a public entity asked, for the public interest\n- B. Forward it to the data management office and the data protection officer, with your assessment\n- C. Refuse: counselling data is health data and is never shared\n- D. Send pseudonymised rows instead, which removes the names","notes":"Answer: the second option. The fourth option is tempting because it sounds careful; it is still the analyst deciding to disclose health data about single students. If the room chooses refusal, ask what the health authority does next: it finds someone less careful.","minutes":null,"lo":["LO2"]},{"id":"lab-1-4","n":47,"title":"The Observatory's request","kind":"lab","session":4,"hash":"5de39709","md":"#### [day1#lab-1-4] The Observatory's request\n\nLab 1.4 · 25 min\n\nAssess a partner's sharing request and draft the approval conditions.\n\n[D1_4_sharing_request.ipynb](https://sdaiaacademy.github.io/ds-207/labs/D1_4_sharing_request.ipynb)\n\n- [ ] Read the request and name the parties and the route (4 min)\n- [ ] Assess it against the three tests (6 min)\n- [ ] Choose the form of release (5 min)\n- [ ] Draft the conditions under the eight control headings (7 min)\n- [ ] Fill the decision record and name who signs (3 min)\n- [ ] ✱ Stretch: The partner adds a consultant outside the Kingdom: revise the decision","notes":"Watch task 3: some participants answer \"aggregate\" by reflex. Ask them how the Observatory would link aggregates to employment records. Task 4 needs the request open beside the headings. The lab writes the decision to `labs/artifacts/`. No earlier lab is needed.","minutes":null,"lo":[]},{"id":"wrap-up","n":48,"title":"Three things to keep","kind":"content","session":4,"hash":"d4925a57","md":"#### [day1#wrap-up] Three things to keep\n\n*Day 1*\n\n- **Name the kind first.** Inside the purpose, a new purpose, a disclosure, a transfer. The kind tells you which rule to open and who decides.\n- **The purpose cuts the data.** Keep, coarsen or drop, with a reason in a log. Thirty columns became eight.\n- **Outputs get a level and requests get conditions.** Classify what you produce. Answer a partner with a form of release and eight conditions.","notes":"Ask each participant for one sentence: which of today's four labs would have changed something they did last month? Collect three answers.","minutes":null,"lo":["LO1","LO2"]},{"id":"next","n":49,"title":"Day 2: fair and safe outputs","kind":"content","session":4,"hash":"93f2f372","md":"#### [day1#next] Day 2: fair and safe outputs\n\n*Tomorrow*\n\nA table that looks harmless and points at one student. A rule that looks neutral and is wrong more often for two groups.\n\n- Bring: your setup, working\n- Recall: a confidence interval for a proportion","notes":"Day 2 starts from supplied files, so nobody is blocked by an unfinished lab of today. Remind participants of the prerequisite: rates and an interval for a proportion by group.","minutes":null,"lo":["LO3","LO4"]}],"activities":[{"id":"check-kind-of-request-q1","slide":"check-kind-of-request","type":"single","prompt":"The alumni office asks the analyst for the grade averages of last year's graduates, to invite the top tenth to a paid executive programme run with a private partner. Which rule decides the answer?","options":[{"key":"A","text":"Purpose limitation is satisfied, because the data stays inside the University"},{"key":"B","text":"The sensitive-data rule, because grades are sensitive data"},{"key":"C","text":"Purpose limitation and marketing consent: a new purpose that is advertising"},{"key":"D","text":"The disclosure rule, because the alumni office is another entity"}],"correct":[2],"explanation":"The data was collected to teach, assess and support. An invitation to a paid programme is a new purpose and it is advertising sent to a person, which needs that person's prior consent.","misconceptions":["Treats any use by the same university as the original purpose: selling a programme is not teaching or support","Confuses a grade with a sensitive kind: grades are personal data, not on the sensitive list","","Assumes every request from outside the unit is a disclosure: the alumni office is part of the same controller"],"lo":["LO1"]},{"id":"check-minimise-q1","slide":"check-minimise","type":"single","prompt":"Purpose: \"report the share of first-year students who end the term struggling, by college\". Which extract is the minimum that serves it?","options":[{"key":"A","text":"A pseudonym, the college, the level and the outcome flag, for first-year students"},{"key":"B","text":"The same, plus the student number and email in case a college wants to follow up"},{"key":"C","text":"The college, the level, the exact term grade and the date of birth"},{"key":"D","text":"The college, the level and the outcome flag for all 18,000 students, filtered later"}],"correct":[0],"explanation":"The purpose names first-year students, colleges and one outcome. Rows and fields beyond that are data the purpose does not need.","misconceptions":["","Keeps identifiers 'in case of follow-up': follow-up is a different purpose with its own approval","Treats precision as harmless: the exact grade and birth date add detail the question never uses","Assumes more rows cannot hurt: students outside the population are outside the purpose"],"lo":["LO2"]},{"id":"check-classify-output-q1","slide":"check-classify-output","type":"single","prompt":"You compute a table of registered-disability counts by college and nationality group from the pseudonymised extract. Two cells are under 10 and one is 1. Nobody has reviewed it. What is its level now?","options":[{"key":"A","text":"Public, because it is an aggregate with no names"},{"key":"B","text":"Restricted, because every output of a Restricted source stays Restricted"},{"key":"C","text":"Secret, because it contains health data"},{"key":"D","text":"Restricted, because a cell of 1 can single out a student, until it is suppressed and checked"}],"correct":[3],"explanation":"The level follows what the output would reveal. A count of 1 is one student's disability status. After suppression and a second-person check the table may be proposed as Public.","misconceptions":["Assumes an aggregate cannot identify: a cell of 1 points at one student's health data","Assumes an output inherits its source's handling in full: the level is set by what the output itself reveals, and here that happens to agree, but for a different reason","Rates the harm by how serious health data feels: the policy's scale places individual privacy at low impact",""],"lo":["LO2"]},{"id":"check-sharing-q1","slide":"check-sharing","type":"single","prompt":"A government health authority emails the analyst: \"For a wellbeing study, send names and counselling visit counts of all students.\" What comes first?","options":[{"key":"A","text":"Send it: a public entity asked, for the public interest"},{"key":"B","text":"Forward it to the data management office and the data protection officer, with your assessment"},{"key":"C","text":"Refuse: counselling data is health data and is never shared"},{"key":"D","text":"Send pseudonymised rows instead, which removes the names"}],"correct":[1],"explanation":"The request has a front door. The analyst routes it there with an assessment: a legitimate purpose, no need for names, counts by college may be enough.","misconceptions":["Treats a government requester as an automatic yes: the purpose may be lawful, the minimum-data test and the route still apply","","Treats sensitive data as unshareable in any form: counts by college with suppression could serve the study","Makes the decision alone and changes the request without the office: the analyst prepares, the office decides"],"lo":["LO2"]}],"ai":{"context":{"course":"../context/course.md","courseJs":"../context/course.js","day":"day1.md","llms":"../llms.txt"},"tasks":[],"tools":[]},"bridge":{"allowedOrigins":[]},"features":{},"strings":{}}</script>
+<script src="../_engine/academy.js"></script>
+</body>
+</html>

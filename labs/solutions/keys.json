@@ -1,0 +1,169 @@
+{
+ "requests": {
+  "R1": {
+   "kind": "within the collection purpose",
+   "rules": [
+    "lawful basis",
+    "purpose limitation",
+    "minimisation",
+    "records of processing"
+   ],
+   "dpo": false,
+   "why": "Evaluating the support service is academic support, the purpose in the notice. The analyst still cuts the fields and the unit records the processing."
+  },
+  "R2": {
+   "kind": "new internal purpose",
+   "rules": [
+    "purpose limitation",
+    "minimisation",
+    "sensitive data"
+   ],
+   "dpo": true,
+   "why": "Health data collected for an accommodation or for counselling is seen only by the staff who provide that service. A dean's talk is a different purpose and needs none of it."
+  },
+  "R3": {
+   "kind": "disclosure to another entity",
+   "rules": [
+    "lawful basis",
+    "purpose limitation",
+    "minimisation",
+    "disclosure",
+    "classification",
+    "records of processing"
+   ],
+   "dpo": true,
+   "why": "A public entity asking for a public-interest purpose is a case the law allows, but it is a disclosure and a secondary use: minimum data, the Data Sharing Policy and a record."
+  },
+  "R4": {
+   "kind": "new internal purpose",
+   "rules": [
+    "lawful basis",
+    "purpose limitation",
+    "marketing consent"
+   ],
+   "dpo": true,
+   "why": "Advertising needs the recipient's prior consent and the notice says the University does not use data for advertising. Refuse."
+  },
+  "R5": {
+   "kind": "transfer outside the Kingdom",
+   "rules": [
+    "minimisation",
+    "sensitive data",
+    "transfer",
+    "classification"
+   ],
+   "dpo": true,
+   "why": "Uploading is a transfer outside the Kingdom and puts Restricted data into an AI tool. Neither the purpose nor the level allows it."
+  }
+ },
+ "classification": {
+  "D1": {
+   "level": "Restricted",
+   "controls": [
+    "protective marking",
+    "need-to-know access",
+    "encrypted storage",
+    "retention schedule"
+   ],
+   "ai_tool": false,
+   "why": "Disclosure harms individuals' privacy (low impact) and would break the PDPL, so step 4 of the process makes it Restricted."
+  },
+  "D2": {
+   "level": "Restricted",
+   "controls": [
+    "protective marking",
+    "minimum staff access for health data",
+    "encrypted storage",
+    "retention schedule"
+   ],
+   "ai_tool": false,
+   "why": "Health data: Restricted, with access limited to the staff who provide the service."
+  },
+  "D3": {
+   "level": "Public",
+   "controls": [
+    "no control beyond accuracy"
+   ],
+   "ai_tool": true,
+   "why": "Already published; disclosure has no impact."
+  },
+  "D4": {
+   "level": "Restricted",
+   "controls": [
+    "protective marking",
+    "need-to-know access",
+    "encrypted storage",
+    "retention schedule"
+   ],
+   "ai_tool": false,
+   "why": "Pseudonymised data is still personal data: the key exists and the rows are about single students."
+  },
+  "O1": {
+   "level": "Public",
+   "controls": [
+    "approval by the data owner before release"
+   ],
+   "ai_tool": true,
+   "why": "Large counts, nobody singled out, a benefit in publishing. Public once the data owner approves the release; Restricted until then."
+  },
+  "O2": {
+   "level": "Restricted",
+   "controls": [
+    "protective marking",
+    "need-to-know access",
+    "second-person check before release"
+   ],
+   "ai_tool": false,
+   "why": "A cell of 1 points at one student's health data. Restricted until suppressed and checked."
+  },
+  "O3": {
+   "level": "Restricted",
+   "controls": [
+    "protective marking",
+    "need-to-know access",
+    "retention schedule"
+   ],
+   "ai_tool": false,
+   "why": "Named students: personal data for the advisors who act on it, and nobody else."
+  }
+ },
+ "sharing": {
+  "tests": {
+   "legitimate purpose": "met",
+   "minimum data": "not met",
+   "source entity consent": "met with conditions"
+  },
+  "needed_fields": [
+   "national_id",
+   "college",
+   "programme",
+   "level_year",
+   "term_gpa"
+  ],
+  "population": "final-year students only",
+  "form": "record level, minimised",
+  "signatory": "director of the data management office",
+  "assessment_days": 10
+ },
+ "note_counts": {
+  "plain": 1860,
+  "phone": 180,
+  "national_id": 70,
+  "health": 210,
+  "other_person": 80
+ },
+ "capstone": {
+  "scholarships": {
+   "bias_group": "disability_status",
+   "bias_note": "students with a reduced-load accommodation are recorded below 12 credit hours although their load is approved"
+  },
+  "housing": {
+   "bias_group": "nationality_group",
+   "bias_note": "non-Saudi students have no home address in the Kingdom on file, so the distance is recorded as 0"
+  },
+  "careers": {
+   "bias_group": "gender",
+   "bias_note": "workshops ran in a building and at an hour that one campus section could not reach, so attendance is recorded low for it"
+  }
+ }
+}

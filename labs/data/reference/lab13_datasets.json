@@ -1,0 +1,18 @@
+{
+ "D1": [
+  "Restricted",
+  "low impact on individuals' privacy; disclosure would break the PDPL"
+ ],
+ "D2": [
+  "Restricted",
+  "health data of individuals; disclosure would break the PDPL"
+ ],
+ "D3": [
+  "Public",
+  "already published; disclosure harms nobody"
+ ],
+ "D4": [
+  "Restricted",
+  "pseudonymised rows are still personal data; disclosure would break the PDPL"
+ ]
+}

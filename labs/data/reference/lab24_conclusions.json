@@ -1,0 +1,14 @@
+{
+ "A": {
+  "supported": "measurement bias",
+  "evidence": "The card record is about 17 points below the roll call for students with a remote accommodation; their false-referral rate is 59% against 4% for other students with a registered disability.",
+  "fix": "Feed approved remote attendance into the record, or exclude the attendance signal for these students until it is.",
+  "open": "The 187 students with a registered disability and no remote accommodation are a small group: a moderate gap for them could hide inside the interval."
+ },
+ "B": {
+  "supported": "coverage bias",
+  "evidence": "With a mark present, non-Saudi and Saudi students are missed at similar rates; with the mark missing, both are missed more than 70% of the time.",
+  "fix": "Bring the bridging programme's midterm marks into the registry; until then report bridging-year entrants separately.",
+  "open": "Whether the limits of 2023 fit bridging-year entrants once their marks are present cannot be known before the marks exist."
+ }
+}

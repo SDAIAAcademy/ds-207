@@ -1,0 +1,63 @@
+{
+ "items": [
+  {
+   "id": "D1",
+   "kind": "dataset",
+   "name": "Student registry",
+   "description": "30 columns for 18,000 students: identity, contact, programme, marks, attendance, disability type, counselling visits, bank account."
+  },
+  {
+   "id": "D2",
+   "kind": "dataset",
+   "name": "Accommodation and counselling register",
+   "description": "Disability type, medical evidence reference and counselling visit dates for students who used either service."
+  },
+  {
+   "id": "D3",
+   "kind": "dataset",
+   "name": "Course catalogue and timetable",
+   "description": "Courses, sections, rooms and times, as printed in the student guide and on the website."
+  },
+  {
+   "id": "D4",
+   "kind": "dataset",
+   "name": "Pseudonymised analysis extract",
+   "description": "13 columns per student under a project pseudonym: college, level, group fields, attendance, midterm mark, referral, outcome."
+  },
+  {
+   "id": "O1",
+   "kind": "output",
+   "name": "Referral rate by college",
+   "description": "Six rows: students, referred students and the referral rate of each college. The smallest count is in the hundreds."
+  },
+  {
+   "id": "O2",
+   "kind": "output",
+   "name": "Draft table: disability by college and nationality group",
+   "description": "Registered-disability counts by college and nationality group, before suppression. Several cells are under 10 and one is 1."
+  },
+  {
+   "id": "O3",
+   "kind": "output",
+   "name": "Advisor worklist",
+   "description": "Names, student numbers and programme of the students Awn referred this week, for the advisors who contact them."
+  }
+ ],
+ "levels": [
+  "Top Secret",
+  "Secret",
+  "Restricted",
+  "Public"
+ ],
+ "controls": [
+  "protective marking",
+  "need-to-know access",
+  "minimum staff access for health data",
+  "encrypted storage",
+  "secure sharing channel",
+  "retention schedule",
+  "second-person check before release",
+  "approval by the data owner before release",
+  "no control beyond accuracy"
+ ]
+}

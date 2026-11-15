@@ -1,0 +1,41 @@
+# Responsible Data Practice and Conduct in Analytical Work
+
+> Handle an analytical request lawfully and fairly: test it against the PDPL, classify and share with conditions, release tables that single nobody out, compare groups honestly, document the work and hold the conversation that rescopes an unsafe request. SDAIA Academy course DS-207, version 2027.1.0, in English.
+
+Each slide is a heading such as "#### [day1#slide-id] Title": cite slides by that id, and each citation is a link (slides/day1.html#slide-id). These files are what a trainee sees: no speaker notes and no answer keys.
+
+## Course
+
+- [Course page](https://sdaiaacademy.github.io/ds-207/index.md): overview, outcomes, schedule and labs; the page itself is https://sdaiaacademy.github.io/ds-207/index.html
+- [The whole course](https://sdaiaacademy.github.io/ds-207/llms-full.txt): every unit, session and slide in one file, about 21,080 tokens
+- [Practice questions](https://sdaiaacademy.github.io/ds-207/practice.html): questions to check yourself, with feedback after each answer
+
+## Slides
+
+- [Day 1: Lawful analysis](https://sdaiaacademy.github.io/ds-207/slides/day1.md): Test the request, cut the data, classify it and decide what a partner may have; sessions: What the law asks of an analyst, Purpose, minimisation and secondary use, Classifying data and outputs, Sharing requests; page: https://sdaiaacademy.github.io/ds-207/slides/day1.html; about 6,817 tokens
+- [Day 2: Fair and safe outputs](https://sdaiaacademy.github.io/ds-207/slides/day2.md): Release tables that single nobody out, and compare groups with honest uncertainty; sessions: Aggregate release and small cells, Where bias enters, Comparing groups, Naming the bias; page: https://sdaiaacademy.github.io/ds-207/slides/day2.html; about 6,626 tokens
+- [Day 3: Professional conduct](https://sdaiaacademy.github.io/ds-207/slides/day3.md): Document the work so others can check it, and hold the three conversations; sessions: Datasheets and analysis logs, Scoping with a sponsor, Pushing back without obstructing, Explaining limits; page: https://sdaiaacademy.github.io/ds-207/slides/day3.html; about 6,210 tokens
+- [Capstone: Capstone: the responsible-practice pack](https://sdaiaacademy.github.io/ds-207/slides/capstone.md): Eight-minute defences: six to present the pack with a short role-play inside, two for the assessor's changed fact; page: https://sdaiaacademy.github.io/ds-207/slides/capstone.html; about 864 tokens
+
+## Labs
+
+- [Lab 1.1: Five requests, which rules](https://sdaiaacademy.github.io/ds-207/labs/D1_1_five_requests.ipynb): Day 1, Session 1, 25 min
+- [Lab 1.2: Cut the extract](https://sdaiaacademy.github.io/ds-207/labs/D1_2_cut_extract.ipynb): Day 1, Session 2, 25 min
+- [Lab 1.3: Classify and control](https://sdaiaacademy.github.io/ds-207/labs/D1_3_classify_control.ipynb): Day 1, Session 3, 25 min
+- [Lab 1.4: The Observatory's request](https://sdaiaacademy.github.io/ds-207/labs/D1_4_sharing_request.ipynb): Day 1, Session 4, 25 min
+- [Lab 2.1: Suppress, then attack](https://sdaiaacademy.github.io/ds-207/labs/D2_1_small_cells.ipynb): Day 2, Session 1, 25 min
+- [Lab 2.2: Four entry points](https://sdaiaacademy.github.io/ds-207/labs/D2_2_bias_entry_points.ipynb): Day 2, Session 2, 25 min
+- [Lab 2.3: Rates with intervals](https://sdaiaacademy.github.io/ds-207/labs/D2_3_group_rates.ipynb): Day 2, Session 3, 25 min
+- [Lab 2.4: Two gaps, two names](https://sdaiaacademy.github.io/ds-207/labs/D2_4_name_the_bias.ipynb): Day 2, Session 4, 25 min
+- [Lab 3.1: Datasheet and log](https://sdaiaacademy.github.io/ds-207/labs/D3_1_datasheet_log.ipynb): Day 3, Session 1, 25 min
+- [Lab 3.2: Scope in six minutes](https://sdaiaacademy.github.io/ds-207/labs/D3_2_scoping_roleplay.ipynb): Day 3, Session 2, 25 min
+- [Lab 3.3: The risk list](https://sdaiaacademy.github.io/ds-207/labs/D3_3_pushback_roleplay.ipynb): Day 3, Session 3, 25 min
+- [Lab 3.4: Three sentences and the capstone case](https://sdaiaacademy.github.io/ds-207/labs/D3_4_limits_statement.ipynb): Day 3, Session 4, 25 min
+
+## Context files
+
+- [context/course.md](https://sdaiaacademy.github.io/ds-207/context/course.md): the whole course, for an assistant that takes a file, about 21,080 tokens
+- [context/day1.md](https://sdaiaacademy.github.io/ds-207/context/day1.md): Day 1, about 6,817 tokens
+- [context/day2.md](https://sdaiaacademy.github.io/ds-207/context/day2.md): Day 2, about 6,626 tokens
+- [context/day3.md](https://sdaiaacademy.github.io/ds-207/context/day3.md): Day 3, about 6,210 tokens
+- [context/capstone.md](https://sdaiaacademy.github.io/ds-207/context/capstone.md): Capstone, about 864 tokens

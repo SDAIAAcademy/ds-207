@@ -1,0 +1,32 @@
+[
+ {
+  "id": "S1",
+  "stage": "attendance recording",
+  "what_happens": "A student's card is read at the door of a teaching room. Sessions followed remotely under an approved accommodation have no card reading."
+ },
+ {
+  "id": "S2",
+  "stage": "midterm marks",
+  "what_happens": "Instructors enter midterm marks in the registry. Bridging-year entrants are marked in the bridging programme's own system for their first two years, and those marks are not copied over."
+ },
+ {
+  "id": "S3",
+  "stage": "thresholds",
+  "what_happens": "The limits of 75% attendance and 2.5 were set in 2023 from one year of records of two colleges, Business and Engineering."
+ },
+ {
+  "id": "S4",
+  "stage": "outcome label",
+  "what_happens": "'Struggled' means a term grade average below 2.5. A student who withdraws during the term keeps the average of the courses completed."
+ },
+ {
+  "id": "S5",
+  "stage": "referral and support",
+  "what_happens": "An advisor contacts each referred student. Students who are helped may pass, and then count as referrals that were 'not needed'."
+ },
+ {
+  "id": "S6",
+  "stage": "reporting",
+  "what_happens": "The unit reports one referral rate and one hit rate for the whole University each term."
+ }
+]

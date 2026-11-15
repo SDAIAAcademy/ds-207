@@ -1,0 +1,14 @@
+{
+ "O1": [
+  "Public",
+  "large counts, nobody singled out, a benefit in publishing; released once the data owner approves"
+ ],
+ "O2": [
+  "Restricted",
+  "a cell of 1 points at one student's health data"
+ ],
+ "O3": [
+  "Restricted",
+  "named students, for the advisors who act on the list"
+ ]
+}

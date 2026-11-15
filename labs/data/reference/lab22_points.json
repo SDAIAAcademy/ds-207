@@ -1,0 +1,26 @@
+{
+ "S1": {
+  "how": "Remote sessions leave no card reading, so recorded attendance is lower than true attendance.",
+  "who": "students with an approved remote accommodation, most of them with a registered disability"
+ },
+ "S2": {
+  "how": "Marks kept in the bridging programme's system never reach the registry, so the rule sees no midterm mark and cannot fire on it.",
+  "who": "bridging-year entrants in their first two years, many of them non-Saudi students"
+ },
+ "S3": {
+  "how": "Limits set on two colleges in 2023 may not fit colleges with different attendance habits or grading.",
+  "who": "students of the four colleges that were not in the 2023 records"
+ },
+ "S4": {
+  "how": "A student who withdraws after two easy courses keeps a good average and is labelled 'ok'.",
+  "who": "students who withdraw during the term"
+ },
+ "S5": {
+  "how": "Support that works turns a correct referral into an apparent false alarm.",
+  "who": "referred students in colleges where advisors act quickly"
+ },
+ "S6": {
+  "how": "One rate for the whole University hides a rule that works well for most and badly for a small group.",
+  "who": "any small group: 429 students have a registered disability"
+ }
+}

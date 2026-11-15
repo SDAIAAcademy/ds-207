@@ -1,0 +1,51 @@
+{
+ "briefs": [
+  {
+   "id": "B1",
+   "sponsor": "Dr. Nabil Al-Faraj, dean of engineering",
+   "request": "Our first-year results are a disaster. I need the data on why engineering students are failing.",
+   "hidden": {
+    "decision": "whether to add tutorial sections to two first-year courses next term",
+    "population": "first-year engineering students, this term and the last two",
+    "measure": "share ending the term below 2.5, by course",
+    "deadline": "the timetable is fixed in three weeks",
+    "out_of_scope": "naming students or instructors"
+   }
+  },
+  {
+   "id": "B2",
+   "sponsor": "Jassim Al-Nuaimi, director of the Student Success Unit",
+   "request": "Is Awn working? The vice-rector will ask me next month.",
+   "hidden": {
+    "decision": "whether to extend Awn to all colleges or change its thresholds first",
+    "population": "all students this term",
+    "measure": "share of struggling students Awn referred, and share of referrals that were not needed, by group",
+    "deadline": "one page before the council meets in four weeks",
+    "out_of_scope": "whether the support itself helps: there is no comparison group"
+   }
+  },
+  {
+   "id": "B3",
+   "sponsor": "The communications office",
+   "request": "We want a nice number about student success for the annual report.",
+   "hidden": {
+    "decision": "which single figure the annual report prints, with its definition",
+    "population": "students enrolled in both terms of last year",
+    "measure": "share who ended the year in good standing, with last year's figure beside it",
+    "deadline": "the report goes to print in two weeks",
+    "out_of_scope": "figures by nationality or disability with small counts"
+   }
+  }
+ ],
+ "scope_fields": [
+  "decision",
+  "question",
+  "population",
+  "measure",
+  "success_criterion",
+  "out_of_scope",
+  "data",
+  "deadline",
+  "confirmed_by"
+ ]
+}

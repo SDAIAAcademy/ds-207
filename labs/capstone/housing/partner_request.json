@@ -1,0 +1,18 @@
+{
+ "requester": "Al-Qimam City Municipality",
+ "requester_kind": "government entity",
+ "purpose": "Plan bus routes between student districts and the campus (public interest).",
+ "requested_fields": [
+  "full_name",
+  "national_id",
+  "home_address",
+  "phone",
+  "college",
+  "gender",
+  "priority_given"
+ ],
+ "delivery": "a spreadsheet by email",
+ "retention": "not stated",
+ "onward_sharing": "the bus operator",
+ "location": "the municipality's servers in the Kingdom"
+}

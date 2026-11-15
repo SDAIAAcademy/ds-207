@@ -1,0 +1,27 @@
+{
+ "requester": "Masarat Labour Market Observatory",
+ "requester_kind": "government entity",
+ "contact": "Hazza Al-Marri, partnerships liaison",
+ "sent_to": "the analyst's own email address",
+ "purpose": "Link study records to employment records to plan which programmes the labour market needs (public interest).",
+ "population": "all 18,000 current students",
+ "requested_fields": [
+  "national_id",
+  "full_name",
+  "date_of_birth",
+  "phone",
+  "nationality",
+  "college",
+  "programme",
+  "level_year",
+  "term_gpa",
+  "disability_type",
+  "awn_referred"
+ ],
+ "delivery": "a spreadsheet attached to an email",
+ "access": "the Observatory's analysts and its contractors",
+ "onward_sharing": "a consulting firm that builds the Observatory's dashboards",
+ "retention": "kept for future studies",
+ "location": "the Observatory's servers in the Kingdom",
+ "legal_basis_stated": "the Observatory's mandate to study the labour market"
+}

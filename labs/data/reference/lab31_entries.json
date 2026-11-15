@@ -1,0 +1,26 @@
+[
+ {
+  "id": "L003",
+  "date": "2026-11-09",
+  "decision": "Release disability counts as two one-way tables (by college, by nationality group) and not as the cross table; 5 primary and 5 complementary cells would have been suppressed.",
+  "reason": "Complementary suppression hid 10 of 12 cells; the one-way tables have no cell under 10.",
+  "approver": "Rami Al-Tuwaijri, registrar (data owner); suppression checked by Jassim Al-Nuaimi, director of the unit",
+  "evidence": "suppression log, Lab 2.1"
+ },
+ {
+  "id": "L004",
+  "date": "2026-11-09",
+  "decision": "Do not release the Saudi-only disability table by college.",
+  "reason": "Differencing against the release of 2026-10 reveals counts of 1 to 9, including one student in Computing.",
+  "approver": "Rami Al-Tuwaijri, registrar (data owner)",
+  "evidence": "suppression log, Lab 2.1"
+ },
+ {
+  "id": "L005",
+  "date": "2026-11-10",
+  "decision": "Report bridging-year entrants and students with a remote accommodation separately in the evaluation of Awn.",
+  "reason": "Their midterm marks are missing and their attendance is under-recorded, so the rule's errors for them have a known cause that the overall rates would hide.",
+  "approver": "Jassim Al-Nuaimi, director of the Student Success Unit",
+  "evidence": "bias findings, Lab 2.4"
+ }
+]

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-ax="page" data-track="data-science">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Responsible Data Practice and Conduct in Analytical Work · SDAIA Academy</title>
+<meta name="generator" content="SDAIA Academy engine 1.0.0">
+<meta name="description" content="Handle an analytical request lawfully and fairly: test it against the PDPL, classify and share with conditions, release tables that single nobody out, compare groups honestly, document the work and hold the conversation that rescopes an unsafe request">
+<link rel="icon" href="_engine/icon.svg">
+<link rel="alternate" type="text/markdown" href="index.md">
+<link rel="describedby" href="llms.txt">
+<link rel="stylesheet" href="_engine/academy.css">
+</head>
+<body>
+<header>
+<div class="wrap">
+<div class="top"><div class="logo" id="logo"></div><nav><a href="slides/day1.html">Slides</a><a href="practice.html">Practice</a><a href="index.md" type="text/markdown">Markdown</a></nav></div>
+<div class="kicker">Data Science Track · SDAIA Academy · DS-207</div>
+<h1>Responsible Data Practice and Conduct in Analytical Work<span class="sub ar" lang="ar" dir="rtl">الممارسة المسؤولة للبيانات وقواعد السلوك في العمل التحليلي</span></h1>
+<p>Handle an analytical request lawfully and fairly: test it against the PDPL, classify and share with conditions, release tables that single nobody out, compare groups honestly, document the work and hold the conversation that rescopes an unsafe request</p>
+<div class="meta"><span class="track">Data Science Track</span><span>3 teaching days + capstone day</span><span>21 hours</span><span>Level 200</span><span>Data Science · Assistant badge</span></div>
+</div>
+</header>
+<main class="wrap">
+<h2>About the course</h2>
+<p>Participants handle an analytical engagement for a fictional university's student-success unit. They test requests against the Personal Data Protection Law (PDPL), classify the data and decide what may be shared with a government partner, suppress small cells in aggregate outputs, compare outcome and error rates across student groups, keep an analysis log and a datasheet, and handle three stakeholder conversations: scoping, pushing back on an unsafe request and explaining limits. Deeper de-identification and fairness audits are in DS-309.</p>
+<p><b>Who it is for:</b> Practitioners. Graduates and early-career analysts who have completed the FN courses or passed the placement test, and analysts moving into data science.</p>
+<p><b>Format:</b> Intensive: 3 teaching days of four sessions and a capstone day, with guided pre-work and a tracked follow-up task</p>
+<h2>The case study</h2>
+<div class="note info"><b>Al-Qimam University, Student Success Unit.</b> Al-Qimam University is a fictional public university with six colleges. Its Student Success Unit runs Awn, a rule that refers students to academic support from attendance and midterm marks, and its analyst is asked to evaluate the rule, publish tables, answer a government partner and serve three sponsors. All 18,000 student records are synthetic, generated with a fixed seed, and planted with the problems the labs find: identifiers in free-text notes, small cells that a subtraction recovers, attendance that is under-recorded for one group, marks that are missing for another, a gap that vanishes inside colleges, and a sharing request that asks for too much.</div>
+<h2>The course</h2>
+<div class="day">
+<div class="day-head c-teal"><div><div class="t">Day 1 · 4 sessions · 4 labs</div><h3>Lawful analysis</h3></div><a class="btn" href="slides/day1.html">Open the slides</a></div>
+<div class="scroll"><table>
+<tr><th>Session</th><th>Topic</th><th>Lab</th></tr>
+<tr><td>1</td><td><b>What the law asks of an analyst</b><br>Name the rules a request engages, and know when to ask before touching data<ul><li>Name the PDPL rules an analysis request engages, from lawful basis to transfer</li><li>Distinguish analysis inside the collection purpose from a new purpose, a disclosure and a transfer</li><li>Decide which requests go to the data protection officer before any data is touched</li></ul></td><td><a href="labs/D1_1_five_requests.ipynb">Lab 1.1 · Five requests, which rules</a> <span class="muted">(25 min)</span><br><a href="https://colab.research.google.com/github/SDAIAAcademy/ds-207/blob/main/labs/D1_1_five_requests.ipynb">Open in Colab</a></td></tr>
+<tr><td>2</td><td><b>Purpose, minimisation and secondary use</b><br>The purpose decides the fields; a new purpose is a new decision<ul><li>Write a purpose precise enough to decide each field against</li><li>Cut an extract to the fields the purpose needs, keeping, coarsening or dropping each with a reason</li><li>Recognise a secondary use and name what the law and the national rules require before it starts</li></ul></td><td><a href="labs/D1_2_cut_extract.ipynb">Lab 1.2 · Cut the extract</a> <span class="muted">(25 min)</span><br><a href="https://colab.research.google.com/github/SDAIAAcademy/ds-207/blob/main/labs/D1_2_cut_extract.ipynb">Open in Colab</a></td></tr>
+<tr><td>3</td><td><b>Classifying data and outputs</b><br>Tables, charts and lists get a level, and the level sets the controls<ul><li>Classify a dataset or an output with the impact questions of the Data Classification Policy</li><li>Apply the highest-level rule to combined data and say when an aggregate can be Public</li><li>Name the control each level requires, including what may be entered into an AI tool</li></ul></td><td><a href="labs/D1_3_classify_control.ipynb">Lab 1.3 · Classify and control</a> <span class="muted">(25 min)</span><br><a href="https://colab.research.google.com/github/SDAIAAcademy/ds-207/blob/main/labs/D1_3_classify_control.ipynb">Open in Colab</a></td></tr>
+<tr><td>4</td><td><b>Sharing requests</b><br>Judge a partner's request, then answer with a form of release and conditions<ul><li>Assess a sharing request against the tests of the Data Sharing Policy and the rules for secondary use</li><li>Choose the form of release: record level, pseudonymised or aggregate</li><li>Draft approval conditions under the policy's control headings and name who signs</li></ul></td><td><a href="labs/D1_4_sharing_request.ipynb">Lab 1.4 · The Observatory's request</a> <span class="muted">(25 min)</span><br><a href="https://colab.research.google.com/github/SDAIAAcademy/ds-207/blob/main/labs/D1_4_sharing_request.ipynb">Open in Colab</a></td></tr>
+</table></div>
+</div>
+<div class="day">
+<div class="day-head c-cyan"><div><div class="t">Day 2 · 4 sessions · 4 labs</div><h3>Fair and safe outputs</h3></div><a class="btn" href="slides/day2.html">Open the slides</a></div>
+<div class="scroll"><table>
+<tr><th>Session</th><th>Topic</th><th>Lab</th></tr>
+<tr><td>1</td><td><b>Aggregate release and small cells</b><br>An aggregate table can still point at one student<ul><li>Explain how a small cell, a total or a second release singles out a student</li><li>Apply a threshold rule with complementary suppression and log each suppressed cell</li><li>Test a release for recovery by subtraction and by differencing before it leaves</li></ul></td><td><a href="labs/D2_1_small_cells.ipynb">Lab 2.1 · Suppress, then attack</a> <span class="muted">(25 min)</span><br><a href="https://colab.research.google.com/github/SDAIAAcademy/ds-207/blob/main/labs/D2_1_small_cells.ipynb">Open in Colab</a></td></tr>
+<tr><td>2</td><td><b>Where bias enters</b><br>Bias enters in recording, coverage, labels and use, before any metric<ul><li>Trace a rule's data from the event to the decision and mark where bias can enter</li><li>Distinguish a recording problem, a coverage problem, a label problem and a use problem</li><li>Measure one entry point with data instead of arguing about it</li></ul></td><td><a href="labs/D2_2_bias_entry_points.ipynb">Lab 2.2 · Four entry points</a> <span class="muted">(25 min)</span><br><a href="https://colab.research.google.com/github/SDAIAAcademy/ds-207/blob/main/labs/D2_2_bias_entry_points.ipynb">Open in Colab</a></td></tr>
+<tr><td>3</td><td><b>Comparing groups</b><br>Referral and error rates by group, each with its interval<ul><li>Compute referral, false-referral and missed-student rates by group</li><li>Report each rate and each difference with a confidence interval</li><li>Check whether a gap survives inside colleges before explaining it</li></ul></td><td><a href="labs/D2_3_group_rates.ipynb">Lab 2.3 · Rates with intervals</a> <span class="muted">(25 min)</span><br><a href="https://colab.research.google.com/github/SDAIAAcademy/ds-207/blob/main/labs/D2_3_group_rates.ipynb">Open in Colab</a></td></tr>
+<tr><td>4</td><td><b>Naming the bias</b><br>Two candidate bias types for a gap, and the check that separates them<ul><li>Match an observed gap to candidate bias types in the AI Bias Reference Guide</li><li>Design the check that separates two candidate causes</li><li>State what a fairness metric cannot settle and who decides the rest</li></ul></td><td><a href="labs/D2_4_name_the_bias.ipynb">Lab 2.4 · Two gaps, two names</a> <span class="muted">(25 min)</span><br><a href="https://colab.research.google.com/github/SDAIAAcademy/ds-207/blob/main/labs/D2_4_name_the_bias.ipynb">Open in Colab</a></td></tr>
+</table></div>
+</div>
+<div class="day">
+<div class="day-head c-coral"><div><div class="t">Day 3 · 4 sessions · 4 labs</div><h3>Professional conduct</h3></div><a class="btn" href="slides/day3.html">Open the slides</a></div>
+<div class="scroll"><table>
+<tr><th>Session</th><th>Topic</th><th>Lab</th></tr>
+<tr><td>1</td><td><b>Datasheets and analysis logs</b><br>A reviewer must be able to trace a number to data, decisions and approvals<ul><li>Fill a datasheet that states what the data is, how it was collected and what it must not be used for</li><li>Keep an analysis log in which every decision has a reason, a date and an approver</li><li>Tie a release to a version so a result can be traced and rerun</li></ul></td><td><a href="labs/D3_1_datasheet_log.ipynb">Lab 3.1 · Datasheet and log</a> <span class="muted">(25 min)</span><br><a href="https://colab.research.google.com/github/SDAIAAcademy/ds-207/blob/main/labs/D3_1_datasheet_log.ipynb">Open in Colab</a></td></tr>
+<tr><td>2</td><td><b>Scoping with a sponsor</b><br>A vague request becomes a decision, a population, a measure and a criterion<ul><li>Ask the questions that turn a request into a decision, a population, a measure and a time frame</li><li>Agree success criteria and what is out of scope before any analysis starts</li><li>Record the agreement in a scope note the sponsor confirms</li></ul></td><td><a href="labs/D3_2_scoping_roleplay.ipynb">Lab 3.2 · Scope in six minutes</a> <span class="muted">(25 min)</span><br><a href="https://colab.research.google.com/github/SDAIAAcademy/ds-207/blob/main/labs/D3_2_scoping_roleplay.ipynb">Open in Colab</a></td></tr>
+<tr><td>3</td><td><b>Pushing back without obstructing</b><br>Name the harm and the rule, offer an alternative, escalate when needed<ul><li>Refuse an unsafe request by naming the harm and the rule, not by citing policy at the sponsor</li><li>Offer a lawful alternative that serves the sponsor's decision</li><li>Recognise when to escalate to the data protection officer and record the agreement</li></ul></td><td><a href="labs/D3_3_pushback_roleplay.ipynb">Lab 3.3 · The risk list</a> <span class="muted">(25 min)</span><br><a href="https://colab.research.google.com/github/SDAIAAcademy/ds-207/blob/main/labs/D3_3_pushback_roleplay.ipynb">Open in Colab</a></td></tr>
+<tr><td>4</td><td><b>Explaining limits</b><br>Say what the result does not show and what it must not be used for<ul><li>State what an analysis cannot show, separately from how uncertain it is</li><li>Write a limits statement a non-specialist cannot misread</li><li>Choose the capstone engagement and list what its pack must contain</li></ul></td><td><a href="labs/D3_4_limits_statement.ipynb">Lab 3.4 · Three sentences and the capstone case</a> <span class="muted">(25 min)</span><br><a href="https://colab.research.google.com/github/SDAIAAcademy/ds-207/blob/main/labs/D3_4_limits_statement.ipynb">Open in Colab</a></td></tr>
+</table></div>
+</div>
+<div class="day">
+<div class="day-head c-amber"><div><div class="t">Capstone</div><h3>Capstone: the responsible-practice pack</h3></div><a class="btn" href="slides/capstone.html">Open the slides</a></div>
+<div class="scroll"><table><tr><td>Eight-minute defences: six to present the pack with a short role-play inside, two for the assessor's changed fact</td></tr></table></div>
+</div>
+<h2>Capstone</h2>
+<div class="two">
+<div><p>A responsible-practice pack for one of three synthetic engagements (sharing decision, suppressed tables and log, group comparison, datasheet, analysis log, scope note) in a public repository; eight-minute defence that includes a short role-play</p><p><b>What you submit:</b> A public GitHub repository holding the responsible-practice pack for one of the three synthetic engagements: the sharing decision with its conditions, the suppressed tables with the suppression log, the group comparison with intervals and named bias types, the datasheet, the analysis log and the scope note, with a README that links each part and states who approved each release and what the analysis must not be used for. Then an eight-minute defence: six minutes on the pack, including a two-minute role-play with the sponsor, and two minutes in which the assessor changes one fact of the request and the participant revises the sharing decision.</p><p><b>Format:</b> 6 min talk and demo · 2 min Q&amp;A</p></div>
+<div><h3>Rubric</h3><div class="bar c-teal"><span>Legal and classification decisions<i style="--w:100%"></i></span><b>25%</b></div><div class="bar c-cyan"><span>Release tables and suppression<i style="--w:80%"></i></span><b>20%</b></div><div class="bar c-coral"><span>Group comparison<i style="--w:80%"></i></span><b>20%</b></div><div class="bar c-purple"><span>Documentation<i style="--w:80%"></i></span><b>20%</b></div><div class="bar c-amber"><span>Scope note<i style="--w:60%"></i></span><b>15%</b></div></div>
+</div>
+<h2>Outcomes</h2>
+<p>By the end of the course, participants can:</p>
+<div class="day"><div class="scroll"><table>
+<tr><th></th><th>Outcomes</th><th>Level</th><th>Evidence</th></tr>
+<tr><td><b>LO1</b></td><td>Explain the PDPL principles and the classification and sharing rules an analysis engages, from lawful basis to data subjects' rights and transfer, given five analysis requests from the case</td><td>Awareness</td><td>a note per request naming the rules engaged, at least four of five right</td></tr>
+<tr><td><b>LO2</b></td><td>Classify the datasets and outputs of an analysis and decide what may be shared, with whom and in what form, given the student records, a partner's sharing request and the classification policy</td><td>Applied</td><td>a classification and sharing table with the control each decision requires</td></tr>
+<tr><td><b>LO3</b></td><td>Apply aggregation and small-cell suppression to results tables and check that no student can be singled out, given draft tables by college, nationality and disability status</td><td>Applied</td><td>release-ready tables and a log of each suppressed cell and the reason</td></tr>
+<tr><td><b>LO4</b></td><td>Analyse referral and error rates across student groups and report differences with their uncertainty and possible causes, given a support-referral rule and its results by group</td><td>Applied</td><td>rates with intervals and two possible bias types with the check that separates them</td></tr>
+<tr><td><b>LO5</b></td><td>Prepare a datasheet and an analysis log that let a reviewer trace each result to its data, decisions and approvals, given the case analysis and a template</td><td>Applied</td><td>a datasheet and log a peer uses to answer five audit questions</td></tr>
+<tr><td><b>LO6</b></td><td>Lead a stakeholder conversation that rescopes an unsafe or unclear request into a lawful, answerable question, and record the agreement, given a role-played sponsor asking for an individual-level risk list</td><td>Performance</td><td>an observed role-play scored on a rubric and a written scope note</td></tr>
+</table></div></div>
+<h2>Tools</h2>
+<div class="grid">
+<div class="card c-teal"><h3>Analysis environment and notebooks</h3><p>Python with JupyterLab or marimo · R with Quarto</p></div>
+<div class="card c-cyan"><h3>Dataframes and analytical SQL engine</h3><p>DuckDB · Polars · pandas</p></div>
+<div class="card c-coral"><h3>Personal data detection</h3><p>Presidio · regular-expression rules</p></div>
+<div class="card c-purple"><h3>Group metrics</h3><p>Fairlearn · grouped metrics written in SQL or pandas</p></div>
+<div class="card c-green"><h3>Documentation templates</h3><p>Markdown datasheet templates in Git · Quarto documents</p></div>
+</div>
+<h2>Before you start</h2>
+<h3>Prerequisites</h3>
+<ul><li>FN-106 Responsible Data and AI Practice in the Kingdom</li><li>Computes rates and a confidence interval for a proportion by group in SQL or a dataframe</li><li>Has written a short analytical report for a non-specialist reader</li></ul>
+<div class="note tip">The labs are notebooks. Open each one in Google Colab from the table above, or clone the repository and run them locally.</div>
+<h2>Sources</h2>
+<h3>National references: personal data</h3>
+<ul><li><a href="https://sdaia.gov.sa/en/SDAIA/about/Documents/PersonalDataProtectionLaw.pdf">Personal Data Protection Law (SDAIA)</a></li><li><a href="https://sdaia.gov.sa/en/SDAIA/about/Documents/ImplementingRegulationPersonalDataProtectionLaw.pdf">Implementing Regulation of the Personal Data Protection Law (SDAIA)</a></li><li><a href="https://sdaia.gov.sa/Documents/RegulationonPersonalDataEN.pdf">Regulation on Personal Data Transfer outside the Kingdom (SDAIA)</a></li><li><a href="https://sdaia.gov.sa/Documents/PersonalDataDestructionAnonymizationAndEncryptionGuideline.pdf">Personal Data Destruction, Anonymization and Pseudonymisation Guideline (SDAIA)</a></li></ul>
+<h3>National references: data management (NDMO)</h3>
+<ul><li><a href="https://sdaia.gov.sa/en/SDAIA/about/Documents/DataClassificationPolicy.pdf">Data Classification Policy (NDMO, SDAIA)</a></li><li><a href="https://sdaia.gov.sa/en/SDAIA/about/Documents/DataSharingPolicyEN.pdf">Data Sharing Policy, version 2.0 (NDMO, SDAIA)</a></li><li><a href="https://sdaia.gov.sa/Documents/GeneralRulesForSecondaryUseOfData_EN.pdf">General Rules for Secondary Use of Data, issue 1.0 (SDAIA)</a></li></ul>
+<h3>National references: AI ethics and bias</h3>
+<ul><li><a href="https://sdaia.gov.sa/en/SDAIA/about/Documents/ai-principles.pdf">AI Ethics Principles (SDAIA)</a></li><li><a href="https://sdaia.gov.sa/en/MediaCenter/KnowledgeCenter/ResearchLibrary/EN-AI-BIAS.pdf">AI Bias Reference Guide, first edition (SDAIA, May 2026)</a></li><li><a href="https://sdaia.gov.sa/en/SDAIA/about/Files/GenAIGuidelinesForGovernmentENCompressed.pdf">Generative AI Guidelines for Government (SDAIA)</a></li><li><a href="https://sdaia.gov.sa/en/SDAIA/about/Pages/RegulationsAndPolicies.aspx">Regulations and policies index (SDAIA)</a></li></ul>
+<h3>Disclosure control, fairness and documentation</h3>
+<ul><li><a href="https://studentprivacy.ed.gov/sites/default/files/resource_document/file/FAQs_disclosure_avoidance_0.pdf">Frequently Asked Questions: Disclosure Avoidance (Privacy Technical Assistance Center, US Department of Education)</a></li><li><a href="https://arxiv.org/abs/1803.09010">Gebru et al., Datasheets for Datasets</a></li><li><a href="https://arxiv.org/abs/1901.10002">Suresh and Guttag, A Framework for Understanding Sources of Harm throughout the Machine Learning Life Cycle</a></li><li><a href="https://arxiv.org/abs/1609.05807">Kleinberg, Mullainathan and Raghavan, Inherent Trade-Offs in the Fair Determination of Risk Scores</a></li><li><a href="https://arxiv.org/abs/1610.07524">Chouldechova, Fair prediction with disparate impact</a></li><li><a href="https://fairmlbook.org/">Barocas, Hardt and Narayanan, Fairness and Machine Learning</a></li></ul>
+<h3>Tools</h3>
+<ul><li><a href="https://pandas.pydata.org/">pandas</a></li><li><a href="https://duckdb.org/">DuckDB</a></li><li><a href="https://pola.rs/">Polars</a></li><li><a href="https://jupyterlab.readthedocs.io/en/stable/">JupyterLab documentation</a></li><li><a href="https://marimo.io/">marimo</a></li><li><a href="https://quarto.org/">Quarto</a></li><li><a href="https://fairlearn.org/main/user_guide/assessment/common_fairness_metrics.html">Fairlearn: common fairness metrics</a></li><li><a href="https://data-privacy-stack.github.io/presidio/">Presidio, personal data detection and anonymisation</a></li><li><a href="https://www.statsmodels.org/stable/generated/statsmodels.stats.proportion.proportion_confint.html">statsmodels: confidence intervals for a proportion (Wilson)</a></li></ul>
+<h2>Files and links</h2>
+<div class="files">
+<a href="practice.html"><b>practice.html</b><span>Practice questions with feedback</span></a>
+<a href="index.md"><b>index.md</b><span>This page as Markdown, for an AI assistant</span></a>
+<a href="llms.txt"><b>llms.txt</b><span>The course for AI assistants (llms.txt)</span></a>
+<a href="https://github.com/SDAIAAcademy/ds-207"><b>SDAIAAcademy/ds-207</b><span>The course repository</span></a>
+</div>
+</main>
+<footer><div class="wrap">SDAIA Academy · Data Science Track · Responsible Data Practice and Conduct in Analytical Work<br><span class="muted">Course version 2027.1.0 · engine 1.0.0 · built 2026-11-15 · commit e8058f5</span></div></footer>
+<script type="application/json" id="academy-data">{"v":1,"engine":"1.0.0","build":{"at":"2026-11-15T10:43:05Z","version":"2027.1.0","commit":"e8058f5"},"course":{"id":"ds-207","code":"DS-207","title":"Responsible Data Practice and Conduct in Analytical Work","track":"data-science","lang":"en","dir":"ltr","url":"https://sdaiaacademy.github.io/ds-207/","repo":"SDAIAAcademy/ds-207","home":"index.html"},"ai":{"context":{"course":"context/course.md","courseJs":"context/course.js","day":null,"llms":"llms.txt"},"tasks":[],"tools":[]},"features":{},"strings":{}}</script>
+<script src="_engine/academy.js"></script>
+</body>
+</html>
