@@ -50,6 +50,16 @@ REFS = {
         "lab24_candidates": "cand", "lab24_designs": "design", "lab24_check_a": "check_a",
         "lab24_check_b": "{' | '.join(k): v for k, v in check_b.items()}", "lab24_conclusions": "concl",
     },
+    "D3_1_datasheet_log": {
+        "lab31_datasheet": "sheet", "lab31_entries": "added", "lab31_release": "release",
+    },
+    "D3_2_scoping_roleplay": {"lab32_note": "note"},
+    "D3_3_pushback_roleplay": {
+        "lab33_chosen": "chosen", "lab33_a1": "a1.drop(columns='advisors_of_12').to_dict('index')", "lab33_record": "record",
+    },
+    "D3_4_limits_statement": {
+        "lab34_limits": "limits", "lab34_statement": "{'text': statement}", "lab34_blocks": "blocks",
+    },
 }
 
 

@@ -1,0 +1,11 @@
+{
+ "decision": "Whether to extend Awn to all colleges next term as it is, or to change its inputs first.",
+ "question": "Of the students who ended term 1 struggling, what share did Awn refer, and what share of its referrals went to students who did not struggle, overall and by group?",
+ "population": "All 18,000 students enrolled in term 1 of 2026-27.",
+ "measure": "Missed rate and false-referral rate with 95% intervals, by college, level, gender, nationality group and disability status.",
+ "success_criterion": "One page the director can take to the council: the two rates, the groups for which they differ clearly, and the cause where it could be established.",
+ "out_of_scope": "Whether the support that follows a referral helps students: there is no comparison group. No lists of students.",
+ "data": "The pseudonymised analysis extract (13 fields) and the roll-call audit; group fields as approved in log entry L002.",
+ "deadline": "A draft in 2 weeks, the page in 4 weeks, before the council meets.",
+ "confirmed_by": "Jassim Al-Nuaimi, director of the Student Success Unit, by reply to the note."
+}

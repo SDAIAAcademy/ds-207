@@ -1,0 +1,20 @@
+{
+ "version": "2026.11.1",
+ "date": "2026-11-11",
+ "table": "Referral rate by college, term 1 of 2026-27",
+ "files": {
+  "analysis_extract.csv": "2d9ebc9f490e9f0d",
+  "referral_by_college_v2026.11.1.csv": "6df913390b56de6d"
+ },
+ "log_entries": [
+  "L001",
+  "L002",
+  "L003",
+  "L004",
+  "L005"
+ ],
+ "classification": "Public after approval",
+ "approved_by": "Rami Al-Tuwaijri, registrar (data owner)",
+ "suppressed_cells": 0,
+ "must_not_be_used_for": "ranking colleges or judging advisors: referral rates follow how hard a college's programmes are"
+}
