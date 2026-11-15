@@ -1,7 +1,7 @@
 # Pre-work: back to the law and the classification levels
 
-Do this before Day 1. It takes about two hours. You revisit what FN-106 (Data Protection, AI
-Ethics and Risk in Practice) taught about the Personal Data Protection Law and data
+Do this before Day 1. It takes about two hours. You revisit what FN-106 (Responsible Data and AI
+Practice in the Kingdom) taught about the Personal Data Protection Law and data
 classification, read three short parts that are new, and take an entry quiz of ten questions.
 
 This course does not teach the law again. It starts from the summaries below and asks a

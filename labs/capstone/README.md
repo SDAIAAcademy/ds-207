@@ -29,3 +29,16 @@ and you revise the sharing decision aloud.
 
 AI policy: an assistant may help you draft the documents. You defend every sentence live, and
 the role-play is yours alone.
+
+## How the course result is made
+
+| Part | Share of the result |
+|---|---|
+| Supervised check, without AI, with scenario items in the style of the badge exam | 20% |
+| The pack, scored on the rubric above | 60% |
+| The observed role-play and the live defence | 20% |
+
+To pass you need 70% overall and at least 60% on both the pack's rubric and the supervised
+check. The supervised check is proctored, and the role-play is observed live by the assessor and
+scored on the five behaviours of Lab 3.3 (listen, alternative, harm, rule and who decides,
+record). The certificate is a certificate of completion with assessed work.
