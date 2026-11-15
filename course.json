@@ -9,7 +9,7 @@
     "en": "Responsible Data Practice and Conduct in Analytical Work",
     "ar": "الممارسة المسؤولة للبيانات وقواعد السلوك في العمل التحليلي"
   },
-  "tagline": "REPLACE: one line under the title: what participants can do after the course",
+  "tagline": "Handle an analytical request lawfully and fairly: test it against the PDPL, classify and share with conditions, release tables that single nobody out, compare groups honestly, document the work and hold the conversation that rescopes an unsafe request",
   "description": "Participants handle an analytical engagement for a fictional university's student-success unit. They test requests against the Personal Data Protection Law (PDPL), classify the data and decide what may be shared with a government partner, suppress small cells in aggregate outputs, compare outcome and error rates across student groups, keep an analysis log and a datasheet, and handle three stakeholder conversations: scoping, pushing back on an unsafe request and explaining limits. Deeper de-identification and fairness audits are in DS-309.",
   "track": "data-science",
   "level": 200,
@@ -66,8 +66,8 @@
     }
   ],
   "case_study": {
-    "name": "REPLACE: the name of the fictional organisation every lab works on",
-    "summary": "REPLACE: two sentences on the case study and its synthetic data"
+    "name": "Al-Qimam University, Student Success Unit",
+    "summary": "Al-Qimam University is a fictional public university with six colleges. Its Student Success Unit runs Awn, a rule that refers students to academic support from attendance and midterm marks, and its analyst is asked to evaluate the rule, publish tables, answer a government partner and serve three sponsors. All 18,000 student records are synthetic, generated with a fixed seed, and planted with the problems the labs find: identifiers in free-text notes, small cells that a subtraction recovers, attendance that is under-recorded for one group, marks that are missing for another, a gap that vanishes inside colleges, and a sharing request that asks for too much."
   },
   "format": "intensive",
   "format_note": "Intensive: 3 teaching days of four sessions and a capstone day, with guided pre-work and a tracked follow-up task",
@@ -88,69 +88,175 @@
       "sessions": [
         {
           "title": "What the law asks of an analyst",
+          "summary": "Every analysis request engages a small set of PDPL rules, and an analyst who can name them knows when to proceed and when to ask",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Name the PDPL rules an analysis request engages, from lawful basis to transfer",
+            "Distinguish analysis inside the collection purpose from a new purpose, a disclosure and a transfer",
+            "Decide which requests go to the data protection officer before any data is touched"
           ],
           "lo": [
             "LO1"
           ],
           "lab": {
             "id": "1.1",
-            "title": "Map five requests to the PDPL principles they engage",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "Five requests, which rules",
+            "summary": "Map five requests to the PDPL principles they engage, and write the note that says so for one of them.",
             "minutes": 25,
-            "href": "D1_1_map_five_requests.ipynb"
+            "href": "D1_1_five_requests.ipynb",
+            "steps": [
+              {
+                "text": "Read the five requests and the privacy notice",
+                "minutes": 4
+              },
+              {
+                "text": "Name the kind of processing each request is",
+                "minutes": 5
+              },
+              {
+                "text": "Mark the rules each request engages",
+                "minutes": 8
+              },
+              {
+                "text": "Flag the requests that go to the data protection officer",
+                "minutes": 3
+              },
+              {
+                "text": "Write the note for one request",
+                "minutes": 5
+              }
+            ],
+            "stretch": "Add a sixth request: a student asks for a copy of her data used in the analysis"
           }
         },
         {
           "title": "Purpose, minimisation and secondary use",
+          "summary": "The purpose decides the fields: what it does not need is dropped or coarsened, and a new purpose is a new decision",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Write a purpose precise enough to decide each field against",
+            "Cut an extract to the fields the purpose needs, keeping, coarsening or dropping each with a reason",
+            "Recognise a secondary use and name what the law and the national rules require before it starts"
           ],
           "lo": [
-            "LO1"
+            "LO1",
+            "LO2"
           ],
           "lab": {
             "id": "1.2",
-            "title": "Cut an extract to the fields the purpose needs, recording why",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "Cut the extract",
+            "summary": "Cut an extract to the fields the purpose needs, recording why, and find the identifiers hiding in free text.",
             "minutes": 25,
-            "href": "D1_2_cut_extract_fields.ipynb"
+            "href": "D1_2_cut_extract.ipynb",
+            "steps": [
+              {
+                "text": "Read the purpose and the 30 columns of the registry",
+                "minutes": 3
+              },
+              {
+                "text": "Decide keep, coarsen or drop for each field, with a reason",
+                "minutes": 8
+              },
+              {
+                "text": "Scan the advisor notes for identifiers with rules",
+                "minutes": 5
+              },
+              {
+                "text": "Build the extract with a project pseudonym",
+                "minutes": 6
+              },
+              {
+                "text": "Write the minimisation log",
+                "minutes": 3
+              }
+            ],
+            "stretch": "Decide the fields again for a second purpose, the partner's study, and say what makes it a secondary use"
           }
         },
         {
           "title": "Classifying data and outputs",
+          "summary": "Tables, charts and lists are data too: each gets a level from the impact of its disclosure, and the level sets the controls",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Classify a dataset or an output with the impact questions of the Data Classification Policy",
+            "Apply the highest-level rule to combined data and say when an aggregate can be Public",
+            "Name the control each level requires, including what may be entered into an AI tool"
           ],
           "lo": [
             "LO2"
           ],
           "lab": {
             "id": "1.3",
-            "title": "Classify four datasets and three outputs and name each control",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "Classify and control",
+            "summary": "Classify four datasets and three outputs and name each control.",
             "minutes": 25,
-            "href": "D1_3_classify_four_datasets.ipynb"
+            "href": "D1_3_classify_control.ipynb",
+            "steps": [
+              {
+                "text": "Run the impact questions on the four datasets",
+                "minutes": 7
+              },
+              {
+                "text": "Classify the three outputs",
+                "minutes": 6
+              },
+              {
+                "text": "Apply the highest-level rule to a joined file",
+                "minutes": 3
+              },
+              {
+                "text": "Name the controls for each item",
+                "minutes": 6
+              },
+              {
+                "text": "Decide what may be entered into an AI tool",
+                "minutes": 3
+              }
+            ],
+            "stretch": "Set a declassification trigger for the referral table and say who approves it"
           }
         },
         {
           "title": "Sharing requests",
+          "summary": "A partner's request is judged on purpose, minimum data and the source's consent, then answered with a form of release and conditions",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Assess a sharing request against the tests of the Data Sharing Policy and the rules for secondary use",
+            "Choose the form of release: record level, pseudonymised or aggregate",
+            "Draft approval conditions under the policy's control headings and name who signs"
           ],
           "lo": [
             "LO2"
           ],
           "lab": {
             "id": "1.4",
-            "title": "Assess a partner's sharing request and draft approval conditions",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "The Observatory's request",
+            "summary": "Assess a partner's sharing request and draft the approval conditions.",
             "minutes": 25,
-            "href": "D1_4_assess_partner_s.ipynb"
+            "href": "D1_4_sharing_request.ipynb",
+            "steps": [
+              {
+                "text": "Read the request and name the parties and the route",
+                "minutes": 4
+              },
+              {
+                "text": "Assess it against the three tests",
+                "minutes": 6
+              },
+              {
+                "text": "Choose the form of release",
+                "minutes": 5
+              },
+              {
+                "text": "Draft the conditions under the eight control headings",
+                "minutes": 7
+              },
+              {
+                "text": "Fill the decision record and name who signs",
+                "minutes": 3
+              }
+            ],
+            "stretch": "The partner adds a consultant outside the Kingdom: revise the decision"
           }
         }
-      ]
+      ],
+      "subtitle": "Test the request, cut the data, classify it and decide what a partner may have"
     },
     {
       "id": "day2",
@@ -160,69 +266,174 @@
       "sessions": [
         {
           "title": "Aggregate release and small cells",
+          "summary": "An aggregate table can still point at one student: small cells, totals and a second table are the three ways",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Explain how a small cell, a total or a second release singles out a student",
+            "Apply a threshold rule with complementary suppression and log each suppressed cell",
+            "Test a release for recovery by subtraction and by differencing before it leaves"
           ],
           "lo": [
             "LO3"
           ],
           "lab": {
             "id": "2.1",
-            "title": "Apply a threshold rule and test for singling out by differencing",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "Suppress, then attack",
+            "summary": "Apply a threshold rule and test for singling out by differencing.",
             "minutes": 25,
-            "href": "D2_1_apply_threshold_rule.ipynb"
+            "href": "D2_1_small_cells.ipynb",
+            "steps": [
+              {
+                "text": "Count the cells under the threshold in three draft tables",
+                "minutes": 4
+              },
+              {
+                "text": "Suppress them and log each cell with its reason",
+                "minutes": 6
+              },
+              {
+                "text": "Recover a suppressed cell from the totals",
+                "minutes": 4
+              },
+              {
+                "text": "Add complementary suppression and test again",
+                "minutes": 6
+              },
+              {
+                "text": "Difference the table against an earlier release",
+                "minutes": 5
+              }
+            ],
+            "stretch": "Round the counts to a base of 5 in place of suppression and compare what a reader loses"
           }
         },
         {
           "title": "Where bias enters",
+          "summary": "Bias enters before any metric is computed: in what is recorded, who is covered, how the outcome is defined and how the result is used",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Trace a rule's data from the event to the decision and mark where bias can enter",
+            "Distinguish a recording problem, a coverage problem, a label problem and a use problem",
+            "Measure one entry point with data instead of arguing about it"
           ],
           "lo": [
             "LO4"
           ],
           "lab": {
             "id": "2.2",
-            "title": "Mark four points where bias can enter the referral data",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "Four entry points",
+            "summary": "Mark four points where bias can enter the referral data, and measure two of them.",
             "minutes": 25,
-            "href": "D2_2_mark_four_points.ipynb"
+            "href": "D2_2_bias_entry_points.ipynb",
+            "steps": [
+              {
+                "text": "Trace Awn's data from the event to the referral",
+                "minutes": 5
+              },
+              {
+                "text": "Mark four points where bias can enter",
+                "minutes": 8
+              },
+              {
+                "text": "Measure the attendance record against the roll-call audit",
+                "minutes": 6
+              },
+              {
+                "text": "Measure missing midterm marks by group",
+                "minutes": 4
+              },
+              {
+                "text": "Rank which entry point to check first",
+                "minutes": 2
+              }
+            ],
+            "stretch": "Find a fifth entry point after the referral: who takes up the support that is offered"
           }
         },
         {
           "title": "Comparing groups",
+          "summary": "A fair comparison reports the referral rate and both error rates by group, each with its interval, inside the strata that matter",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Compute referral, false-referral and missed-student rates by group",
+            "Report each rate and each difference with a confidence interval",
+            "Check whether a gap survives inside colleges before explaining it"
           ],
           "lo": [
             "LO4"
           ],
           "lab": {
             "id": "2.3",
-            "title": "Compare referral and error rates by group with intervals",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "Rates with intervals",
+            "summary": "Compare referral and error rates by group with intervals.",
             "minutes": 25,
-            "href": "D2_3_compare_referral_error.ipynb"
+            "href": "D2_3_group_rates.ipynb",
+            "steps": [
+              {
+                "text": "Build the four outcome counts by group",
+                "minutes": 5
+              },
+              {
+                "text": "Compute the three rates with Wilson intervals",
+                "minutes": 8
+              },
+              {
+                "text": "Compute the differences with their intervals",
+                "minutes": 5
+              },
+              {
+                "text": "Check the gender gap inside each college",
+                "minutes": 5
+              },
+              {
+                "text": "Write the result in one sentence per gap",
+                "minutes": 2
+              }
+            ],
+            "stretch": "Compute the rates for one intersection of two groups and say what the interval allows you to claim"
           }
         },
         {
           "title": "Naming the bias",
+          "summary": "A gap has more than one possible cause: name two bias types from the national guide and run the check that separates them",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Match an observed gap to candidate bias types in the AI Bias Reference Guide",
+            "Design the check that separates two candidate causes",
+            "State what a fairness metric cannot settle and who decides the rest"
           ],
           "lo": [
             "LO4"
           ],
           "lab": {
             "id": "2.4",
-            "title": "Match two observed gaps to bias types in the national guide",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "Two gaps, two names",
+            "summary": "Match two observed gaps to bias types in the national guide and run the check that separates them.",
             "minutes": 25,
-            "href": "D2_4_match_two_observed.ipynb"
+            "href": "D2_4_name_the_bias.ipynb",
+            "steps": [
+              {
+                "text": "Read the two gaps and their intervals",
+                "minutes": 3
+              },
+              {
+                "text": "Pick two candidate bias types for each gap",
+                "minutes": 6
+              },
+              {
+                "text": "Design the check that separates them",
+                "minutes": 6
+              },
+              {
+                "text": "Run the two checks",
+                "minutes": 7
+              },
+              {
+                "text": "Record the conclusion and what stays open",
+                "minutes": 3
+              }
+            ],
+            "stretch": "Change the rule to equalise false referrals and report what happens to missed students"
           }
         }
-      ]
+      ],
+      "subtitle": "Release tables that single nobody out, and compare groups with honest uncertainty"
     },
     {
       "id": "day3",
@@ -232,82 +443,189 @@
       "sessions": [
         {
           "title": "Datasheets and analysis logs",
+          "summary": "A reviewer who was not in the room must be able to trace a number to its data, its decisions and its approvals",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Fill a datasheet that states what the data is, how it was collected and what it must not be used for",
+            "Keep an analysis log in which every decision has a reason, a date and an approver",
+            "Tie a release to a version so a result can be traced and rerun"
           ],
           "lo": [
             "LO5"
           ],
           "lab": {
             "id": "3.1",
-            "title": "Fill a datasheet and log three decisions with their approver",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "Datasheet and log",
+            "summary": "Fill a datasheet and log three decisions with their approver, then let a peer audit them.",
             "minutes": 25,
-            "href": "D3_1_fill_datasheet_log.ipynb"
+            "href": "D3_1_datasheet_log.ipynb",
+            "steps": [
+              {
+                "text": "Fill the datasheet from the data and the notice",
+                "minutes": 8
+              },
+              {
+                "text": "Log three decisions with reason, date and approver",
+                "minutes": 6
+              },
+              {
+                "text": "Tag the release with its file fingerprints",
+                "minutes": 4
+              },
+              {
+                "text": "Swap with a peer and answer five audit questions",
+                "minutes": 5
+              },
+              {
+                "text": "Fix what the peer could not answer",
+                "minutes": 2
+              }
+            ],
+            "stretch": "Add a decision record for the choice of threshold, with the options that were rejected"
           }
         },
         {
           "title": "Scoping with a sponsor",
+          "summary": "A vague request becomes an answerable question when the decision, the population, the measure and the success criterion are agreed",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Ask the questions that turn a request into a decision, a population, a measure and a time frame",
+            "Agree success criteria and what is out of scope before any analysis starts",
+            "Record the agreement in a scope note the sponsor confirms"
           ],
           "lo": [
             "LO6"
           ],
           "lab": {
             "id": "3.2",
-            "title": "Turn a vague request into a question in a timed role-play",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "Scope in six minutes",
+            "summary": "Turn a vague request into a question in a timed role-play, in threes, and write the scope note.",
             "minutes": 25,
-            "href": "D3_2_turn_vague_request.ipynb"
+            "href": "D3_2_scoping_roleplay.ipynb",
+            "steps": [
+              {
+                "text": "Read the brief and your role card",
+                "minutes": 3
+              },
+              {
+                "text": "Round 1: analyst, sponsor, observer",
+                "minutes": 6
+              },
+              {
+                "text": "Round 2: rotate the roles",
+                "minutes": 6
+              },
+              {
+                "text": "Round 3: rotate the roles",
+                "minutes": 6
+              },
+              {
+                "text": "Write your scope note",
+                "minutes": 4
+              }
+            ],
+            "stretch": "Send the scope note as a five-line message and ask the sponsor to confirm one sentence"
           }
         },
         {
           "title": "Pushing back without obstructing",
+          "summary": "Saying no is half an answer: name the rule, offer the lawful alternative that serves the same decision, and escalate when it is not yours to decide",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "Refuse an unsafe request by naming the harm and the rule, not by citing policy at the sponsor",
+            "Offer a lawful alternative that serves the sponsor's decision",
+            "Recognise when to escalate to the data protection officer and record the agreement"
           ],
           "lo": [
             "LO6"
           ],
           "lab": {
             "id": "3.3",
-            "title": "Role-play a request for a risk list; agree a lawful alternative",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "The risk list",
+            "summary": "Role-play a request for a risk list and agree a lawful alternative.",
             "minutes": 25,
-            "href": "D3_3_role_play_request.ipynb"
+            "href": "D3_3_pushback_roleplay.ipynb",
+            "steps": [
+              {
+                "text": "Read the request and prepare two alternatives",
+                "minutes": 5
+              },
+              {
+                "text": "Round 1: analyst, sponsor, observer",
+                "minutes": 5
+              },
+              {
+                "text": "Round 2: rotate the roles",
+                "minutes": 5
+              },
+              {
+                "text": "Round 3: rotate the roles",
+                "minutes": 5
+              },
+              {
+                "text": "Record the agreement and the escalation",
+                "minutes": 5
+              }
+            ],
+            "stretch": "The sponsor insists: write the three-line escalation to the data protection officer"
           }
         },
         {
           "title": "Explaining limits",
+          "summary": "A result is finished when its reader knows what it does not show, how sure it is and what it must not be used for",
           "outcomes": [
-            "REPLACE: what a participant can do after this session"
+            "State what an analysis cannot show, separately from how uncertain it is",
+            "Write a limits statement a non-specialist cannot misread",
+            "Choose the capstone engagement and list what its pack must contain"
           ],
           "lo": [
+            "LO4",
+            "LO5",
             "LO6"
           ],
           "lab": {
             "id": "3.4",
-            "title": "Write a three-sentence limits statement; choose the capstone case",
-            "summary": "REPLACE: one line on what participants build and take away; then list the steps of the lab in course.json, their minutes adding up to 25",
+            "title": "Three sentences and the capstone case",
+            "summary": "Write a three-sentence limits statement and choose the capstone case.",
             "minutes": 25,
-            "href": "D3_4_write_three_sentence.ipynb"
+            "href": "D3_4_limits_statement.ipynb",
+            "steps": [
+              {
+                "text": "Read the result and its interval",
+                "minutes": 3
+              },
+              {
+                "text": "List what the analysis cannot show",
+                "minutes": 5
+              },
+              {
+                "text": "Write the three-sentence limits statement",
+                "minutes": 7
+              },
+              {
+                "text": "Test it against four misreadings",
+                "minutes": 5
+              },
+              {
+                "text": "Choose the capstone engagement and open its files",
+                "minutes": 5
+              }
+            ],
+            "stretch": "Rewrite the statement for a student newspaper, without a number that could mislead"
           }
         }
-      ]
+      ],
+      "subtitle": "Document the work so others can check it, and hold the three conversations"
     },
     {
       "id": "capstone",
       "kind": "capstone",
-      "title": "Capstone project presentations",
+      "title": "Capstone: the responsible-practice pack",
       "deck": "slides/capstone.html",
-      "subtitle": "REPLACE: the catalog gives 8 minutes for each presentation and nothing about questions; decide whether the questions are inside those minutes, set capstone.talk_minutes and capstone.qa_minutes in course.json and the timers of the now-presenting slide, and remove this line"
+      "subtitle": "Eight-minute defences: six to present the pack with a short role-play inside, two for the assessor's changed fact"
     }
   ],
   "capstone": {
     "summary": "A responsible-practice pack for one of three synthetic engagements (sharing decision, suppressed tables and log, group comparison, datasheet, analysis log, scope note) in a public repository; eight-minute defence that includes a short role-play",
-    "submission": "REPLACE: what participants submit and how: a public repository link, or a shared folder for a course without code",
-    "talk_minutes": 8,
+    "submission": "A public GitHub repository holding the responsible-practice pack for one of the three synthetic engagements: the sharing decision with its conditions, the suppressed tables with the suppression log, the group comparison with intervals and named bias types, the datasheet, the analysis log and the scope note, with a README that links each part and states who approved each release and what the analysis must not be used for. Then an eight-minute defence: six minutes on the pack, including a two-minute role-play with the sponsor, and two minutes in which the assessor changes one fact of the request and the participant revises the sharing decision.",
+    "talk_minutes": 6,
     "rubric": [
       {
         "criterion": "Legal and classification decisions",
@@ -329,7 +647,8 @@
         "criterion": "Scope note",
         "weight": 15
       }
-    ]
+    ],
+    "qa_minutes": 2
   },
   "labs": {
     "kind": "notebooks",
@@ -370,6 +689,137 @@
       "examples": [
         "Markdown datasheet templates in Git",
         "Quarto documents"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "group": "National references: personal data",
+      "items": [
+        {
+          "title": "Personal Data Protection Law (SDAIA)",
+          "url": "https://sdaia.gov.sa/en/SDAIA/about/Documents/PersonalDataProtectionLaw.pdf"
+        },
+        {
+          "title": "Implementing Regulation of the Personal Data Protection Law (SDAIA)",
+          "url": "https://sdaia.gov.sa/en/SDAIA/about/Documents/ImplementingRegulationPersonalDataProtectionLaw.pdf"
+        },
+        {
+          "title": "Regulation on Personal Data Transfer outside the Kingdom (SDAIA)",
+          "url": "https://sdaia.gov.sa/Documents/RegulationonPersonalDataEN.pdf"
+        },
+        {
+          "title": "Personal Data Destruction, Anonymization and Pseudonymisation Guideline (SDAIA)",
+          "url": "https://sdaia.gov.sa/Documents/PersonalDataDestructionAnonymizationAndEncryptionGuideline.pdf"
+        }
+      ]
+    },
+    {
+      "group": "National references: data management (NDMO)",
+      "items": [
+        {
+          "title": "Data Classification Policy (NDMO, SDAIA)",
+          "url": "https://sdaia.gov.sa/en/SDAIA/about/Documents/DataClassificationPolicy.pdf"
+        },
+        {
+          "title": "Data Sharing Policy, version 2.0 (NDMO, SDAIA)",
+          "url": "https://sdaia.gov.sa/en/SDAIA/about/Documents/DataSharingPolicyEN.pdf"
+        },
+        {
+          "title": "General Rules for Secondary Use of Data, issue 1.0 (SDAIA)",
+          "url": "https://sdaia.gov.sa/Documents/GeneralRulesForSecondaryUseOfData_EN.pdf"
+        }
+      ]
+    },
+    {
+      "group": "National references: AI ethics and bias",
+      "items": [
+        {
+          "title": "AI Ethics Principles (SDAIA)",
+          "url": "https://sdaia.gov.sa/en/SDAIA/about/Documents/ai-principles.pdf"
+        },
+        {
+          "title": "AI Bias Reference Guide, first edition (SDAIA, May 2026)",
+          "url": "https://sdaia.gov.sa/en/MediaCenter/KnowledgeCenter/ResearchLibrary/EN-AI-BIAS.pdf"
+        },
+        {
+          "title": "Generative AI Guidelines for Government (SDAIA)",
+          "url": "https://sdaia.gov.sa/en/SDAIA/about/Files/GenAIGuidelinesForGovernmentENCompressed.pdf"
+        },
+        {
+          "title": "Regulations and policies index (SDAIA)",
+          "url": "https://sdaia.gov.sa/en/SDAIA/about/Pages/RegulationsAndPolicies.aspx"
+        }
+      ]
+    },
+    {
+      "group": "Disclosure control, fairness and documentation",
+      "items": [
+        {
+          "title": "Frequently Asked Questions: Disclosure Avoidance (Privacy Technical Assistance Center, US Department of Education)",
+          "url": "https://studentprivacy.ed.gov/sites/default/files/resource_document/file/FAQs_disclosure_avoidance_0.pdf"
+        },
+        {
+          "title": "Gebru et al., Datasheets for Datasets",
+          "url": "https://arxiv.org/abs/1803.09010"
+        },
+        {
+          "title": "Suresh and Guttag, A Framework for Understanding Sources of Harm throughout the Machine Learning Life Cycle",
+          "url": "https://arxiv.org/abs/1901.10002"
+        },
+        {
+          "title": "Kleinberg, Mullainathan and Raghavan, Inherent Trade-Offs in the Fair Determination of Risk Scores",
+          "url": "https://arxiv.org/abs/1609.05807"
+        },
+        {
+          "title": "Chouldechova, Fair prediction with disparate impact",
+          "url": "https://arxiv.org/abs/1610.07524"
+        },
+        {
+          "title": "Barocas, Hardt and Narayanan, Fairness and Machine Learning",
+          "url": "https://fairmlbook.org/"
+        }
+      ]
+    },
+    {
+      "group": "Tools",
+      "items": [
+        {
+          "title": "pandas",
+          "url": "https://pandas.pydata.org/"
+        },
+        {
+          "title": "DuckDB",
+          "url": "https://duckdb.org/"
+        },
+        {
+          "title": "Polars",
+          "url": "https://pola.rs/"
+        },
+        {
+          "title": "JupyterLab documentation",
+          "url": "https://jupyterlab.readthedocs.io/en/stable/"
+        },
+        {
+          "title": "marimo",
+          "url": "https://marimo.io/"
+        },
+        {
+          "title": "Quarto",
+          "url": "https://quarto.org/"
+        },
+        {
+          "title": "Fairlearn: common fairness metrics",
+          "url": "https://fairlearn.org/main/user_guide/assessment/common_fairness_metrics.html"
+        },
+        {
+          "title": "Presidio, personal data detection and anonymisation",
+          "url": "https://data-privacy-stack.github.io/presidio/"
+        },
+        {
+          "title": "statsmodels: confidence intervals for a proportion (Wilson)",
+          "url": "https://www.statsmodels.org/stable/generated/statsmodels.stats.proportion.proportion_confint.html"
+        }
       ]
     }
   ]
