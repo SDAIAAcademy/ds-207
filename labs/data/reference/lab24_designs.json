@@ -1,0 +1,12 @@
+{
+ "A": {
+  "check": "Compare the card record with the instructors' roll call for audited students, and compute the false-referral rate of students with a registered disability separately for those with and without a remote accommodation.",
+  "if_first": "The record is far below the roll call for remote-accommodation students, and the gap in false referrals is confined to them.",
+  "if_second": "The record matches the roll call, and false referrals are high for all students with a registered disability."
+ },
+ "B": {
+  "check": "Split struggling students by whether a midterm mark is in the registry, and compare the missed rate of non-Saudi and Saudi students inside each part.",
+  "if_first": "Inside each part the two groups are missed about equally; the gap comes from more non-Saudi students having no mark.",
+  "if_second": "Non-Saudi students are missed more often even when their marks are present."
+ }
+}

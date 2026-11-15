@@ -1,0 +1,42 @@
+[
+ {
+  "type": "measurement bias",
+  "in_short": "The recorded values are systematically too high or too low compared with the true ones, because of how the data is collected or recorded."
+ },
+ {
+  "type": "coverage bias",
+  "in_short": "The data does not adequately represent part of the population, so results are worse for those who are under-represented."
+ },
+ {
+  "type": "historical bias",
+  "in_short": "The data carries assumptions, standards or circumstances of the past that no longer fit the present."
+ },
+ {
+  "type": "sampling bias",
+  "in_short": "The data selected does not representatively capture the full range of the domain."
+ },
+ {
+  "type": "aggregation bias",
+  "in_short": "Groups that differ are combined as if they were alike, so the result fits the largest group and overlooks smaller ones."
+ },
+ {
+  "type": "labeling bias",
+  "in_short": "The labels reflect the subjective judgement of the people who assigned them."
+ },
+ {
+  "type": "detection bias",
+  "in_short": "Outcomes are identified or verified with different methods or intensity for different groups."
+ },
+ {
+  "type": "feedback loop bias",
+  "in_short": "A system's outputs come back as its future inputs, so an early skew is preserved or magnified."
+ },
+ {
+  "type": "exclusion bias",
+  "in_short": "Important information was removed or left out of the data, leaving blind spots."
+ },
+ {
+  "type": "automation bias",
+  "in_short": "People favour the output of an automated system over their own judgement or other evidence."
+ }
+]

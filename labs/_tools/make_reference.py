@@ -34,6 +34,22 @@ REFS = {
         "lab14_parties": "who", "lab14_tests": "tests", "lab14_form": "form", "lab14_conditions": "conds",
         "lab14_record": "record",
     },
+    "D2_1_small_cells": {
+        "lab21_small": "small", "lab21_leaked": "leaked", "lab21_after": "after",
+        "lab21_mask3": "full3.to_dict()", "lab21_difference": "revealed",
+    },
+    "D2_2_bias_entry_points": {
+        "lab22_points": "points", "lab22_gap": "gap", "lab22_missing": "missing", "lab22_order": "order",
+    },
+    "D2_3_group_rates": {
+        "lab23_counts": "{g: t.to_dict('index') for g, t in table.items()}", "lab23_rates": "rt.to_dict('records')",
+        "lab23_probe": "probe", "lab23_gaps": "gaps", "lab23_within": "inside.to_dict('records')",
+        "lab23_sentences": "lines",
+    },
+    "D2_4_name_the_bias": {
+        "lab24_candidates": "cand", "lab24_designs": "design", "lab24_check_a": "check_a",
+        "lab24_check_b": "{' | '.join(k): v for k, v in check_b.items()}", "lab24_conclusions": "concl",
+    },
 }
 
 

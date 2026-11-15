@@ -1,0 +1,66 @@
+[
+ {
+  "group": "gender",
+  "value": "F",
+  "n": 8218,
+  "referral": "12.3% (11.6% to 13.1%)",
+  "false_referral": "5.5% (5.0% to 6.0%)",
+  "missed": "43.2% (40.3% to 46.2%)"
+ },
+ {
+  "group": "gender",
+  "value": "M",
+  "n": 9782,
+  "referral": "10.5% (9.9% to 11.1%)",
+  "false_referral": "5.1% (4.6% to 5.5%)",
+  "missed": "46.4% (43.5% to 49.4%)"
+ },
+ {
+  "group": "nationality_group",
+  "value": "Saudi",
+  "n": 16063,
+  "referral": "11.8% (11.3% to 12.3%)",
+  "false_referral": "5.4% (5.1% to 5.8%)",
+  "missed": "42.9% (40.8% to 45.1%)"
+ },
+ {
+  "group": "nationality_group",
+  "value": "non-Saudi",
+  "n": 1937,
+  "referral": "7.8% (6.7% to 9.1%)",
+  "false_referral": "3.9% (3.1% to 4.9%)",
+  "missed": "61.8% (55.2% to 68.0%)"
+ },
+ {
+  "group": "disability_status",
+  "value": "none",
+  "n": 17571,
+  "referral": "10.6% (10.1% to 11.1%)",
+  "false_referral": "4.6% (4.2% to 4.9%)",
+  "missed": "45.7% (43.6% to 47.8%)"
+ },
+ {
+  "group": "disability_status",
+  "value": "registered",
+  "n": 429,
+  "referral": "41.7% (37.2% to 46.4%)",
+  "false_referral": "34.2% (29.6% to 39.2%)",
+  "missed": "13.1% (6.8% to 23.8%)"
+ },
+ {
+  "group": "first_generation",
+  "value": "no",
+  "n": 12365,
+  "referral": "11.1% (10.6% to 11.7%)",
+  "false_referral": "5.1% (4.7% to 5.5%)",
+  "missed": "44.5% (41.9% to 47.0%)"
+ },
+ {
+  "group": "first_generation",
+  "value": "yes",
+  "n": 5635,
+  "referral": "11.7% (10.9% to 12.6%)",
+  "false_referral": "5.7% (5.0% to 6.3%)",
+  "missed": "45.6% (42.0% to 49.3%)"
+ }
+]

@@ -451,6 +451,29 @@ LIMITS_RESULT = {
 }
 
 
+PIPELINE = [
+    {"id": "S1", "stage": "attendance recording", "what_happens": "A student's card is read at the door of a teaching room. Sessions followed remotely under an approved accommodation have no card reading."},
+    {"id": "S2", "stage": "midterm marks", "what_happens": "Instructors enter midterm marks in the registry. Bridging-year entrants are marked in the bridging programme's own system for their first two years, and those marks are not copied over."},
+    {"id": "S3", "stage": "thresholds", "what_happens": "The limits of 75% attendance and 2.5 were set in 2023 from one year of records of two colleges, Business and Engineering."},
+    {"id": "S4", "stage": "outcome label", "what_happens": "'Struggled' means a term grade average below 2.5. A student who withdraws during the term keeps the average of the courses completed."},
+    {"id": "S5", "stage": "referral and support", "what_happens": "An advisor contacts each referred student. Students who are helped may pass, and then count as referrals that were 'not needed'."},
+    {"id": "S6", "stage": "reporting", "what_happens": "The unit reports one referral rate and one hit rate for the whole University each term."},
+]
+
+BIAS_TYPES = [
+    {"type": "measurement bias", "in_short": "The recorded values are systematically too high or too low compared with the true ones, because of how the data is collected or recorded."},
+    {"type": "coverage bias", "in_short": "The data does not adequately represent part of the population, so results are worse for those who are under-represented."},
+    {"type": "historical bias", "in_short": "The data carries assumptions, standards or circumstances of the past that no longer fit the present."},
+    {"type": "sampling bias", "in_short": "The data selected does not representatively capture the full range of the domain."},
+    {"type": "aggregation bias", "in_short": "Groups that differ are combined as if they were alike, so the result fits the largest group and overlooks smaller ones."},
+    {"type": "labeling bias", "in_short": "The labels reflect the subjective judgement of the people who assigned them."},
+    {"type": "detection bias", "in_short": "Outcomes are identified or verified with different methods or intensity for different groups."},
+    {"type": "feedback loop bias", "in_short": "A system's outputs come back as its future inputs, so an early skew is preserved or magnified."},
+    {"type": "exclusion bias", "in_short": "Important information was removed or left out of the data, leaving blind spots."},
+    {"type": "automation bias", "in_short": "People favour the output of an automated system over their own judgement or other evidence."},
+]
+
+
 # --------------------------------------------------------------------------- capstone engagements
 
 ENGAGEMENTS = {
@@ -634,6 +657,8 @@ def main() -> None:
     caught = sum(r["awn_referred"] == "yes" for r in struggled)
     LIMITS_RESULT["claim"] = f"Awn referred {round(100 * caught / len(struggled))}% of the students who ended the term struggling ({caught} of {len(struggled)})."
     write_json(DATA / "limits_result.json", LIMITS_RESULT)
+    write_json(DATA / "awn_pipeline.json", PIPELINE)
+    write_json(DATA / "bias_types.json", BIAS_TYPES)
     cap_notes = make_capstone(random.Random(SEED + 2))
     write_json(HERE / "solutions" / "keys.json", {
         "requests": REQUEST_KEY, "classification": CLASSIFICATION_KEY, "sharing": SHARING_KEY,

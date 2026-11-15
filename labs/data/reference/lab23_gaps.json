@@ -1,0 +1,47 @@
+[
+ {
+  "group": "gender",
+  "compare": "F minus M",
+  "rate": "referral",
+  "difference": 0.018501159295518918,
+  "low": 0.009180060516417276,
+  "high": 0.027888405994664387,
+  "excludes_zero": true
+ },
+ {
+  "group": "disability_status",
+  "compare": "registered minus none",
+  "rate": "false_referral",
+  "difference": 0.29673363968880145,
+  "low": 0.24998042762863593,
+  "high": 0.34672034681777353,
+  "excludes_zero": true
+ },
+ {
+  "group": "nationality_group",
+  "compare": "non-Saudi minus Saudi",
+  "rate": "missed",
+  "difference": 0.18895807388958075,
+  "low": 0.11967737878877911,
+  "high": 0.25431246769250354,
+  "excludes_zero": true
+ },
+ {
+  "group": "first_generation",
+  "compare": "yes minus no",
+  "rate": "missed",
+  "difference": 0.011446742984654923,
+  "low": -0.03296388050933892,
+  "high": 0.05608924330034063,
+  "excludes_zero": false
+ },
+ {
+  "group": "first_generation",
+  "compare": "yes minus no",
+  "rate": "false_referral",
+  "difference": 0.005836193077262693,
+  "low": -0.0016269292955679556,
+  "high": 0.013709767649494786,
+  "excludes_zero": false
+ }
+]

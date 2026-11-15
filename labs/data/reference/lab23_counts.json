@@ -1,0 +1,66 @@
+{
+ "gender": {
+  "F": {
+   "n": 8218,
+   "caught": 623,
+   "false_referral": 391,
+   "missed": 474,
+   "left_alone": 6730
+  },
+  "M": {
+   "n": 9782,
+   "caught": 586,
+   "false_referral": 440,
+   "missed": 508,
+   "left_alone": 8248
+  }
+ },
+ "nationality_group": {
+  "Saudi": {
+   "n": 16063,
+   "caught": 1125,
+   "false_referral": 764,
+   "missed": 846,
+   "left_alone": 13328
+  },
+  "non-Saudi": {
+   "n": 1937,
+   "caught": 84,
+   "false_referral": 67,
+   "missed": 136,
+   "left_alone": 1650
+  }
+ },
+ "disability_status": {
+  "none": {
+   "n": 17571,
+   "caught": 1156,
+   "false_referral": 705,
+   "missed": 974,
+   "left_alone": 14736
+  },
+  "registered": {
+   "n": 429,
+   "caught": 53,
+   "false_referral": 126,
+   "missed": 8,
+   "left_alone": 242
+  }
+ },
+ "first_generation": {
+  "no": {
+   "n": 12365,
+   "caught": 826,
+   "false_referral": 552,
+   "missed": 661,
+   "left_alone": 10326
+  },
+  "yes": {
+   "n": 5635,
+   "caught": 383,
+   "false_referral": 279,
+   "missed": 321,
+   "left_alone": 4652
+  }
+ }
+}

@@ -1,158 +1,624 @@
 <section class="slide title" id="title" data-auto="title">
-  <aside class="notes">REPLACE: welcome; introduce yourself; one question to the room that calibrates the pace; the rhythm of the day</aside>
+  <aside class="notes"><p>Yesterday was about what may be done with the data. Today is about what comes out of it: tables that must not point at a student, and comparisons that must not mislead. Every lab today starts from supplied files, so nobody is blocked by yesterday.</p></aside>
 </section>
 
 <section class="slide" id="agenda" data-auto="agenda"></section>
+
+<section class="slide" id="review-day1" data-lo="LO1 LO2">
+  <div class="kicker">Review of Day 1</div>
+  <h2>Which statement about the pseudonymised extract is right?</h2>
+  <div class="quiz" data-type="single" data-lo="LO2">
+    <p class="lead">The analysis extract has 13 columns per student under a project pseudonym, with no names or identity numbers. A colleague wants to paste 500 rows into a hosted AI assistant to get plotting code.</p>
+    <div class="opts">
+      <div class="opt" data-why="Equates removing names with anonymising: the key exists and each row is one student">Fine: without names the rows are anonymous</div>
+      <div class="opt" data-ok>Not allowed: the extract is personal data classified Restricted; describe the columns and ask for code</div>
+      <div class="opt" data-why="Looks for a technical fix to a classification rule: the level of the data does not change with the channel">Fine if the assistant's history is switched off</div>
+      <div class="opt" data-why="Over-classifies: the impact is on individuals' privacy, which the policy places at low impact, so Restricted">Not allowed: student data is classified Secret</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> Pseudonymised data is personal data, its level is Restricted, and only Public data goes into a generative AI tool.</div>
+  </div>
+  <aside class="notes"><p>Answer: the second option. It joins three ideas of Day 1: pseudonymised is not anonymised, the level follows the impact, and the rule for AI tools. If the room is unsure, give two minutes to the Day 1 wrap-up before going on.</p></aside>
+</section>
+
+<section class="slide" id="approved-extract" data-lo="LO4 LO5">
+  <div class="kicker">Where today starts</div>
+  <h2>The group comparison is a separate decision, already approved and logged</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>Yesterday's extract dropped gender, nationality and disability status: its purpose did not need them</li>
+      <li>Checking the rule's errors by group <b>does</b> need them</li>
+      <li>Disability status is health data, so the data protection officer decided</li>
+    </ul>
+    <div class="card c-teal"><h4>Log entry L002, approved by Shatha Al-Omair</h4><p class="small mb0">Gender, nationality group, disability status and remote accommodation are added to the extract for the group comparison. It runs only on the pseudonymised extract inside the unit and is reported in aggregate.</p></div>
+  </div>
+  <aside class="notes"><p>The file is <code>labs/data/analysis_extract.csv</code>, 18,000 rows and 13 columns. Nationality has been coarsened to Saudi and non-Saudi. Make the point that measuring fairness needs the sensitive fields; refusing to hold them does not make a rule fair, it makes its errors invisible. The approval is in <code>labs/data/analysis_log_seed.json</code>, which Day 3 extends.</p></aside>
+</section>
 
 <!-- Session 1 -->
 
 <section class="slide section" id="s1" data-auto="section" data-session="1"></section>
 
-<section class="slide" id="s1-idea" data-lo="LO3">
-  <div class="kicker">REPLACE: the question this slide answers</div>
-  <h2>REPLACE: one idea, stated as a sentence</h2>
-  <div class="cols cols-2">
-    <ul class="bullets">
-      <li>REPLACE: at most six bullets, each a complete thought</li>
-      <li>REPLACE: bold the key phrase; numbers come from the lab run, not from memory</li>
-    </ul>
-    <div class="card c-teal"><h4>In the case study</h4><p class="small mb0">REPLACE: tie the idea to the case study and its data</p></div>
+<section class="slide" id="aggregates-disclose" data-lo="LO3">
+  <div class="kicker">The idea of this session</div>
+  <h2>An aggregate table can point at one student in three ways</h2>
+  <div class="cols cols-3">
+    <div class="card c-coral"><h4>A small cell</h4><p class="small mb0">A count of 1 in "Computing, non-Saudi, registered disability" is a person, to anyone who knows that college.</p></div>
+    <div class="card c-amber"><h4>A total</h4><p class="small mb0">Hide the 1 and print the row total: the reader subtracts and has it back.</p></div>
+    <div class="card c-purple"><h4>A second table</h4><p class="small mb0">Two tables that each look safe differ by exactly the students one of them leaves out.</p></div>
   </div>
-  <div class="callout warn mt"><b>What goes wrong.</b> REPLACE: the failure participants will hit, and how to recognise it</div>
-  <aside class="notes">REPLACE: what to say, the demo to run, the question to ask the room, the common failure and its fix</aside>
+  <div class="callout note mt"><b>Singling out</b> means a reader can tell that a cell is one particular person, and so learns what the table says about that person.</div>
+  <aside class="notes"><p>The three ways are the three attacks of Lab 2.1. Ask who the attacker is: not a hacker, a classmate, a lecturer, a journalist with the earlier report. The US Department of Education's guidance uses a "reasonable person in the school community" as the standard.</p><p>Sources: Privacy Technical Assistance Center, Frequently Asked Questions: Disclosure Avoidance.</p></aside>
 </section>
 
-<section class="slide" id="s1-steps" data-lo="LO3">
-  <div class="kicker">Step by step</div>
-  <h2>REPLACE: a process, shown one step per key press</h2>
-  <div class="flow">
-    <div class="step c-teal"><b>1 · REPLACE: name</b>REPLACE: what happens first</div>
-    <div class="arrow frag" data-frag="b">→</div><div class="step c-cyan frag" data-frag="b"><b>2 · REPLACE: name</b>REPLACE: the next piece</div>
-    <div class="arrow frag" data-frag="c">→</div><div class="step c-coral frag" data-frag="c"><b>3 · REPLACE: name</b>REPLACE: the result</div>
+<section class="slide" id="threshold-rule" data-lo="LO3">
+  <div class="kicker">The rule</div>
+  <h2>A threshold rule: no count from 1 to 9 leaves the unit</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>The unit's release policy sets <b>10</b>. It is the University's own choice</li>
+      <li><b>No national instrument sets a number.</b> The national guideline requires that aggregated data cannot be used to identify a person</li>
+      <li>Practice elsewhere: 3 as an absolute floor, 5 or 10 as common minimums</li>
+    </ul>
+    <div class="card c-teal"><h4>Choosing a threshold</h4><p class="small mb0">Higher when the attribute is sensitive (health), when the population is small and people know each other (a college), and when more tables on the same population will follow.</p></div>
   </div>
-  <div class="callout tip mt frag"><b>Takeaway.</b> REPLACE: the one sentence to remember</div>
-  <aside class="notes">Press once per step and say what each step adds before the next one appears. REPLACE: the example to walk through</aside>
+  <aside class="notes"><p>Be exact about what is law and what is house policy: the PDPL and its guideline give the goal, the number is the unit's. The 3, 5 and 10 come from the US Department of Education's guidance for education data and are cited as practice, not as a Saudi rule. The policy text is <code>labs/data/release_policy.md</code>.</p><p>Sources: Personal Data Destruction, Anonymization and Pseudonymisation Guideline; Privacy Technical Assistance Center, Frequently Asked Questions: Disclosure Avoidance.</p></aside>
+</section>
+
+<section class="slide" id="draft-table" data-lo="LO3">
+  <div class="kicker">From the lab's run</div>
+  <h2>The draft: students with a registered disability, by college and nationality group</h2>
+  <div class="cols cols-21">
+    <table class="t small">
+      <tr><th>College</th><th class="num">Saudi</th><th class="num">non-Saudi</th><th class="num">Total</th></tr>
+      <tr><td>Arts and Humanities</td><td class="num">65</td><td class="num">8</td><td class="num">73</td></tr>
+      <tr><td>Business</td><td class="num">92</td><td class="num">8</td><td class="num">100</td></tr>
+      <tr class="hl"><td>Computing</td><td class="num">54</td><td class="num">1</td><td class="num">55</td></tr>
+      <tr><td>Engineering</td><td class="num">81</td><td class="num">12</td><td class="num">93</td></tr>
+      <tr><td>Health Sciences</td><td class="num">51</td><td class="num">3</td><td class="num">54</td></tr>
+      <tr><td>Science</td><td class="num">50</td><td class="num">4</td><td class="num">54</td></tr>
+    </table>
+    <div class="stack">
+      <div class="stat center"><div class="big">5</div><div class="lbl">cells from 1 to 9</div></div>
+      <div class="callout warn"><b>One student.</b> The cell of 1 states a health fact about a person a whole college can name.</div>
+    </div>
+  </div>
+  <aside class="notes"><p>This is table T3 of Lab 2.1, computed from the synthetic registry. Ask the room to find the problem before you highlight it. Then ask: is 8 a problem? Under the unit's rule, yes.</p></aside>
+</section>
+
+<section class="slide" id="subtraction-attack" data-lo="LO3">
+  <div class="kicker">Attack one</div>
+  <h2>Suppress the small cells, keep the totals, and all five come back</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>College</th><th class="num">Saudi</th><th class="num">non-Saudi</th><th class="num">Total</th></tr>
+      <tr><td>Arts and Humanities</td><td class="num">65</td><td class="num">c</td><td class="num">73</td></tr>
+      <tr><td>Business</td><td class="num">92</td><td class="num">c</td><td class="num">100</td></tr>
+      <tr class="hl"><td>Computing</td><td class="num">54</td><td class="num">c</td><td class="num">55</td></tr>
+      <tr><td>Engineering</td><td class="num">81</td><td class="num">12</td><td class="num">93</td></tr>
+      <tr><td>Health Sciences</td><td class="num">51</td><td class="num">c</td><td class="num">54</td></tr>
+      <tr><td>Science</td><td class="num">50</td><td class="num">c</td><td class="num">54</td></tr>
+    </table>
+    <div>
+      <pre class="code"><code class="language-python">55 - 54   # Computing, non-Saudi: 1
+54 - 51   # Health Sciences: 3</code></pre>
+      <div class="callout warn mt-s"><b>What changed.</b> How the table looks. Not what it reveals.</div>
+    </div>
+  </div>
+  <aside class="notes"><p>Demonstration: run task 3 of the lab. The function recovers every cell that is the only suppressed one in its row or column. This is the most common real mistake in published tables: a "c" beside an exact total.</p></aside>
+</section>
+
+<section class="slide" id="complementary" data-lo="LO3">
+  <div class="kicker">The repair, and its price</div>
+  <h2>Complementary suppression protects the cell and can eat the table</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>Where one hidden cell can be subtracted back, hide a <b>second</b> cell in the same row and column</li>
+      <li>Repeat until no row or column has exactly one hidden cell</li>
+      <li>In the draft: <b>10 of 12 cells</b> end up hidden, including counts of 50 to 92 nobody needed to hide</li>
+    </ul>
+    <div class="card c-teal"><h4>Redesign beats repair</h4><p class="small mb0">Two one-way tables: by college (54 to 100) and by nationality group (393 and 36). Every cell is 10 or more, no suppression, and almost the same message.</p></div>
+  </div>
+  <aside class="notes"><p>Numbers from task 4 of the lab. The lesson analysts resist: when suppression removes most of a table, the breakdown is too fine for the population. Coarsen the categories or split the table.</p><p>Sources: Privacy Technical Assistance Center, Frequently Asked Questions: Disclosure Avoidance (complementary suppression).</p></aside>
+</section>
+
+<section class="slide" id="differencing" data-lo="LO3">
+  <div class="kicker">Attack two</div>
+  <h2>Two safe tables can differ by one student</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Registered disability</th><th class="num">Published last month, all</th><th class="num">Asked for now, Saudi only</th><th class="num">Difference</th></tr>
+      <tr><td>Arts and Humanities</td><td class="num">73</td><td class="num">65</td><td class="num">8</td></tr>
+      <tr><td>Business</td><td class="num">100</td><td class="num">92</td><td class="num">8</td></tr>
+      <tr class="hl"><td>Computing</td><td class="num">55</td><td class="num">54</td><td class="num">1</td></tr>
+      <tr><td>Health Sciences</td><td class="num">54</td><td class="num">51</td><td class="num">3</td></tr>
+      <tr><td>Science</td><td class="num">54</td><td class="num">50</td><td class="num">4</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>Each table passes the threshold alone: every count is 50 or more</li>
+      <li>The difference is the group the second table left out</li>
+      <li><b>The check:</b> before a release, compare it with every earlier table on the same population</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>Task 5 of the lab. The decision recorded there: the Saudi-only table by college is not released; the University-level split by nationality group is offered. Differencing needs a register of releases: you cannot check against a table nobody remembers publishing.</p></aside>
+</section>
+
+<section class="slide" id="other-methods" data-lo="LO3">
+  <div class="kicker">Beyond suppression</div>
+  <h2>Suppression is one of four tools</h2>
+  <table class="t small">
+    <tr><th>Method</th><th>What it does</th><th>What the reader loses</th></tr>
+    <tr><td>Coarsen the categories</td><td>Merge colleges, or nationalities into two groups</td><td>Detail; usually the cheapest loss</td></tr>
+    <tr><td>Suppress</td><td>Hide small cells and their complements</td><td>Cells, sometimes most of them</td></tr>
+    <tr><td>Round or band</td><td>Counts to a base of 5; "fewer than 10"</td><td>Exactness of every cell</td></tr>
+    <tr><td>Perturb</td><td>Small random changes to counts</td><td>Trust that a number is the number</td></tr>
+  </table>
+  <div class="callout note mt"><b>Later.</b> Noise with a mathematical guarantee (differential privacy) and measured re-identification risk are in DS-309.</div>
+  <aside class="notes"><p>The lab's stretch is rounding. For public accountability tables, perturbation is often judged unsuitable because readers can no longer trust a figure. Whatever the method, published exact totals reopen the subtraction attack.</p><p>Sources: Privacy Technical Assistance Center, Frequently Asked Questions: Disclosure Avoidance (suppression, blurring, perturbation).</p></aside>
+</section>
+
+<section class="slide" id="zeros-and-hundreds" data-lo="LO3">
+  <div class="kicker">Not only small counts</div>
+  <h2>A cell of zero or of everyone can disclose too</h2>
+  <div class="cols cols-2">
+    <div class="card c-coral"><h4>Everyone in a group</h4><p class="small mb0">"All 14 students of programme X were referred." No small cell, and you now know the referral status of each of the 14.</p></div>
+    <div class="card c-amber"><h4>Nobody in a group</h4><p class="small mb0">"0 of 14 were not referred" is the same sentence. A zero that tells you about everyone else is not harmless.</p></div>
+  </div>
+  <ul class="bullets mt">
+    <li>Check <b>rates of 0% and 100%</b> in small groups as well as counts</li>
+    <li>The unit's rule covers counts of 1 to 9; this case needs your judgement and a line in the log</li>
+  </ul>
+  <aside class="notes"><p>This is group disclosure: nobody is singled out, yet everyone in the group is described. The illustration of 14 students is an example, not a number from the data. Ask where it could occur in the Awn tables: a small programme where every student was referred.</p><p>Sources: Privacy Technical Assistance Center, Frequently Asked Questions: Disclosure Avoidance.</p></aside>
+</section>
+
+<section class="slide" id="suppression-log" data-lo="LO3 LO5">
+  <div class="kicker">The evidence</div>
+  <h2>Every suppressed cell has a line in the log, and every release a line in the register</h2>
+  <table class="t small">
+    <tr><th>Table</th><th>Row</th><th>Column</th><th>Kind</th><th>Reason</th></tr>
+    <tr><td>T3</td><td>Computing</td><td>non-Saudi</td><td>primary</td><td>count of 1 to 9</td></tr>
+    <tr><td>T3</td><td>Computing</td><td>Saudi</td><td>complementary</td><td>protects a suppressed cell from subtraction</td></tr>
+    <tr><td>Saudi-only by college</td><td>all</td><td>all</td><td>not released</td><td>differencing against the release of 2026-10 reveals counts of 1 to 9</td></tr>
+  </table>
+  <div class="callout tip mt"><b>Second person.</b> The unit's policy: a table with a suppressed cell is checked by someone who did not make it, before it is proposed as Public.</div>
+  <aside class="notes"><p>Three of the eleven lines the lab writes. The log is the evidence for the course outcome and a file of the capstone pack. The register of releases (population, breakdown, date, version) is what makes next month's differencing check possible.</p></aside>
+</section>
+
+<section class="slide" id="check-small-cells" data-lo="LO3">
+  <div class="kicker">Checkpoint</div>
+  <h2>Is this table ready for release?</h2>
+  <div class="quiz" data-type="single" data-lo="LO3">
+    <p class="lead">A table of referred students by college and level has one cell of 4. The analyst replaces it with "c" and keeps the row and column totals. The threshold is 10. What is the state of the table?</p>
+    <div class="opts">
+      <div class="opt" data-why="Stops at primary suppression: the totals give the cell back by subtraction">Ready: the only small cell is suppressed</div>
+      <div class="opt" data-why="Believes totals are the problem in themselves: removing them destroys the table's use when a second suppressed cell would do">Not ready: all totals must be removed from every table</div>
+      <div class="opt" data-why="Reads the threshold as a rule about the smallest value shown, not about what can be derived">Ready, provided the cell is shown as "fewer than 10"</div>
+      <div class="opt" data-ok>Not ready: the 4 is recovered from its row total until a second cell in that row and column is suppressed</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> One hidden cell beside exact totals is a subtraction. Complementary suppression, or a coarser table, closes it.</div>
+  </div>
+  <aside class="notes"><p>Answer: the fourth option. The third option is worth a minute: "fewer than 10" beside a row total that leaves exactly 4 unexplained is the same leak with a different label.</p></aside>
 </section>
 
 <section class="slide lab" id="lab-2-1" data-auto="lab" data-lab="2.1">
-  <aside class="notes">REPLACE: what to watch for while participants work, the typical problems, and the fallback for anyone who did not finish an earlier lab</aside>
+  <aside class="notes"><p>Task 4 is the hard one; participants who are stuck on the loop can read the solution's function and spend their time on the "look at" that follows. Typical error: forgetting the column direction. The lab writes the suppression log to <code>labs/artifacts/</code>. It starts from the registry and last month's published table; no earlier lab is needed.</p></aside>
 </section>
 
 <!-- Session 2 -->
 
 <section class="slide section" id="s2" data-auto="section" data-session="2"></section>
 
-<section class="slide" id="s2-idea" data-lo="LO4">
-  <div class="kicker">REPLACE: the question this slide answers</div>
-  <h2>REPLACE: one idea, stated as a sentence</h2>
+<section class="slide" id="bias-is-systematic" data-lo="LO4">
+  <div class="kicker">A working definition</div>
+  <h2>Bias is a systematic error that falls on some groups more than others</h2>
   <div class="cols cols-2">
     <ul class="bullets">
-      <li>REPLACE: at most six bullets, each a complete thought</li>
-      <li>REPLACE: bold the key phrase; numbers come from the lab run, not from memory</li>
+      <li>It needs <b>no intent</b>: a process that records or covers people unequally is enough</li>
+      <li>It is <b>not noise</b>: more data of the same kind does not remove it</li>
+      <li>It enters <b>before</b> any metric is computed</li>
     </ul>
-    <div class="card c-teal"><h4>In the case study</h4><p class="small mb0">REPLACE: tie the idea to the case study and its data</p></div>
+    <div class="card c-teal"><h4>The national frame</h4><p class="small mb0">Fairness is the first of SDAIA's AI Ethics Principles: act to eliminate bias in the data, the design and the use of a system. The AI Bias Reference Guide names more than a hundred types, with how each arises and how to mitigate it.</p></div>
   </div>
-  <div class="callout warn mt"><b>What goes wrong.</b> REPLACE: the failure participants will hit, and how to recognise it</div>
-  <aside class="notes">REPLACE: what to say, the demo to run, the question to ask the room, the common failure and its fix</aside>
+  <aside class="notes"><p>Awn is a two-line rule, not a trained model. Everything the guide says about data applies to it all the same: the rule's inputs are recorded data and its thresholds were set on historical data.</p><p>Sources: AI Ethics Principles, principle 1 (fairness); AI Bias Reference Guide, introduction.</p></aside>
 </section>
 
-<section class="slide" id="s2-steps" data-lo="LO4">
-  <div class="kicker">Step by step</div>
-  <h2>REPLACE: a process, shown one step per key press</h2>
-  <div class="flow">
-    <div class="step c-teal"><b>1 · REPLACE: name</b>REPLACE: what happens first</div>
-    <div class="arrow frag" data-frag="b">→</div><div class="step c-cyan frag" data-frag="b"><b>2 · REPLACE: name</b>REPLACE: the next piece</div>
-    <div class="arrow frag" data-frag="c">→</div><div class="step c-coral frag" data-frag="c"><b>3 · REPLACE: name</b>REPLACE: the result</div>
+<section class="slide" id="six-stages" data-lo="LO4">
+  <div class="kicker">Walk the path</div>
+  <h2>Awn's data passes six stages, and each is an entry point</h2>
+  <div class="cols cols-3">
+    <div class="card flat c-teal"><h4>1 · Recording</h4><p class="small mb0">A card read at the door of a teaching room</p></div>
+    <div class="card flat c-cyan"><h4>2 · Marks</h4><p class="small mb0">Midterm marks entered in the registry</p></div>
+    <div class="card flat c-purple"><h4>3 · Thresholds</h4><p class="small mb0">75% and 2.5, set in 2023 on two colleges</p></div>
+    <div class="card flat c-amber"><h4>4 · Outcome label</h4><p class="small mb0">"Struggled": a term average below 2.5</p></div>
+    <div class="card flat c-coral"><h4>5 · Use</h4><p class="small mb0">An advisor contacts the referred student</p></div>
+    <div class="card flat c-navy"><h4>6 · Reporting</h4><p class="small mb0">One rate for the whole University</p></div>
   </div>
-  <div class="callout tip mt frag"><b>Takeaway.</b> REPLACE: the one sentence to remember</div>
-  <aside class="notes">Press once per step and say what each step adds before the next one appears. REPLACE: the example to walk through</aside>
+  <div class="callout tip mt"><b>The question at each stage.</b> For whom could this step go wrong more often than for others?</div>
+  <aside class="notes"><p>The stages are in <code>labs/data/awn_pipeline.json</code>, with one sentence each. The framework behind the walk is the life-cycle view of sources of harm: historical, representation, measurement, aggregation, evaluation and deployment.</p><p>Sources: Suresh and Guttag, A Framework for Understanding Sources of Harm throughout the Machine Learning Life Cycle.</p></aside>
+</section>
+
+<section class="slide" id="recording-gap" data-lo="LO4">
+  <div class="kicker">Entry point 1, measured</div>
+  <h2>The card record is 17 points too low for students who attend remotely</h2>
+  <div class="cols cols-2 mid">
+    <div class="bars">
+      <div class="row"><span>Remote accommodation</span><div class="bar c-coral" style="--w:84%"></div><span class="val">16.8 points</span></div>
+      <div class="row"><span>Other students</span><div class="bar c-teal" style="--w:1%"></div><span class="val">-0.1 points</span></div>
+    </div>
+    <ul class="bullets">
+      <li>Roll call minus card record, from an audit of 1,600 students</li>
+      <li>Of 300 students with a remote accommodation, <b>191</b> are below the 75% limit on the card record</li>
+      <li>On the roll call, <b>14</b> are</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>Task 3 of Lab 2.2. A remote session leaves no card reading. 242 of the 300 students with a remote accommodation have a registered disability, which is why the effect will show up tomorrow morning under "disability" in the group table. The guide's name for a record that is systematically too low is measurement bias.</p><p>Sources: AI Bias Reference Guide, measurement bias.</p></aside>
+</section>
+
+<section class="slide" id="coverage-gap" data-lo="LO4">
+  <div class="kicker">Entry point 2, measured</div>
+  <h2>Over a third of non-Saudi students have no midterm mark in the registry</h2>
+  <div class="cols cols-2 mid">
+    <div class="bars">
+      <div class="row"><span>Non-Saudi students</span><div class="bar c-coral" style="--w:72%"></div><span class="val">36.2%</span></div>
+      <div class="row"><span>Saudi students</span><div class="bar c-teal" style="--w:7%"></div><span class="val">3.4%</span></div>
+    </div>
+    <ul class="bullets">
+      <li>1,244 students have no mark; <b>every one</b> is a bridging-year entrant</li>
+      <li>Their marks are in the bridging programme's own system</li>
+      <li>For them, half of the rule cannot fire</li>
+    </ul>
+  </div>
+  <div class="callout note mt"><b>Where you see it is not where it comes from.</b> The effect appears under nationality; the cause is the admission route.</div>
+  <aside class="notes"><p>Task 4 of Lab 2.2. Data that does not adequately represent part of the population is what the guide calls coverage bias. Hold the callout for session 4: the fix follows the cause, not the column where the gap showed.</p><p>Sources: AI Bias Reference Guide, coverage bias.</p></aside>
+</section>
+
+<section class="slide" id="thresholds-and-labels" data-lo="LO4">
+  <div class="kicker">Entry points 3 and 4</div>
+  <h2>Thresholds carry their history, and labels carry a definition</h2>
+  <div class="cols cols-2">
+    <div class="card c-purple"><h4>Thresholds from 2023, two colleges</h4><p class="small mb0">A limit tuned on Business and Engineering may not fit Health Sciences, where one student in five ends the term struggling. Past conditions built into today's rule: the guide's historical bias.</p></div>
+    <div class="card c-amber"><h4>"Struggled" is a choice</h4><p class="small mb0">A term average below 2.5. A student who withdraws after two courses keeps a good average and counts as "ok". Change the label and every error rate changes with it.</p></div>
+  </div>
+  <div class="callout warn mt"><b>What goes wrong.</b> Treating the outcome column as the truth. It is one more measurement, with its own blind spots.</div>
+  <aside class="notes"><p>Neither of these is measured in the lab; they are marked as entry points and stated as limits on Day 3. The share of one in five for Health Sciences is from the course data (20.3% struggled).</p><p>Sources: AI Bias Reference Guide, historical bias.</p></aside>
+</section>
+
+<section class="slide" id="use-and-feedback" data-lo="LO4">
+  <div class="kicker">Entry points 5 and 6</div>
+  <h2>What happens after the referral changes what the data says about it</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li><b>Support that works hides itself.</b> A referred student who is helped and passes counts as a referral that was "not needed"</li>
+      <li><b>Take-up differs.</b> Who answers an advisor's call, who can come during working hours?</li>
+      <li><b>One number for everyone</b> hides a rule that fails a small group</li>
+    </ul>
+    <div class="card c-coral"><h4>The loop</h4><p class="small mb0">If next year's thresholds are tuned on this year's outcomes, colleges with good advisors will look as if they need fewer referrals. The guide's feedback loop bias.</p></div>
+  </div>
+  <aside class="notes"><p>The unit cannot separate "false alarm" from "helped" without a comparison group, and it has none. That sentence goes into the limits statement of Lab 3.4. Combining groups that differ so that the result fits the largest one is the guide's aggregation bias.</p><p>Sources: AI Bias Reference Guide, feedback loop bias and aggregation bias.</p></aside>
+</section>
+
+<section class="slide" id="measure-not-argue" data-lo="LO4">
+  <div class="kicker">Method</div>
+  <h2>An entry point is a hypothesis until someone measures it</h2>
+  <div class="cols cols-2">
+    <div class="card c-coral"><h4>An opinion</h4><p class="small mb0">"Attendance data is probably unfair to some students." Nobody can act on it, and nobody can refute it.</p></div>
+    <div class="card c-teal"><h4>A measurement</h4><p class="small mb0">"For 300 students with a remote accommodation the record is 17 points below the roll call; 191 fall under the limit on paper, 14 in fact." A size, a group, a consequence.</p></div>
+  </div>
+  <ul class="bullets mt">
+    <li>The audit sampled <b>all 300</b> students of the small group and 1,300 others at random: a small group needs all its members to be measured at all</li>
+  </ul>
+  <aside class="notes"><p>The design point matters for participants' own work: a simple random sample of 1,600 from 18,000 would have held about 27 students with a remote accommodation. Sampling the small group in full is what makes the comparison possible.</p></aside>
+</section>
+
+<section class="slide" id="check-entry-point" data-lo="LO4">
+  <div class="kicker">Checkpoint</div>
+  <h2>Where did the bias enter?</h2>
+  <div class="quiz" data-type="single" data-lo="LO4">
+    <p class="lead">A library fines late returns. Evening students are fined twice as often. A return is logged when staff scan the book; the desk closes before evening classes end, and the drop box is scanned the next morning. Where does the gap come from?</p>
+    <div class="opts">
+      <div class="opt" data-ok>Recording: the return time is logged later than the true return for one group</div>
+      <div class="opt" data-why="Jumps to behaviour before checking the record: the data cannot yet tell late returns from late scans">Outcome: evening students return books later</div>
+      <div class="opt" data-why="Looks for a threshold problem when the input itself is wrong: no limit fixes a timestamp that is a day late">Thresholds: the loan period is too short for evening students</div>
+      <div class="opt" data-why="Blames the report: reporting one rate hides a gap, it does not create one">Reporting: the fine rate is reported for all students together</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The recorded time is systematically later than the true one for evening students: a measurement problem. The check compares drop-box times with scan times.</div>
+  </div>
+  <aside class="notes"><p>Answer: the first option. The second option may also be partly true; the point is the order of work. Rule out the record before explaining behaviour. Ask what audit would separate the two: a time stamp on the drop box.</p></aside>
 </section>
 
 <section class="slide lab" id="lab-2-2" data-auto="lab" data-lab="2.2">
-  <aside class="notes">REPLACE: what to watch for while participants work, the typical problems, and the fallback for anyone who did not finish an earlier lab</aside>
+  <aside class="notes"><p>Task 2 is written work: push for entries specific enough to measure. Typical weak answer: "attendance may be biased". Good answer names the mechanism and the group. Tasks 3 and 4 are short joins. The lab starts from the supplied extract and the audit file; no earlier lab is needed.</p></aside>
 </section>
 
 <!-- Session 3 -->
 
 <section class="slide section" id="s3" data-auto="section" data-session="3"></section>
 
-<section class="slide" id="s3-idea" data-lo="LO4">
-  <div class="kicker">REPLACE: the question this slide answers</div>
-  <h2>REPLACE: one idea, stated as a sentence</h2>
-  <div class="cols cols-2">
+<section class="slide" id="three-rates" data-lo="LO4">
+  <div class="kicker">What to compare</div>
+  <h2>One rule, four outcomes, three rates</h2>
+  <div class="cols cols-2 mid">
+    <table class="t">
+      <tr><th></th><th>Struggled</th><th>Did not struggle</th></tr>
+      <tr><td><b>Referred</b></td><td>caught: 1,209</td><td>false referral: 831</td></tr>
+      <tr><td><b>Not referred</b></td><td>missed: 982</td><td>left alone: 14,978</td></tr>
+    </table>
     <ul class="bullets">
-      <li>REPLACE: at most six bullets, each a complete thought</li>
-      <li>REPLACE: bold the key phrase; numbers come from the lab run, not from memory</li>
+      <li><b>Referral rate</b> = referred / all = 11.3%</li>
+      <li><b>False-referral rate</b> = false referrals / did not struggle = 5.3%</li>
+      <li><b>Missed rate</b> = missed / struggled = 44.8%</li>
     </ul>
-    <div class="card c-teal"><h4>In the case study</h4><p class="small mb0">REPLACE: tie the idea to the case study and its data</p></div>
   </div>
-  <div class="callout warn mt"><b>What goes wrong.</b> REPLACE: the failure participants will hit, and how to recognise it</div>
-  <aside class="notes">REPLACE: what to say, the demo to run, the question to ask the room, the common failure and its fix</aside>
+  <div class="callout note mt"><b>Not "accuracy".</b> Awn is right for 90% of students, and misses 45% of those it exists for.</div>
+  <aside class="notes"><p>Counts from Lab 2.3, all 18,000 students. The false-referral rate is the false positive rate and the missed rate the false negative rate; use the plain names with sponsors. Accuracy here is (1,209 + 14,978) / 18,000 = 89.9%: true and useless.</p></aside>
 </section>
 
-<section class="slide" id="s3-steps" data-lo="LO4">
-  <div class="kicker">Step by step</div>
-  <h2>REPLACE: a process, shown one step per key press</h2>
-  <div class="flow">
-    <div class="step c-teal"><b>1 · REPLACE: name</b>REPLACE: what happens first</div>
-    <div class="arrow frag" data-frag="b">→</div><div class="step c-cyan frag" data-frag="b"><b>2 · REPLACE: name</b>REPLACE: the next piece</div>
-    <div class="arrow frag" data-frag="c">→</div><div class="step c-coral frag" data-frag="c"><b>3 · REPLACE: name</b>REPLACE: the result</div>
+<section class="slide" id="two-errors" data-lo="LO4">
+  <div class="kicker">Why two error rates</div>
+  <h2>The two errors hurt different students in different ways</h2>
+  <div class="cols cols-2">
+    <div class="card c-amber"><h4>A false referral</h4><p class="small mb0">A student who was fine is contacted, labelled "at risk" in a system, and takes an advisor's hour from someone else. Mild once; not mild if the label travels.</p></div>
+    <div class="card c-coral"><h4>A miss</h4><p class="small mb0">A student who is struggling hears from nobody. The rule existed for this student.</p></div>
   </div>
-  <div class="callout tip mt frag"><b>Takeaway.</b> REPLACE: the one sentence to remember</div>
-  <aside class="notes">Press once per step and say what each step adds before the next one appears. REPLACE: the example to walk through</aside>
+  <ul class="bullets mt">
+    <li>A group can be worse off in <b>one</b> error and not the other, so one combined number hides it</li>
+    <li>The ethics principles ask that metrics be chosen by the <b>effect of the decision</b> and the harm of each kind of error</li>
+  </ul>
+  <aside class="notes"><p>The two gaps found in the lab are in different errors: false referrals for one group, misses for another. A single fairness score would have averaged them.</p><p>Sources: AI Ethics Principles, principle 1 (fairness assessment and choice of metrics).</p></aside>
+</section>
+
+<section class="slide" id="intervals" data-lo="LO4">
+  <div class="kicker">Uncertainty</div>
+  <h2>A rate without its interval hides how many students it rests on</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Missed rate</th><th class="num">Struggling students</th><th>Rate (95% interval)</th></tr>
+      <tr><td>Saudi</td><td class="num">1,971</td><td>42.9% (40.8 to 45.1)</td></tr>
+      <tr><td>non-Saudi</td><td class="num">220</td><td>61.8% (55.2 to 68.0)</td></tr>
+      <tr><td>Registered disability</td><td class="num">61</td><td>13.1% (6.8 to 23.8)</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>The <b>denominator</b> of a missed rate is the struggling students of the group, not the group</li>
+      <li>Use the <b>Wilson interval</b>: it behaves for small counts and rates near 0 or 1</li>
+      <li>For a difference, an interval on the difference itself</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>The prerequisite covers the interval; here the point is the denominator. 429 students have a registered disability, 61 of them struggled, and 8 of those were missed: the rate of 13% spans 17 points. The lab's helper <code>U.wilson</code> is ten lines; statsmodels offers the same method.</p><p>Sources: statsmodels documentation, confidence intervals for a proportion (Wilson).</p></aside>
+</section>
+
+<section class="slide" id="rate-table" data-lo="LO4">
+  <div class="kicker">From the lab's run</div>
+  <h2>Two groups stand out, in two different errors</h2>
+  <table class="t small">
+    <tr><th>Group</th><th class="num">Students</th><th class="num">Referral rate</th><th class="num">False-referral rate</th><th class="num">Missed rate</th></tr>
+    <tr><td>Women</td><td class="num">8,218</td><td class="num">12.3%</td><td class="num">5.5%</td><td class="num">43.2%</td></tr>
+    <tr><td>Men</td><td class="num">9,782</td><td class="num">10.5%</td><td class="num">5.1%</td><td class="num">46.4%</td></tr>
+    <tr><td>Saudi</td><td class="num">16,063</td><td class="num">11.8%</td><td class="num">5.4%</td><td class="num">42.9%</td></tr>
+    <tr class="hl"><td>non-Saudi</td><td class="num">1,937</td><td class="num">7.8%</td><td class="num">3.9%</td><td class="num">61.8%</td></tr>
+    <tr><td>No registered disability</td><td class="num">17,571</td><td class="num">10.6%</td><td class="num">4.6%</td><td class="num">45.7%</td></tr>
+    <tr class="hl"><td>Registered disability</td><td class="num">429</td><td class="num">41.7%</td><td class="num">34.2%</td><td class="num">13.1%</td></tr>
+  </table>
+  <aside class="notes"><p>The rate table of Lab 2.3 without the intervals, which are on the next slide for the differences. Ask the room to find the two rows before you point. First-generation students are in the lab and show no clear difference.</p></aside>
+</section>
+
+<section class="slide" id="gaps-with-intervals" data-lo="LO4">
+  <div class="kicker">Differences</div>
+  <h2>Report every comparison you made, with its interval</h2>
+  <table class="t small">
+    <tr><th>Comparison</th><th>Rate</th><th class="num">Difference</th><th>95% interval</th><th>Reading</th></tr>
+    <tr class="hl"><td>Registered disability minus none</td><td>false referral</td><td class="num">+29.7 points</td><td>+25.0 to +34.7</td><td>clear</td></tr>
+    <tr class="hl"><td>non-Saudi minus Saudi</td><td>missed</td><td class="num">+18.9 points</td><td>+12.0 to +25.4</td><td>clear</td></tr>
+    <tr><td>Women minus men</td><td>referral</td><td class="num">+1.9 points</td><td>+0.9 to +2.8</td><td>clear, see next slide</td></tr>
+    <tr><td>First generation minus not</td><td>missed</td><td class="num">+1.1 points</td><td>-3.3 to +5.6</td><td>could be zero</td></tr>
+    <tr><td>First generation minus not</td><td>false referral</td><td class="num">+0.6 points</td><td>-0.2 to +1.4</td><td>could be zero</td></tr>
+  </table>
+  <div class="callout tip mt"><b>The two rows at the bottom belong in the report.</b> Leaving out comparisons that found nothing makes the others look selected.</div>
+  <aside class="notes"><p>Task 3 of the lab. Selective reporting has its own entry in the guide: reporting bias. With five comparisons at 95%, one "clear" result by chance would not be surprising; the two large gaps are far beyond that, the gender gap is small.</p><p>Sources: AI Bias Reference Guide, reporting bias.</p></aside>
+</section>
+
+<section class="slide" id="gap-inside-colleges" data-lo="LO4">
+  <div class="kicker">Before explaining a gap</div>
+  <h2>The gender gap vanishes inside every college</h2>
+  <div class="cols cols-21">
+    <table class="t small">
+      <tr><th>College</th><th class="num">Share of women</th><th class="num">Referral rate</th><th>Women minus men (95% interval)</th></tr>
+      <tr><td>Health Sciences</td><td class="num">76%</td><td class="num">20.0%</td><td>-1.2 points (-5.1 to +2.5)</td></tr>
+      <tr><td>Science</td><td class="num">59%</td><td class="num">14.4%</td><td>-1.1 points (-3.9 to +1.6)</td></tr>
+      <tr><td>Arts and Humanities</td><td class="num">50%</td><td class="num">10.6%</td><td>+0.3 points (-1.9 to +2.5)</td></tr>
+      <tr><td>Business</td><td class="num">39%</td><td class="num">7.8%</td><td>-0.8 points (-2.5 to +1.0)</td></tr>
+      <tr><td>Computing</td><td class="num">37%</td><td class="num">9.0%</td><td>0.0 points (-2.3 to +2.4)</td></tr>
+      <tr><td>Engineering</td><td class="num">25%</td><td class="num">9.2%</td><td>-0.3 points (-2.3 to +2.0)</td></tr>
+    </table>
+    <div class="callout warn"><b>Overall: +1.9 points.</b> Women study more often in the colleges where everyone is referred more. The rule treats women and men in the same college alike.</div>
+  </div>
+  <aside class="notes"><p>Task 4 of the lab. An overall number that is true and misleading. The habit to build: before explaining a gap, check it inside the obvious strata. The reverse also happens, a gap that appears only inside strata, which is why you look both ways.</p></aside>
+</section>
+
+<section class="slide" id="tools-for-groups" data-lo="LO4">
+  <div class="kicker">Tools</div>
+  <h2>A library computes the rates; you choose the comparisons</h2>
+  <div class="cols cols-2">
+    <pre class="code s"><code class="language-python">g = df.groupby("nationality_group")
+missed = g.apply(lambda d:
+    (~d.referred &amp; d.struggled).sum()
+    / d.struggled.sum())</code></pre>
+    <ul class="bullets">
+      <li><b>Grouped metrics in pandas or SQL:</b> a group-by and three ratios</li>
+      <li><b>A fairness library</b> (Fairlearn's <code>MetricFrame</code>): the same table in one call, for many metrics</li>
+      <li>Neither chooses the groups, the strata, the intervals or the question</li>
+    </ul>
+  </div>
+  <div class="callout note mt"><b>Small groups twice.</b> A rate on 8 students is too uncertain to interpret and too small to publish. Both rules apply.</div>
+  <aside class="notes"><p>The lab uses pandas only, so that every step is visible. Fairlearn's documentation calls its false positive and false negative rates by those names. For intersections (the lab's stretch) the counts shrink fast: check the release threshold before putting any intersection in a report.</p><p>Sources: Fairlearn documentation, common fairness metrics.</p></aside>
+</section>
+
+<section class="slide" id="check-compare" data-lo="LO4">
+  <div class="kicker">Checkpoint</div>
+  <h2>What can the analyst claim?</h2>
+  <div class="quiz" data-type="single" data-lo="LO4">
+    <p class="lead">Awn missed 8 of 61 struggling students with a registered disability (13%, interval 7% to 24%) and 974 of 2,130 others (46%, interval 44% to 48%). Which sentence is supported?</p>
+    <div class="opts">
+      <div class="opt" data-why="Reads a low miss rate as good performance without looking at the other error: this group has a false-referral rate of 34%">The rule works better for students with a registered disability</div>
+      <div class="opt" data-why="Treats an interval on 61 students as too weak to say anything: the two intervals do not come near each other">Nothing can be said: 61 students are too few</div>
+      <div class="opt" data-ok>Fewer of this group were missed, by an uncertain margin; read the false-referral rate beside it</div>
+      <div class="opt" data-why="Turns a difference in one error rate into a verdict on fairness, which no single rate can give">The rule is biased in favour of students with a registered disability</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The difference is clear, its size uncertain. A rule that refers 42% of a group misses few of them; the cost is in false referrals.</div>
+  </div>
+  <aside class="notes"><p>Answer: the third option. This checkpoint sets up session 4: the low miss rate and the high false-referral rate have one cause, a record that makes most of the group look absent.</p></aside>
 </section>
 
 <section class="slide lab" id="lab-2-3" data-auto="lab" data-lab="2.3">
-  <aside class="notes">REPLACE: what to watch for while participants work, the typical problems, and the fallback for anyone who did not finish an earlier lab</aside>
+  <aside class="notes"><p>Watch the denominators in task 2: the commonest error is dividing misses by the size of the group. Task 4 produces the table of the previous slides; give it its five minutes. The lab starts from the supplied extract; no earlier lab is needed.</p></aside>
 </section>
 
 <!-- Session 4 -->
 
 <section class="slide section" id="s4" data-auto="section" data-session="4"></section>
 
-<section class="slide" id="s4-idea" data-lo="LO4">
-  <div class="kicker">REPLACE: the question this slide answers</div>
-  <h2>REPLACE: one idea, stated as a sentence</h2>
-  <div class="cols cols-2">
-    <ul class="bullets">
-      <li>REPLACE: at most six bullets, each a complete thought</li>
-      <li>REPLACE: bold the key phrase; numbers come from the lab run, not from memory</li>
-    </ul>
-    <div class="card c-teal"><h4>In the case study</h4><p class="small mb0">REPLACE: tie the idea to the case study and its data</p></div>
+<section class="slide" id="gap-is-not-cause" data-lo="LO4">
+  <div class="kicker">The idea of this session</div>
+  <h2>A gap is an observation; a bias type is an explanation</h2>
+  <div class="flow">
+    <div class="step c-teal"><b>1 · Observe</b>a gap with its interval</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>2 · Name two candidates</b>that would need different fixes</div>
+    <div class="arrow">→</div>
+    <div class="step c-purple"><b>3 · Design a check</b>on which they disagree</div>
+    <div class="arrow">→</div>
+    <div class="step c-coral"><b>4 · Run it</b>and say what stays open</div>
   </div>
-  <div class="callout warn mt"><b>What goes wrong.</b> REPLACE: the failure participants will hit, and how to recognise it</div>
-  <aside class="notes">REPLACE: what to say, the demo to run, the question to ask the room, the common failure and its fix</aside>
+  <div class="callout warn mt"><b>What goes wrong.</b> Naming the first bias type that fits and stopping. One gap usually fits several names, and each name points to a different repair.</div>
+  <aside class="notes"><p>This is the evidence the course outcome asks for: two possible bias types and the check that separates them. The discipline is the same as differential diagnosis: a name is useful when it changes what you do next.</p></aside>
 </section>
 
-<section class="slide" id="s4-steps" data-lo="LO4">
-  <div class="kicker">Step by step</div>
-  <h2>REPLACE: a process, shown one step per key press</h2>
-  <div class="flow">
-    <div class="step c-teal"><b>1 · REPLACE: name</b>REPLACE: what happens first</div>
-    <div class="arrow frag" data-frag="b">→</div><div class="step c-cyan frag" data-frag="b"><b>2 · REPLACE: name</b>REPLACE: the next piece</div>
-    <div class="arrow frag" data-frag="c">→</div><div class="step c-coral frag" data-frag="c"><b>3 · REPLACE: name</b>REPLACE: the result</div>
+<section class="slide" id="the-guide" data-lo="LO4">
+  <div class="kicker">The national reference</div>
+  <h2>The AI Bias Reference Guide gives each type a definition, an example and a mitigation</h2>
+  <table class="t small">
+    <tr><th>Type</th><th>In one line (our wording)</th></tr>
+    <tr><td>Measurement bias</td><td>Recorded values are systematically too high or too low</td></tr>
+    <tr><td>Coverage bias</td><td>The data does not adequately represent part of the population</td></tr>
+    <tr><td>Aggregation bias</td><td>Groups that differ are combined; the result fits the largest</td></tr>
+    <tr><td>Historical bias</td><td>Past assumptions or conditions no longer fit the present</td></tr>
+    <tr><td>Feedback loop bias</td><td>Outputs return as inputs and magnify an early skew</td></tr>
+    <tr><td>Automation bias</td><td>People favour a system's output over other evidence</td></tr>
+  </table>
+  <aside class="notes"><p>Six of the ten entries the lab offers. The one-line versions are ours; before a name goes into a report, read the guide's own entry. The guide is alphabetical with more than a hundred entries, first edition May 2026.</p><p>Sources: AI Bias Reference Guide (entries named on the slide).</p></aside>
+</section>
+
+<section class="slide" id="gap-a-candidates" data-lo="LO4">
+  <div class="kicker">Gap A · false referrals, registered disability</div>
+  <h2>Is the record wrong, or does one limit not fit?</h2>
+  <div class="cols cols-2">
+    <div class="card c-coral"><h4>Measurement bias</h4><p class="small mb0">Attendance is <b>recorded</b> too low for these students. Prediction: the record is far below the roll call, and the gap is confined to students with a remote accommodation. Fix the record.</p></div>
+    <div class="card c-purple"><h4>Aggregation bias</h4><p class="small mb0">Attendance is recorded correctly and one limit of 75% does not fit this group. Prediction: record matches roll call, and the gap covers all students with a registered disability. Fix the rule.</p></div>
   </div>
-  <div class="callout tip mt frag"><b>Takeaway.</b> REPLACE: the one sentence to remember</div>
-  <aside class="notes">Press once per step and say what each step adds before the next one appears. REPLACE: the example to walk through</aside>
+  <div class="callout tip mt"><b>The check.</b> Roll call against record, and the false-referral rate with and without a remote accommodation.</div>
+  <aside class="notes"><p>Ask the room for the predictions before showing the next slide. A check is only worth running if the two candidates predict different results.</p></aside>
+</section>
+
+<section class="slide" id="gap-a-result" data-lo="LO4">
+  <div class="kicker">Gap A · the check's result</div>
+  <h2>The gap is confined to students whose attendance is under-recorded</h2>
+  <div class="cols cols-2 mid">
+    <div class="bars">
+      <div class="row"><span>Registered, remote accommodation</span><div class="bar c-coral" style="--w:100%"></div><span class="val">59.4%</span></div>
+      <div class="row"><span>Registered, no remote accommodation</span><div class="bar c-teal" style="--w:6%"></div><span class="val">3.6%</span></div>
+      <div class="row"><span>No registered disability</span><div class="bar c-teal" style="--w:8%"></div><span class="val">4.6%</span></div>
+    </div>
+    <ul class="bullets">
+      <li>False-referral rates, Lab 2.4</li>
+      <li>Intervals: 52.5 to 65.9; 1.7 to 7.7; 4.2 to 4.9</li>
+      <li>The record is 16.8 points below the roll call for the first group</li>
+      <li><b>Measurement bias.</b> Fix the feed of remote attendance</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>What stays open: the 187 students with a registered disability and no remote accommodation are a small group, and their interval is wide enough to hide a moderate gap. Say it; do not round it away.</p></aside>
+</section>
+
+<section class="slide" id="gap-b-result" data-lo="LO4">
+  <div class="kicker">Gap B · missed students, non-Saudi</div>
+  <h2>Compare like with like and the gap moves to where the marks are missing</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Missed rate</th><th>Saudi</th><th>non-Saudi</th></tr>
+      <tr><td>Mark present</td><td>41.6% (39.4 to 43.9)</td><td>45.9% (37.6 to 54.3)</td></tr>
+      <tr class="hl"><td>Mark missing</td><td>76.7% (65.8 to 84.9)</td><td>86.2% (77.4 to 91.9)</td></tr>
+    </table>
+    <ul class="bullets">
+      <li><b>Candidates:</b> coverage bias (no marks) or aggregation bias (limits that do not fit)</li>
+      <li>With a mark, both groups are missed at similar rates</li>
+      <li>Without one, both are missed three times in four or more</li>
+      <li><b>Coverage bias.</b> Bring the bridging programme's marks into the registry</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>Results of Lab 2.4. Saudi bridging-year entrants are missed too: the cause is the route. What stays open: whether the limits fit bridging-year entrants once their marks exist cannot be known before the marks exist.</p></aside>
+</section>
+
+<section class="slide" id="name-decides-fix" data-lo="LO4">
+  <div class="kicker">Why the name matters</div>
+  <h2>The name decides the fix, and a wrong name produces a harmful one</h2>
+  <table class="t small">
+    <tr><th>If you had concluded</th><th>You would have</th><th>And then</th></tr>
+    <tr><td>"The limit does not fit students with a disability"</td><td>Lowered their attendance limit</td><td>Missed those who truly stop attending, and left the record wrong</td></tr>
+    <tr><td>"The rule does not fit non-Saudi students"</td><td>Set separate limits by nationality</td><td>Treated students by a protected characteristic, and still missed Saudi bridging-year entrants</td></tr>
+    <tr class="hl"><td>Measurement and coverage</td><td>Repaired two data feeds</td><td>Fixed it for everyone the feeds had failed</td></tr>
+  </table>
+  <aside class="notes"><p>This is the argument for the checks. Both wrong fixes sound reasonable and would have passed a meeting. Neither would have survived the split tables.</p></aside>
+</section>
+
+<section class="slide" id="what-metrics-cannot-settle" data-lo="LO4">
+  <div class="kicker">The limit of the numbers</div>
+  <h2>A fairness metric cannot tell you which fairness to want</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>When groups differ in how often the outcome occurs, a rule <b>cannot</b> equalise every error rate and every hit rate at once</li>
+      <li>Lowering false referrals for a group raises its misses, or the reverse</li>
+      <li>How large a remaining gap is acceptable is not a statistical question</li>
+    </ul>
+    <div class="card c-teal"><h4>Who decides</h4><p class="small mb0">The director of the unit owns the rule; the data protection officer owns the impact on students. You bring the rates, the intervals, the cause you could establish and what stays open. They choose.</p></div>
+  </div>
+  <aside class="notes"><p>The impossibility results are for risk scores and classifiers; the trade between the two errors applies to any rule with a threshold. In the case the outcome rates do differ a little: 14.2% of students with a registered disability struggled against 12.1% of others. The lab's stretch makes the trade visible.</p><p>Sources: Kleinberg, Mullainathan and Raghavan, Inherent Trade-Offs in the Fair Determination of Risk Scores; Chouldechova, Fair prediction with disparate impact.</p></aside>
+</section>
+
+<section class="slide" id="check-name-bias" data-lo="LO4">
+  <div class="kicker">Checkpoint</div>
+  <h2>Which check separates the two candidates?</h2>
+  <div class="quiz" data-type="single" data-lo="LO4">
+    <p class="lead">A training centre flags trainees with fewer than three logged sessions a week. One branch is flagged three times as often. Either its sessions are logged too low (measurement), or one limit does not fit a branch with fewer, longer sessions (aggregation). Which check separates the two?</p>
+    <div class="opts">
+      <div class="opt" data-why="Repeats the observation with more precision: a tighter interval on the gap says nothing about its cause">Recompute the flag rates with confidence intervals</div>
+      <div class="opt" data-ok>Compare logged sessions with the branch's attendance sheets</div>
+      <div class="opt" data-why="Changes the rule before knowing the cause: it would hide the gap whichever candidate is true">Lower the limit for that branch and see whether the gap closes</div>
+      <div class="opt" data-why="Asks an opinion where a comparison is available: staff views do not distinguish a wrong record from a wrong limit">Ask the branch's trainers whether the rule seems fair</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The candidates disagree about whether the record is right. Only comparing the record with the truth can tell them apart.</div>
+  </div>
+  <aside class="notes"><p>Answer: the second option. The third option is the tempting one for people who like to act: it changes the rule before the cause is known, and it would make the gap disappear under either explanation.</p></aside>
 </section>
 
 <section class="slide lab" id="lab-2-4" data-auto="lab" data-lab="2.4">
-  <aside class="notes">REPLACE: what to watch for while participants work, the typical problems, and the fallback for anyone who did not finish an earlier lab</aside>
+  <aside class="notes"><p>The lab loads the gaps from a supplied file, <code>labs/data/reference/lab23_gaps.json</code>, so nobody depends on finishing Lab 2.3. Task 3 is written work and the heart of the lab: insist on two different predictions before any code runs. The lab writes its findings to <code>labs/artifacts/</code>.</p></aside>
 </section>
 
-<section class="slide" id="wrap-up">
-  <div class="kicker">Day 2 · wrap-up</div>
+<section class="slide" id="wrap-up" data-lo="LO3 LO4">
+  <div class="kicker">Day 2</div>
   <h2>Three things to keep</h2>
   <div class="cols cols-3">
-    <div class="card c-teal"><h4>Remember</h4><p class="small mb0">REPLACE: one idea participants keep</p></div>
-    <div class="card c-coral"><h4>Remember</h4><p class="small mb0">REPLACE: one idea participants keep</p></div>
-    <div class="card c-purple"><h4>Remember</h4><p class="small mb0">REPLACE: one idea participants keep</p></div>
+    <div class="card c-teal"><h4>Attack your own table</h4><p class="small mb0">Small cells, then totals, then earlier releases. When suppression eats the table, redesign it.</p></div>
+    <div class="card c-cyan"><h4>Rates by group, with intervals</h4><p class="small mb0">Referral, false referral, missed. Every comparison reported, each inside the strata that matter.</p></div>
+    <div class="card c-coral"><h4>Two candidates and a check</h4><p class="small mb0">A gap is not a cause. The name decides the fix, so earn the name.</p></div>
   </div>
+  <aside class="notes"><p>Ask: which of today's findings would the director of the unit most want to hear, and which would he least want to hear? Both go into the documents of tomorrow.</p></aside>
 </section>
 
-<section class="slide dark" id="next" data-label="Next">
-  <div class="kicker">Next</div>
-  <h2>Day 3: Professional conduct</h2>
-  <p class="lead">REPLACE: what participants prepare before then; unfinished labs can be finished at home</p>
-  <aside class="notes">REPLACE: accounts, installs or reading participants need before the next unit</aside>
+<section class="slide dark" id="next" data-lo="LO5 LO6">
+  <div class="kicker">Tomorrow</div>
+  <h1>Day 3: professional conduct</h1>
+  <p class="lead">The work so far lives in your head and your notebook. Tomorrow it becomes something others can check, and you hold three conversations.</p>
+  <ul class="bullets">
+    <li>You will role-play in threes: analyst, sponsor, observer</li>
+    <li>No AI assistant in the role-plays</li>
+  </ul>
+  <aside class="notes"><p>Form the groups of three before people leave, so the first role-play starts on time. Mix backgrounds within each group. Day 3 starts from supplied files.</p></aside>
 </section>
