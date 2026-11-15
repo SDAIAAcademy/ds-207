@@ -1,0 +1,122 @@
+{
+ "student_id": [
+  "coarsen",
+  "a project pseudonym keeps one row per student without the registry number"
+ ],
+ "national_id": [
+  "drop",
+  "identifies the student; the question is about groups of students"
+ ],
+ "full_name": [
+  "drop",
+  "identifies the student; the question is about groups of students"
+ ],
+ "email": [
+  "drop",
+  "identifies the student; the question is about groups of students"
+ ],
+ "phone": [
+  "drop",
+  "identifies the student; the question is about groups of students"
+ ],
+ "date_of_birth": [
+  "drop",
+  "the purpose does not need it"
+ ],
+ "gender": [
+  "drop",
+  "the purpose does not need it"
+ ],
+ "nationality": [
+  "drop",
+  "the purpose does not need it"
+ ],
+ "home_city": [
+  "drop",
+  "the purpose does not need it"
+ ],
+ "home_address": [
+  "drop",
+  "identifies the student; the question is about groups of students"
+ ],
+ "college": [
+  "keep",
+  "the result is reported by college"
+ ],
+ "programme": [
+  "drop",
+  "the purpose does not need it"
+ ],
+ "level_year": [
+  "keep",
+  "the result is reported by level"
+ ],
+ "admission_year": [
+  "drop",
+  "the purpose does not need it"
+ ],
+ "admission_route": [
+  "keep",
+  "bridging-year entrants have no midterm mark; needed to read the rule's result"
+ ],
+ "scholarship": [
+  "drop",
+  "the purpose does not need it"
+ ],
+ "first_generation": [
+  "drop",
+  "the purpose does not need it"
+ ],
+ "disability_status": [
+  "drop",
+  "the purpose does not need it"
+ ],
+ "disability_type": [
+  "drop",
+  "health data; the purpose does not need it"
+ ],
+ "remote_accommodation": [
+  "drop",
+  "the purpose does not need it"
+ ],
+ "counselling_visits": [
+  "drop",
+  "health-related; the purpose does not need it"
+ ],
+ "bank_iban": [
+  "drop",
+  "identifies the student; the question is about groups of students"
+ ],
+ "attendance_rate": [
+  "keep",
+  "an input of the rule"
+ ],
+ "midterm_gpa": [
+  "keep",
+  "an input of the rule"
+ ],
+ "lms_logins": [
+  "drop",
+  "the purpose does not need it"
+ ],
+ "awn_referred": [
+  "keep",
+  "what is being evaluated"
+ ],
+ "referral_date": [
+  "drop",
+  "the purpose does not need it"
+ ],
+ "term_gpa": [
+  "drop",
+  "term_outcome already says struggled or not"
+ ],
+ "term_outcome": [
+  "keep",
+  "the outcome the referral is compared with"
+ ],
+ "advisor_note": [
+  "drop",
+  "free text: cannot be checked field by field"
+ ]
+}

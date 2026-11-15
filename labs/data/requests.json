@@ -1,0 +1,56 @@
+{
+ "requests": [
+  {
+   "id": "R1",
+   "from": "Jassim Al-Nuaimi, director of the Student Success Unit",
+   "text": "Before we extend Awn next term, tell me whether its referrals reach the students who end the term struggling. By college and level is enough.",
+   "data_wanted": "attendance, midterm marks, referral flag and term outcome for all students",
+   "leaves_the_university": false
+  },
+  {
+   "id": "R2",
+   "from": "Dr. Nabil Al-Faraj, dean of engineering",
+   "text": "Send me the names of my referred students with their counselling visits and any disability, so department heads can have a word with them.",
+   "data_wanted": "names, counselling visits and disability type of referred engineering students",
+   "leaves_the_university": false
+  },
+  {
+   "id": "R3",
+   "from": "Hazza Al-Marri, Masarat Labour Market Observatory (a government body)",
+   "text": "For our labour-market planning study we need your student records with identity numbers, so we can link them to employment records.",
+   "data_wanted": "record-level student data with national identity numbers",
+   "leaves_the_university": true
+  },
+  {
+   "id": "R4",
+   "from": "The communications office",
+   "text": "A tutoring company will sponsor the open day. Give us the email addresses of students with a low grade average so we can send them its offer.",
+   "data_wanted": "email addresses of students below a grade threshold",
+   "leaves_the_university": false
+  },
+  {
+   "id": "R5",
+   "from": "A colleague in the unit",
+   "text": "The registry extract is slow on my laptop. I will upload it to a free online notebook service hosted abroad and ask its AI assistant to summarise it.",
+   "data_wanted": "the full registry extract, uploaded to a service outside the Kingdom",
+   "leaves_the_university": true
+  }
+ ],
+ "rules": [
+  "lawful basis",
+  "purpose limitation",
+  "minimisation",
+  "sensitive data",
+  "disclosure",
+  "transfer",
+  "marketing consent",
+  "classification",
+  "records of processing"
+ ],
+ "kinds": [
+  "within the collection purpose",
+  "new internal purpose",
+  "disclosure to another entity",
+  "transfer outside the Kingdom"
+ ]
+}

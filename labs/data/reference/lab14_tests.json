@@ -1,0 +1,14 @@
+{
+ "legitimate purpose": {
+  "status": "met",
+  "evidence": "Labour-market planning is inside the Observatory's mandate and serves the public interest."
+ },
+ "minimum data": {
+  "status": "not met",
+  "evidence": "All 18,000 current students, with names, phones, birth dates, disability type and the referral flag: a study of graduates' employment needs none of these."
+ },
+ "source entity consent": {
+  "status": "met with conditions",
+  "evidence": "The University is the source of programme and marks. Identity number and nationality come from another source entity: share only what is needed to link, and say so."
+ }
+}

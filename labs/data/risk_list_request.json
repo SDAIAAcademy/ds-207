@@ -1,0 +1,69 @@
+{
+ "request": {
+  "sponsor": "Dr. Ibtisam Al-Khayyat, vice-rector for academic affairs",
+  "request": "Give me a list of every student likely to fail this year, with names and a risk score. I want it on my desk and with the deans by Sunday.",
+  "what_she_wants_to_decide": "where to put twelve new advisors and whether the colleges are acting on referrals",
+  "why_it_is_unsafe": [
+   "a named list of predicted failure is a new purpose and reaches people who do not advise the student",
+   "the score is wrong for known groups: false referrals for students with a remote accommodation, misses for bridging-year entrants",
+   "a label that travels to deans can follow a student into grading and discipline"
+  ],
+  "pressures": [
+   "the council meets on Monday",
+   "another university does this already",
+   "I am the vice-rector, I am allowed to see student data"
+  ]
+ },
+ "alternatives": [
+  {
+   "id": "A1",
+   "title": "Counts for the vice-rector",
+   "what": "Referred and struggling students by college and level, with suppression, to place the twelve advisors.",
+   "serves_decision": true,
+   "names_leave_advising": false
+  },
+  {
+   "id": "A2",
+   "title": "Worklists stay with advisors",
+   "what": "Each advisor keeps the named worklist of their own students, as today; the vice-rector sees how many were contacted within two weeks.",
+   "serves_decision": true,
+   "names_leave_advising": false
+  },
+  {
+   "id": "A3",
+   "title": "The full named list, marked confidential",
+   "what": "Send the list as asked, with a confidentiality marking.",
+   "serves_decision": true,
+   "names_leave_advising": true
+  },
+  {
+   "id": "A4",
+   "title": "Nothing until legal review",
+   "what": "Decline and wait for a legal opinion.",
+   "serves_decision": false,
+   "names_leave_advising": false
+  }
+ ],
+ "observer_rubric": [
+  {
+   "id": "listen",
+   "text": "Asked what decision the sponsor has to make before proposing anything"
+  },
+  {
+   "id": "harm",
+   "text": "Named the harm to students in plain words, not only a rule"
+  },
+  {
+   "id": "rule",
+   "text": "Named the rule or the role that decides (the notice, the law, the data protection officer)"
+  },
+  {
+   "id": "alternative",
+   "text": "Offered an alternative that serves the sponsor's decision"
+  },
+  {
+   "id": "record",
+   "text": "Said what will be written down and who confirms it"
+  }
+ ]
+}

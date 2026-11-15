@@ -1,0 +1,15 @@
+{
+ "form": "record level, minimised",
+ "population": "final-year students only",
+ "fields": [
+  "national_id",
+  "college",
+  "programme",
+  "level_year",
+  "term_gpa"
+ ],
+ "coarsened": {
+  "term_gpa": "a band of half a grade point"
+ },
+ "reason": "Linkage needs the identity number. Employment follows graduation, so only final-year students. No contact details, no birth date, no disability type, no referral flag."
+}

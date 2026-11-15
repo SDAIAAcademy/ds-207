@@ -1,158 +1,635 @@
 <section class="slide title" id="title" data-auto="title">
-  <aside class="notes">REPLACE: welcome; introduce yourself; one question to the room that calibrates the pace; the rhythm of the day</aside>
+  <aside class="notes"><p>Welcome. Ask the room: who has been asked for data they were not sure they could hand over, and what did they do? Take two answers; they calibrate the pace. Rhythm of the day: four sessions, each about 25 minutes of concepts, one checkpoint, then a 25-minute lab. Press B for a break.</p><p>This course assumes FN-106: the law and the policies were introduced there. Here they are applied to analytical work.</p></aside>
 </section>
 
 <section class="slide" id="agenda" data-auto="agenda"></section>
+
+<section class="slide" id="the-case" data-lo="LO1">
+  <div class="kicker">The case</div>
+  <h2>One unit, one rule, one analyst and a week of requests</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li><b>Al-Qimam University</b>: a fictional public university, six colleges, 18,000 students</li>
+      <li><b>The Student Success Unit</b> runs <b>Awn</b>, a rule that refers students to academic support</li>
+      <li><b>You are Ohoud Al-Lihyani</b>, the unit's analyst</li>
+      <li>Every record is synthetic, made with a fixed seed</li>
+    </ul>
+    <table class="t small">
+      <tr><th>Who</th><th>Role</th></tr>
+      <tr><td>Jassim Al-Nuaimi</td><td>Director of the unit</td></tr>
+      <tr><td>Dr. Ibtisam Al-Khayyat</td><td>Vice-rector, a sponsor</td></tr>
+      <tr><td>Dr. Nabil Al-Faraj</td><td>Dean of engineering</td></tr>
+      <tr><td>Rami Al-Tuwaijri</td><td>Registrar, data owner</td></tr>
+      <tr><td>Shatha Al-Omair</td><td>Data protection officer</td></tr>
+      <tr><td>Hazza Al-Marri</td><td>Liaison of a government partner</td></tr>
+    </table>
+  </div>
+  <aside class="notes"><p>Introduce the people now; they return in every lab and in the role-plays of Day 3. The university is public on purpose: the national data policies apply to it directly, and the partner on Day 1 is another government body.</p></aside>
+</section>
+
+<section class="slide" id="awn-rule" data-lo="LO4">
+  <div class="kicker">The rule under study</div>
+  <h2>Awn refers a student on two signals</h2>
+  <div class="flow">
+    <div class="step c-teal"><b>Attendance</b>recorded rate below 75%</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>or midterm mark</b>below 2.5 out of 5</div>
+    <div class="arrow">→</div>
+    <div class="step c-coral"><b>Referral</b>an advisor contacts the student</div>
+  </div>
+  <div class="cols cols-3 mt">
+    <div class="stat center"><div class="big">18,000</div><div class="lbl">students this term</div></div>
+    <div class="stat center"><div class="big">2,040</div><div class="lbl">referred by Awn</div></div>
+    <div class="stat center"><div class="big">2,191</div><div class="lbl">ended the term struggling</div></div>
+  </div>
+  <aside class="notes"><p>"Struggling" is a term grade average below 2.5. The two counts are close and the two groups are not the same students: that gap is Day 2. Today the question is narrower: what may the analyst do with these records at all? Numbers are from the course data, <code>labs/data/students.csv</code>.</p></aside>
+</section>
+
+<section class="slide" id="setup-check">
+  <div class="kicker">Before the first lab</div>
+  <h2>Prove your setup in two minutes</h2>
+  <div class="cols cols-2">
+    <div class="card c-teal"><h4>Google Colab</h4><p class="small mb0">Open <code>00_setup_check.ipynb</code> from the course page and run every cell. The first cell clones the course repository.</p></div>
+    <div class="card c-cyan"><h4>Your laptop</h4><p class="small mb0">Clone the repository, then in <code>labs/</code> run <code>uv run jupyter lab</code> and open the same notebook.</p></div>
+  </div>
+  <div class="callout tip mt"><b>What you need.</b> Python and pandas. No lab calls a model, needs a key or downloads anything beyond the repository.</div>
+  <aside class="notes"><p>Run it now, together. The notebook prints the pandas version, reads the student file and reports 18,000 rows and 30 columns. If a laptop fails, move that participant to Colab and carry on; do not debug environments during session 1.</p></aside>
+</section>
+
+<section class="slide" id="from-fn106" data-lo="LO1">
+  <div class="kicker">Where you start</div>
+  <h2>The pre-work gave you the instruments; this course is about using them at a desk</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>You know</h4><p class="small mb0">The PDPL's vocabulary, the four classification levels, the eight sharing principles, what a pseudonym does and does not hide.</p></div>
+    <div class="card c-cyan"><h4>You practise here</h4><p class="small mb0">Testing a request, cutting an extract, classifying outputs, releasing tables, comparing groups, documenting, saying no with an alternative.</p></div>
+    <div class="card c-purple"><h4>Later, in DS-309</h4><p class="small mb0">Measured re-identification risk, differential privacy, synthetic data, fairness audits of models, model cards.</p></div>
+  </div>
+  <aside class="notes"><p>Ask for a show of hands on the entry quiz: which question was hardest? If most missed the classification question, slow down in session 3. Do not reteach FN-106; refer to it by name when a participant needs the basics.</p></aside>
+</section>
 
 <!-- Session 1 -->
 
 <section class="slide section" id="s1" data-auto="section" data-session="1"></section>
 
-<section class="slide" id="s1-idea" data-lo="LO1">
-  <div class="kicker">REPLACE: the question this slide answers</div>
-  <h2>REPLACE: one idea, stated as a sentence</h2>
+<section class="slide" id="analysis-is-processing" data-lo="LO1">
+  <div class="kicker">The first idea</div>
+  <h2>Every step of an analysis is "processing" in the law</h2>
   <div class="cols cols-2">
     <ul class="bullets">
-      <li>REPLACE: at most six bullets, each a complete thought</li>
-      <li>REPLACE: bold the key phrase; numbers come from the lab run, not from memory</li>
+      <li>The PDPL's definition lists <b>collecting, storing, linking, using, disclosing, sharing, publishing and destroying</b></li>
+      <li>A query, a join, a chart and an email attachment are each on that list</li>
+      <li>The <b>University is the controller</b>: it sets the purpose. You act for it</li>
+      <li>So the question is never "is this analysis?" but <b>"which rules does this step engage?"</b></li>
     </ul>
-    <div class="card c-teal"><h4>In the case study</h4><p class="small mb0">REPLACE: tie the idea to the case study and its data</p></div>
+    <div class="card c-teal"><h4>At Al-Qimam</h4><p class="small mb0">Pulling 30 columns "to have a look" is collecting and storing. Joining the counselling register is linking. Sending a table to a dean is disclosing inside the controller; sending it to the Observatory is disclosing outside it.</p></div>
   </div>
-  <div class="callout warn mt"><b>What goes wrong.</b> REPLACE: the failure participants will hit, and how to recognise it</div>
-  <aside class="notes">REPLACE: what to say, the demo to run, the question to ask the room, the common failure and its fix</aside>
+  <aside class="notes"><p>Read the definition of processing in Article 1 aloud once. The point is that there is no neutral, pre-legal phase called "exploration".</p><p>Sources: Personal Data Protection Law, Article 1.</p></aside>
 </section>
 
-<section class="slide" id="s1-steps" data-lo="LO1">
-  <div class="kicker">Step by step</div>
-  <h2>REPLACE: a process, shown one step per key press</h2>
-  <div class="flow">
-    <div class="step c-teal"><b>1 · REPLACE: name</b>REPLACE: what happens first</div>
-    <div class="arrow frag" data-frag="b">→</div><div class="step c-cyan frag" data-frag="b"><b>2 · REPLACE: name</b>REPLACE: the next piece</div>
-    <div class="arrow frag" data-frag="c">→</div><div class="step c-coral frag" data-frag="c"><b>3 · REPLACE: name</b>REPLACE: the result</div>
+<section class="slide" id="four-kinds" data-lo="LO1">
+  <div class="kicker">Sort the request first</div>
+  <h2>Four kinds of request, four gates</h2>
+  <table class="t">
+    <tr><th>The request is</th><th>The gate</th><th>In the case</th></tr>
+    <tr><td>Inside the collection purpose</td><td>The purpose students were told</td><td>Does Awn reach struggling students?</td></tr>
+    <tr><td>A new internal purpose</td><td>Only the cases Article 10 lists</td><td>A dean wants names with counselling visits</td></tr>
+    <tr><td>A disclosure to another entity</td><td>Only the cases Article 15 lists</td><td>The Observatory wants records</td></tr>
+    <tr><td>A transfer outside the Kingdom</td><td>Article 29 and the transfer regulation</td><td>An upload to a notebook service abroad</td></tr>
+  </table>
+  <div class="callout tip mt"><b>Method.</b> Name the kind before you argue about the data. The kind tells you which article to open.</div>
+  <aside class="notes"><p>This table is the spine of Lab 1.1. Ask the room for one request from their own work and have them place it. Many "internal" requests turn out to be new purposes.</p><p>Sources: Personal Data Protection Law, Articles 10, 15 and 29.</p></aside>
+</section>
+
+<section class="slide" id="lawful-basis" data-lo="LO1">
+  <div class="kicker">Lawful basis</div>
+  <h2>A university's analysis rarely rests on consent</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>Consent is the default, and Article 6 lists cases that need none</li>
+      <li><b>An agreement the student is party to</b>, or another law: enrolment, teaching, assessment, support</li>
+      <li><b>Legitimate interest</b> of the controller: never for sensitive data</li>
+      <li><b>Advertising</b> sent to a person needs prior consent, whatever else is true</li>
+    </ul>
+    <div class="callout warn"><b>What goes wrong.</b> "They agreed to the terms at registration" used as a basis for anything. The basis covers the purposes in the notice. A new purpose needs its own gate.</div>
   </div>
-  <div class="callout tip mt frag"><b>Takeaway.</b> REPLACE: the one sentence to remember</div>
-  <aside class="notes">Press once per step and say what each step adds before the next one appears. REPLACE: the example to walk through</aside>
+  <aside class="notes"><p>Show the privacy notice of the case (<code>labs/data/privacy_notice.md</code>): teaching, assessment, advice and support, stipends, legal reporting, and the sentence "does not use your data for advertising". Request R4 in the lab dies on that sentence and on Article 25.</p><p>Sources: Personal Data Protection Law, Articles 5, 6, 25 and 26.</p></aside>
+</section>
+
+<section class="slide" id="statistics-without-consent" data-lo="LO1">
+  <div class="kicker">The analyst's own article</div>
+  <h2>Statistics without consent are allowed, on four duties</h2>
+  <div class="cols cols-2">
+    <div class="card c-teal"><h4>The law allows it when</h4><p class="small mb0">the data does not specifically identify the person, or the evidence of identity is destroyed before the data is disclosed (not for sensitive data), or another law or an agreement requires it.</p></div>
+    <ol class="bullets">
+      <li>State the purpose in the <b>record of processing</b></li>
+      <li>Collect only the <b>minimum</b> the purpose needs</li>
+      <li><b>Pseudonymise</b> wherever the purpose can still be met</li>
+      <li>Make sure the work has <b>no negative impact</b> on the people in the data</li>
+    </ol>
+  </div>
+  <aside class="notes"><p>This is the article that makes most of the unit's work possible, and its duties are today's first two labs: minimum data and a pseudonym. Duty four is Day 2 and Day 3: a result that singles out a student, or a list that follows a student into grading, is a negative impact.</p><p>Sources: Personal Data Protection Law, Article 27; Implementing Regulation, Article 30.</p></aside>
+</section>
+
+<section class="slide" id="sensitive-data" data-lo="LO1">
+  <div class="kicker">Sensitive data</div>
+  <h2>Health data sits in three ordinary-looking columns</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Column</th><th>Why it is health data</th></tr>
+      <tr><td><code>disability_type</code></td><td>A health condition, stated</td></tr>
+      <tr><td><code>counselling_visits</code></td><td>A health service received</td></tr>
+      <tr><td><code>advisor_note</code></td><td>Free text: surgery, treatment, a hearing aid</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>The PDPL's sensitive kinds include <b>health data</b>, ethnic origin, beliefs, criminal and biometric data</li>
+      <li>Health data: access for the <b>fewest staff</b> who need it to provide the service</li>
+      <li>Legitimate interest never covers it</li>
+      <li>A <b>registered or none</b> flag is still health data</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>Nationality is not on the PDPL's sensitive list by name; racial or ethnic origin is. Treat nationality with care in small groups all the same: Day 2 shows a table where nationality and disability together point at one student.</p><p>Sources: Personal Data Protection Law, Articles 1, 6 and 23.</p></aside>
+</section>
+
+<section class="slide" id="rights-and-retention" data-lo="LO1">
+  <div class="kicker">Rights and retention</div>
+  <h2>A student can ask what you hold, and the extract has an end date</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li><b>Rights:</b> to be informed, to access, to get a copy, to correct, to have data destroyed when no longer needed</li>
+      <li>The University answers within <b>30 days</b></li>
+      <li><b>Retention:</b> destroy personal data when the purpose is met; data that no longer identifies anyone may be kept</li>
+    </ul>
+    <div class="card c-cyan"><h4>What this means at your desk</h4><p class="small mb0">Know where every copy of an extract is. Give each extract a destruction date in the log. Keep the pseudonym key in the unit, so a student's rows can be found for an access request and nowhere else.</p></div>
+  </div>
+  <aside class="notes"><p>The stretch of Lab 1.1 is an access request from a student who heard about the Awn study. The answer goes through the data protection officer; the analyst's part is being able to find the rows.</p><p>Sources: Personal Data Protection Law, Articles 4, 18 and 21; Implementing Regulation (time to respond).</p></aside>
+</section>
+
+<section class="slide" id="disclosure-transfer-breach" data-lo="LO1">
+  <div class="kicker">When data leaves</div>
+  <h2>Three words that are not synonyms: disclosure, transfer, breach</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>Disclosure</h4><p class="small mb0">Someone outside the controller gets access. Allowed only in listed cases, such as a public entity asking for a public-interest purpose.</p></div>
+    <div class="card c-coral"><h4>Transfer</h4><p class="small mb0">The data is processed outside the Kingdom. Needs an adequate level of protection or approved safeguards, and the minimum data.</p></div>
+    <div class="card c-purple"><h4>Breach</h4><p class="small mb0">Access nobody allowed: a lost laptop, a file sent to the wrong list. The University notifies the authority within 72 hours where harm is expected.</p></div>
+  </div>
+  <div class="callout warn mt"><b>Your part in a breach.</b> Tell the data protection officer at once. The 72 hours run from when the University knows, and you are the University.</div>
+  <aside class="notes"><p>A free online notebook hosted abroad is a transfer even when nobody else ever opens the file. That is request R5 in the lab. Safeguards named in the transfer regulation include standard contractual clauses and binding common rules; an analyst does not arrange these alone.</p><p>Sources: Personal Data Protection Law, Articles 15, 20 and 29; Regulation on Personal Data Transfer outside the Kingdom; Implementing Regulation (breach notification).</p></aside>
+</section>
+
+<section class="slide" id="ask-the-dpo" data-lo="LO1">
+  <div class="kicker">Who decides</div>
+  <h2>The analyst prepares the decision; the data protection officer owns the hard ones</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li>She monitors how the law is applied and supervises impact assessments</li>
+      <li>She receives data subjects' requests and reports breaches</li>
+      <li>She keeps the <b>record of processing</b> up to date</li>
+    </ul>
+    <div class="card c-teal"><h4>Rule of thumb</h4><p class="small mb0">Inside the collection purpose: proceed, minimise, record. Anything else (a new purpose, sensitive data, a disclosure, a transfer, advertising): to her <b>before</b> any data is touched, with your note attached.</p></div>
+  </div>
+  <aside class="notes"><p>The note is the lab's last task: what was asked, the kind of processing, the rules engaged, what happens next. A data protection officer who receives that note can answer in minutes; one who receives "can I send this?" cannot.</p><p>Sources: Implementing Regulation, Article 32.</p></aside>
+</section>
+
+<section class="slide" id="check-kind-of-request" data-lo="LO1">
+  <div class="kicker">Checkpoint</div>
+  <h2>Which gate does this request pass through?</h2>
+  <div class="quiz" data-type="single" data-lo="LO1">
+    <p class="lead">The alumni office asks the analyst for the grade averages of last year's graduates, to invite the top tenth to a paid executive programme run with a private partner. Which rule decides the answer?</p>
+    <div class="opts">
+      <div class="opt" data-why="Treats any use by the same university as the original purpose: selling a programme is not teaching or support">Purpose limitation is satisfied, because the data stays inside the University</div>
+      <div class="opt" data-why="Confuses a grade with a sensitive kind: grades are personal data, not on the sensitive list">The sensitive-data rule, because grades are sensitive data</div>
+      <div class="opt" data-ok>Purpose limitation and marketing consent: a new purpose that is advertising</div>
+      <div class="opt" data-why="Assumes every request from outside the unit is a disclosure: the alumni office is part of the same controller">The disclosure rule, because the alumni office is another entity</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The data was collected to teach, assess and support. An invitation to a paid programme is a new purpose and it is advertising sent to a person, which needs that person's prior consent.</div>
+  </div>
+  <aside class="notes"><p>Answer: the third option. If the room splits between the first and the third, ask what the privacy notice told these students. If someone argues legitimate interest, accept the argument for a non-commercial alumni newsletter and ask what changes when a private partner and a fee appear.</p></aside>
 </section>
 
 <section class="slide lab" id="lab-1-1" data-auto="lab" data-lab="1.1">
-  <aside class="notes">REPLACE: what to watch for while participants work, the typical problems, and the fallback for anyone who did not finish an earlier lab</aside>
+  <aside class="notes"><p>Watch for participants who mark all nine rules for every request: the lab asks for the deciding ones. Typical error: R3 marked "refuse"; it is a lawful disclosure that needs minimising. Collect two notes for R2 at the end and read them aloud. No earlier lab is needed.</p></aside>
 </section>
 
 <!-- Session 2 -->
 
 <section class="slide section" id="s2" data-auto="section" data-session="2"></section>
 
-<section class="slide" id="s2-idea" data-lo="LO1">
-  <div class="kicker">REPLACE: the question this slide answers</div>
-  <h2>REPLACE: one idea, stated as a sentence</h2>
+<section class="slide" id="purpose-sentence" data-lo="LO1">
+  <div class="kicker">Purpose</div>
+  <h2>A purpose is precise enough when it can reject a column</h2>
   <div class="cols cols-2">
-    <ul class="bullets">
-      <li>REPLACE: at most six bullets, each a complete thought</li>
-      <li>REPLACE: bold the key phrase; numbers come from the lab run, not from memory</li>
-    </ul>
-    <div class="card c-teal"><h4>In the case study</h4><p class="small mb0">REPLACE: tie the idea to the case study and its data</p></div>
+    <div class="card c-coral"><h4>Too loose to decide anything</h4><p class="small mb0">"Understand student success." Every one of the 30 columns might help with that.</p></div>
+    <div class="card c-teal"><h4>Precise enough to cut with</h4><p class="small mb0">"Evaluate whether Awn's referrals in term 1 reached the students who ended the term struggling, by college and level, to decide whether to extend the rule."</p></div>
   </div>
-  <div class="callout warn mt"><b>What goes wrong.</b> REPLACE: the failure participants will hit, and how to recognise it</div>
-  <aside class="notes">REPLACE: what to say, the demo to run, the question to ask the room, the common failure and its fix</aside>
+  <ul class="bullets mt">
+    <li>It names the <b>decision</b>, the <b>population</b>, the <b>measure</b> and the <b>breakdown</b></li>
+    <li>The law: collect for purposes directly related to the controller's own, and process only for those</li>
+  </ul>
+  <aside class="notes"><p>Have the room test the second sentence against three columns: home address (no), level (yes), nationality (no, not for this purpose). The same four parts return on Day 3 as the scope note.</p><p>Sources: Personal Data Protection Law, Articles 10 and 11.</p></aside>
 </section>
 
-<section class="slide" id="s2-steps" data-lo="LO1">
-  <div class="kicker">Step by step</div>
-  <h2>REPLACE: a process, shown one step per key press</h2>
-  <div class="flow">
-    <div class="step c-teal"><b>1 · REPLACE: name</b>REPLACE: what happens first</div>
-    <div class="arrow frag" data-frag="b">→</div><div class="step c-cyan frag" data-frag="b"><b>2 · REPLACE: name</b>REPLACE: the next piece</div>
-    <div class="arrow frag" data-frag="c">→</div><div class="step c-coral frag" data-frag="c"><b>3 · REPLACE: name</b>REPLACE: the result</div>
+<section class="slide" id="keep-coarsen-drop" data-lo="LO1 LO2">
+  <div class="kicker">Minimisation</div>
+  <h2>Every field gets one of three verdicts</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>Keep</h4><p class="small mb0">The purpose needs it as it is: the rule's inputs, its output, the outcome, the breakdown.</p></div>
+    <div class="card c-amber"><h4>Coarsen</h4><p class="small mb0">The purpose needs a rougher form: a band for a date, a flag for a grade, a pseudonym for a student number.</p></div>
+    <div class="card c-coral"><h4>Drop</h4><p class="small mb0">The purpose does not need it. "It might be useful" is not a need.</p></div>
   </div>
-  <div class="callout tip mt frag"><b>Takeaway.</b> REPLACE: the one sentence to remember</div>
-  <aside class="notes">Press once per step and say what each step adds before the next one appears. REPLACE: the example to walk through</aside>
+  <div class="callout note mt"><b>The legal test.</b> Content limited to the minimum necessary for the purpose, and nothing that identifies a person once the purpose is achieved.</div>
+  <aside class="notes"><p>Coarsening is the verdict people forget. Date of birth to birth year, exact grade to struggled or not, registry number to a project pseudonym. The national guideline names generalisation and aggregation as techniques.</p><p>Sources: Personal Data Protection Law, Article 11; Personal Data Destruction, Anonymization and Pseudonymisation Guideline.</p></aside>
+</section>
+
+<section class="slide" id="thirty-to-eight" data-lo="LO2">
+  <div class="kicker">From the lab's run</div>
+  <h2>The Awn evaluation needs 8 of the registry's 30 columns</h2>
+  <div class="cols cols-2 mid">
+    <div class="bars">
+      <div class="row"><span>Dropped</span><div class="bar c-coral" style="--w:100%"></div><span class="val">22</span></div>
+      <div class="row"><span>Kept</span><div class="bar c-teal" style="--w:32%"></div><span class="val">7</span></div>
+      <div class="row"><span>Coarsened</span><div class="bar c-amber" style="--w:5%"></div><span class="val">1</span></div>
+    </div>
+    <ul class="bullets">
+      <li><b>Kept:</b> college, level, admission route, attendance, midterm mark, referral, outcome</li>
+      <li><b>Coarsened:</b> the student number, into a project pseudonym</li>
+      <li><b>Dropped:</b> names, identity numbers, contacts, addresses, bank accounts, health fields, notes, and the exact term grade</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>These are the counts of the solution of Lab 1.2. A participant who keeps the exact term grade or the login count is not wrong in law if the reason is written; the log is the point. Gender, nationality and disability status are dropped here because this purpose does not need them: the group comparison of Day 2 is a separate decision, approved by the data protection officer.</p></aside>
+</section>
+
+<section class="slide" id="free-text" data-lo="LO1">
+  <div class="kicker">Personal data detection</div>
+  <h2>Pattern rules find the identifiers that have a shape, and miss the rest</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>In 2,400 advisor notes</th><th class="num">Notes</th><th>Found by a pattern?</th></tr>
+      <tr><td>A mobile number</td><td class="num">180</td><td>Yes</td></tr>
+      <tr><td>An identity number</td><td class="num">70</td><td>Yes</td></tr>
+      <tr><td>A health remark</td><td class="num">210</td><td>No</td></tr>
+      <tr><td>Another student's name</td><td class="num">80</td><td>No</td></tr>
+    </table>
+    <div>
+      <pre class="code s"><code class="language-python">re.search(r"\b05\d{8}\b", note)     # phone
+re.search(r"\b[12]\d{9}\b", note)   # identity</code></pre>
+      <div class="callout warn mt-s"><b>So.</b> A free-text column is dropped whole, not cleaned. Detection tools (regular expressions, Presidio) lower the risk; they do not certify a text.</div>
+    </div>
+  </div>
+  <aside class="notes"><p>Demonstration: run task 3 of Lab 1.2 and then the "look at" cell, which prints a dialysis note and a note that accuses a named student. Neither has a pattern. The counts are planted by the data generator and found by the lab.</p></aside>
+</section>
+
+<section class="slide" id="pseudonym-is-personal" data-lo="LO1 LO2">
+  <div class="kicker">A word used loosely</div>
+  <h2>"Anonymised" has a legal meaning, and your extract does not meet it</h2>
+  <div class="cols cols-2">
+    <div class="card c-amber"><h4>Pseudonymised</h4><p class="small mb0">Identifiers replaced by a code. Someone holds the key, and each row is still one student. <b>Still personal data.</b> Every rule still applies.</p></div>
+    <div class="card c-teal"><h4>Anonymised</h4><p class="small mb0">Re-identification is <b>impossible</b>, the controller has assessed that, and keeps assessing it as methods change. Only then is it no longer personal data.</p></div>
+  </div>
+  <div class="callout tip mt"><b>At your desk.</b> Say "pseudonymised extract". Use a keyed hash with a key for this project only, so two extracts cannot be joined.</div>
+  <aside class="notes"><p>FN-106 attacked a pseudonymised file by linkage; do not repeat it, recall it. The measured version (k-anonymity, uniqueness) is in DS-309. Here the participant only needs the vocabulary to be exact, because the classification in session 3 depends on it.</p><p>Sources: Implementing Regulation, Article 9; Personal Data Destruction, Anonymization and Pseudonymisation Guideline.</p></aside>
+</section>
+
+<section class="slide" id="secondary-use" data-lo="LO1 LO2">
+  <div class="kicker">Secondary use</div>
+  <h2>A new purpose for old data is a new decision</h2>
+  <div class="cols cols-2">
+    <ul class="bullets">
+      <li><b>Secondary use:</b> using data for a purpose other than the one it was collected for</li>
+      <li>The PDPL allows it only in listed cases: consent, a public entity acting in the public interest, data that no longer identifies anyone, and a few more</li>
+      <li>The <b>General Rules for Secondary Use of Data</b> govern requests between entities for the public interest or for research</li>
+    </ul>
+    <div class="card c-cyan"><h4>What the Rules ask of an applicant</h4><p class="small mb0">A legitimate purpose that is not profit-seeking. Only the minimum data for it. A request to the entity that is the source of the data, or proof of its approval. A rejection must give its reasons.</p></div>
+  </div>
+  <aside class="notes"><p>The Rules complement the Data Sharing Policy; session 4 uses both. Inside the University the same idea holds without the Rules: the dean's request and the communications office's request are secondary uses, and neither fits a listed case.</p><p>Sources: Personal Data Protection Law, Article 10; General Rules for Secondary Use of Data.</p></aside>
+</section>
+
+<section class="slide" id="minimisation-log" data-lo="LO2 LO5">
+  <div class="kicker">Recording why</div>
+  <h2>The cut is a decision, so it leaves a log</h2>
+  <table class="t small">
+    <tr><th>Field</th><th>Decision</th><th>Reason</th></tr>
+    <tr><td><code>student_id</code></td><td>coarsen</td><td>A project pseudonym keeps one row per student without the registry number</td></tr>
+    <tr><td><code>admission_route</code></td><td>keep</td><td>Bridging-year entrants have no midterm mark; needed to read the rule's result</td></tr>
+    <tr><td><code>term_gpa</code></td><td>drop</td><td>The outcome flag already says struggled or not</td></tr>
+    <tr><td><code>advisor_note</code></td><td>drop</td><td>Free text: cannot be checked field by field</td></tr>
+  </table>
+  <div class="callout tip mt"><b>Who reads it.</b> The data owner who approves the extract, the reviewer who audits it, and you, six months later.</div>
+  <aside class="notes"><p>Four rows of the solution's log. The log returns on Day 3 as part of the analysis log, with an approver beside each decision. Ask: which of these reasons would you be least comfortable defending? Usually the admission route; it is kept because without it the rule's misses cannot be read.</p></aside>
+</section>
+
+<section class="slide" id="check-minimise" data-lo="LO1 LO2">
+  <div class="kicker">Checkpoint</div>
+  <h2>Which extract fits the purpose?</h2>
+  <div class="quiz" data-type="single" data-lo="LO2">
+    <p class="lead">Purpose: "report the share of first-year students who end the term struggling, by college". Which extract is the minimum that serves it?</p>
+    <div class="opts">
+      <div class="opt" data-ok>A pseudonym, the college, the level and the outcome flag, for first-year students</div>
+      <div class="opt" data-why="Keeps identifiers 'in case of follow-up': follow-up is a different purpose with its own approval">The same, plus the student number and email in case a college wants to follow up</div>
+      <div class="opt" data-why="Treats precision as harmless: the exact grade and birth date add detail the question never uses">The college, the level, the exact term grade and the date of birth</div>
+      <div class="opt" data-why="Assumes more rows cannot hurt: students outside the population are outside the purpose">The college, the level and the outcome flag for all 18,000 students, filtered later</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The purpose names first-year students, colleges and one outcome. Rows and fields beyond that are data the purpose does not need.</div>
+  </div>
+  <aside class="notes"><p>Answer: the first option. The fourth option is the one experienced analysts choose; minimisation applies to rows as well as columns. If someone asks whether even the pseudonym is needed: only if the same student must not be counted twice; for a single clean table it could go too.</p></aside>
 </section>
 
 <section class="slide lab" id="lab-1-2" data-auto="lab" data-lab="1.2">
-  <aside class="notes">REPLACE: what to watch for while participants work, the typical problems, and the fallback for anyone who did not finish an earlier lab</aside>
+  <aside class="notes"><p>Task 2 is where the time goes: thirty decisions in eight minutes means deciding by family (identity, contact, health, programme, the rule). Typical problem: keeping the group fields "for fairness later"; point to the "look at" note. The lab writes its log to <code>labs/artifacts/</code>. No earlier lab is needed.</p></aside>
 </section>
 
 <!-- Session 3 -->
 
 <section class="slide section" id="s3" data-auto="section" data-session="3"></section>
 
-<section class="slide" id="s3-idea" data-lo="LO2">
-  <div class="kicker">REPLACE: the question this slide answers</div>
-  <h2>REPLACE: one idea, stated as a sentence</h2>
+<section class="slide" id="outputs-are-data" data-lo="LO2">
+  <div class="kicker">The idea of this session</div>
+  <h2>A table, a chart and a list are data, and each needs a level</h2>
   <div class="cols cols-2">
     <ul class="bullets">
-      <li>REPLACE: at most six bullets, each a complete thought</li>
-      <li>REPLACE: bold the key phrase; numbers come from the lab run, not from memory</li>
+      <li>The policy covers all data a public entity <b>receives, produces or manages</b>, in any form</li>
+      <li>An output does <b>not inherit</b> the level of its source</li>
+      <li>Classify <b>when you create it</b>: until someone does, it is treated as Restricted</li>
     </ul>
-    <div class="card c-teal"><h4>In the case study</h4><p class="small mb0">REPLACE: tie the idea to the case study and its data</p></div>
+    <div class="card c-teal"><h4>In the Awn evaluation</h4><p class="small mb0">One Restricted registry produces a Restricted extract, a Restricted worklist, a Restricted draft table and, after approval, a Public table of referral rates by college.</p></div>
   </div>
-  <div class="callout warn mt"><b>What goes wrong.</b> REPLACE: the failure participants will hit, and how to recognise it</div>
-  <aside class="notes">REPLACE: what to say, the demo to run, the question to ask the room, the common failure and its fix</aside>
+  <aside class="notes"><p>Analysts classify sources and forget outputs. The slide deck you send to a dean is data; so is the screenshot in a chat. Ask the room what they produced last week that nobody classified.</p><p>Sources: Data Classification Policy, scope and principle 3; classification controls.</p></aside>
 </section>
 
-<section class="slide" id="s3-steps" data-lo="LO2">
-  <div class="kicker">Step by step</div>
-  <h2>REPLACE: a process, shown one step per key press</h2>
+<section class="slide" id="four-levels-recap" data-lo="LO2">
+  <div class="kicker">Recap from the pre-work</div>
+  <h2>The level follows the impact of disclosure</h2>
+  <table class="t">
+    <tr><th>Level</th><th>Impact</th><th>What it looks like at a university</th></tr>
+    <tr><td>Top Secret</td><td>High</td><td>Not in a student-success unit</td></tr>
+    <tr><td>Secret</td><td>Medium</td><td>Not in a student-success unit</td></tr>
+    <tr class="hl"><td>Restricted</td><td>Low</td><td>Student records, the extract, a named worklist, a draft with small cells</td></tr>
+    <tr><td>Public</td><td>None</td><td>The timetable, a released table of rates by college</td></tr>
+  </table>
+  <div class="callout note mt"><b>Why not Secret?</b> The policy rates the disclosure of an individual's personal information as a low impact. Low impact leads to Restricted or Public.</div>
+  <aside class="notes"><p>One slide of recap; the levels and impact categories were a session of FN-106. The common mistake in this room will be over-classifying student data as Secret because it feels serious. The level is about impact on national interests, entities, individuals and the environment, and the table of the policy places individual privacy at low.</p><p>Sources: Data Classification Policy, classification levels and Table 2.</p></aside>
+</section>
+
+<section class="slide" id="low-impact-route" data-lo="LO2">
+  <div class="kicker">Restricted or Public?</div>
+  <h2>Low impact needs two more questions</h2>
   <div class="flow">
-    <div class="step c-teal"><b>1 · REPLACE: name</b>REPLACE: what happens first</div>
-    <div class="arrow frag" data-frag="b">→</div><div class="step c-cyan frag" data-frag="b"><b>2 · REPLACE: name</b>REPLACE: the next piece</div>
-    <div class="arrow frag" data-frag="c">→</div><div class="step c-coral frag" data-frag="c"><b>3 · REPLACE: name</b>REPLACE: the result</div>
+    <div class="step c-teal"><b>Impact is low</b>harm to individuals is limited and short-term</div>
+    <div class="arrow">→</div>
+    <div class="step c-coral"><b>Would disclosure conflict with a law?</b>Yes: Restricted</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>Do the benefits of openness outweigh the harm?</b>Yes: Public. No: Restricted</div>
   </div>
-  <div class="callout tip mt frag"><b>Takeaway.</b> REPLACE: the one sentence to remember</div>
-  <aside class="notes">Press once per step and say what each step adds before the next one appears. REPLACE: the example to walk through</aside>
+  <div class="cols cols-2 mt">
+    <div class="card c-coral"><h4>The extract</h4><p class="small mb0">Rows about single students. Disclosure would break the PDPL. Restricted at the first question.</p></div>
+    <div class="card c-teal"><h4>Rates by college</h4><p class="small mb0">Nobody is identified, no law is broken, publishing helps students and the public. Public.</p></div>
+  </div>
+  <aside class="notes"><p>These are steps 4 and 5 of the policy's process. The policy's first principle is open by default in the development sector: the aim of the two questions is to publish what can be published, not to find a reason to restrict.</p><p>Sources: Data Classification Policy, classification process, steps 3 to 5.</p></aside>
+</section>
+
+<section class="slide" id="highest-level" data-lo="LO2">
+  <div class="kicker">Combined data</div>
+  <h2>A joined file takes the highest level of its parts</h2>
+  <div class="cols cols-2 mid">
+    <div class="flow v">
+      <div class="step c-teal"><b>Timetable</b>Public</div>
+      <div class="arrow">↓</div>
+      <div class="step c-coral"><b>joined to the registry</b>Restricted</div>
+      <div class="arrow">↓</div>
+      <div class="step c-coral"><b>Attendance by time of day, per student</b>Restricted</div>
+    </div>
+    <ul class="bullets">
+      <li>The policy's fourth principle: the <b>highest level of protection</b> for an integrated dataset</li>
+      <li>The reverse also happens: an <b>aggregate</b> of Restricted rows can be Public</li>
+      <li>So the level is set for each output, by what that output would reveal</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>In the lab this is one line of code. The teaching point is the second bullet: aggregation can lower the level, but only when no cell points at a person. The draft table in the lab has a cell of 1; it stays Restricted until Day 2 fixes it.</p><p>Sources: Data Classification Policy, principle 4.</p></aside>
+</section>
+
+<section class="slide" id="controls-by-level" data-lo="LO2">
+  <div class="kicker">Controls</div>
+  <h2>The level tells you how to mark, open, store, send and end the data</h2>
+  <table class="t small">
+    <tr><th>Control</th><th>Restricted item</th><th>Public item</th></tr>
+    <tr><td>Protective marking</td><td>Marked on the file and in the email</td><td>None needed</td></tr>
+    <tr><td>Access</td><td>Need to know, least privilege</td><td>Open</td></tr>
+    <tr><td>Storage</td><td>Not left unattended; encrypted</td><td>Anywhere</td></tr>
+    <tr><td>Sharing</td><td>An agreed secure channel</td><td>Any channel</td></tr>
+    <tr><td>Retention and disposal</td><td>On the schedule, disposal logged</td><td>On the schedule</td></tr>
+    <tr><td>Before release</td><td>Second-person check, owner's approval</td><td>Done</td></tr>
+  </table>
+  <aside class="notes"><p>The first five rows are the policy's control families. The last row is the unit's own release policy (<code>labs/data/release_policy.md</code>): a table with a suppressed cell is checked by a second person and approved by the data owner before it becomes Public. Health data adds a rule from the PDPL: the fewest staff who need it.</p><p>Sources: Data Classification Policy, classification controls; Personal Data Protection Law, Article 23.</p></aside>
+</section>
+
+<section class="slide" id="ai-tools" data-lo="LO2">
+  <div class="kicker">What may go into AI tools</div>
+  <h2>Only Public data goes into a generative AI tool</h2>
+  <div class="cols cols-2">
+    <div class="chat">
+      <div class="msg user"><span class="who">Analyst</span>Here are 200 rows of the extract. Summarise the patterns by college.</div>
+      <div class="msg ai bad"><span class="who">Hosted assistant</span>Happy to help. I have stored your file...</div>
+    </div>
+    <ul class="bullets">
+      <li>Government employees enter <b>nothing classified Restricted or higher</b>, and nothing unclassified</li>
+      <li>A pseudonymised extract is Restricted: <b>no</b></li>
+      <li>A released table of rates: <b>yes</b></li>
+      <li>Asking for <b>code</b> without pasting data: yes</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>The guideline for government is explicit. The practical route for an analyst: describe the columns, ask for the code, run it locally. A hosted tool abroad adds the transfer problem of session 1 on top of the classification problem.</p><p>Sources: Generative AI Guidelines for Government.</p></aside>
+</section>
+
+<section class="slide" id="who-classifies" data-lo="LO2">
+  <div class="kicker">Roles and time</div>
+  <h2>You propose a level; the data owner classifies; a reviewer checks</h2>
+  <div class="flow">
+    <div class="step c-teal"><b>Analyst</b>proposes a level and controls for each output</div>
+    <div class="arrow">→</div>
+    <div class="step c-cyan"><b>Data owner</b>(the registrar) classifies</div>
+    <div class="arrow">→</div>
+    <div class="step c-purple"><b>Reviewer</b>in the data management office checks within a month</div>
+  </div>
+  <div class="callout tip mt"><b>Levels change.</b> Set the trigger when you classify: "Restricted until the release is approved", "Public from the publication date". Record it in the register.</div>
+  <aside class="notes"><p>The policy calls the classifier the Business Data Executive. In the case that is Rami Al-Tuwaijri for student records. Declassification triggers can be a period after creation, a period after last use, a date or an event. The lab's stretch asks for one.</p><p>Sources: Data Classification Policy, classification process (steps 2, 6 and 7), roles, declassification.</p></aside>
+</section>
+
+<section class="slide" id="check-classify-output" data-lo="LO2">
+  <div class="kicker">Checkpoint</div>
+  <h2>What level is this output today?</h2>
+  <div class="quiz" data-type="single" data-lo="LO2">
+    <p class="lead">You compute a table of registered-disability counts by college and nationality group from the pseudonymised extract. Two cells are under 10 and one is 1. Nobody has reviewed it. What is its level now?</p>
+    <div class="opts">
+      <div class="opt" data-why="Assumes an aggregate cannot identify: a cell of 1 points at one student's health data">Public, because it is an aggregate with no names</div>
+      <div class="opt" data-why="Assumes an output inherits its source's handling in full: the level is set by what the output itself reveals, and here that happens to agree, but for a different reason">Restricted, because every output of a Restricted source stays Restricted</div>
+      <div class="opt" data-why="Rates the harm by how serious health data feels: the policy's scale places individual privacy at low impact">Secret, because it contains health data</div>
+      <div class="opt" data-ok>Restricted, because a cell of 1 can single out a student, until it is suppressed and checked</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The level follows what the output would reveal. A count of 1 is one student's disability status. After suppression and a second-person check the table may be proposed as Public.</div>
+  </div>
+  <aside class="notes"><p>Answer: the fourth option. The second option has the right level and the wrong reason; spend a minute on it, because the wrong reason would also keep the rates-by-college table Restricted for ever.</p></aside>
 </section>
 
 <section class="slide lab" id="lab-1-3" data-auto="lab" data-lab="1.3">
-  <aside class="notes">REPLACE: what to watch for while participants work, the typical problems, and the fallback for anyone who did not finish an earlier lab</aside>
+  <aside class="notes"><p>Watch task 2: participants argue about whether the rates table is Public "today". Both answers pass the check if the reason is right; the register must say what turns it Public. Typical error in task 4: choosing every control for every item. No earlier lab is needed.</p></aside>
 </section>
 
 <!-- Session 4 -->
 
 <section class="slide section" id="s4" data-auto="section" data-session="4"></section>
 
-<section class="slide" id="s4-idea" data-lo="LO2">
-  <div class="kicker">REPLACE: the question this slide answers</div>
-  <h2>REPLACE: one idea, stated as a sentence</h2>
+<section class="slide" id="sharing-is-expected" data-lo="LO2">
+  <div class="kicker">The starting point</div>
+  <h2>The policy expects you to share, and tells you how</h2>
   <div class="cols cols-2">
     <ul class="bullets">
-      <li>REPLACE: at most six bullets, each a complete thought</li>
-      <li>REPLACE: bold the key phrase; numbers come from the lab run, not from memory</li>
+      <li>Its first principle is a <b>data sharing culture</b>: entities share what they produce</li>
+      <li>The other seven principles are the conditions: legitimate purpose, authorised access, transparency, accountability, security, ethical use, one source of truth</li>
+      <li>For personal data the <b>PDPL's disclosure cases</b> apply on top</li>
     </ul>
-    <div class="card c-teal"><h4>In the case study</h4><p class="small mb0">REPLACE: tie the idea to the case study and its data</p></div>
+    <div class="card c-teal"><h4>The analyst's part</h4><p class="small mb0">You will be the person who knows what the data contains. You prepare the assessment and the conditions. The data management office decides, with the data protection officer.</p></div>
   </div>
-  <div class="callout warn mt"><b>What goes wrong.</b> REPLACE: the failure participants will hit, and how to recognise it</div>
-  <aside class="notes">REPLACE: what to say, the demo to run, the question to ask the room, the common failure and its fix</aside>
+  <aside class="notes"><p>The eight principles were taught in FN-106; one line of recap is enough. The attitude matters: a unit that answers every request with "no" teaches partners to stop asking and start finding another way.</p><p>Sources: Data Sharing Policy, main principles and roles (clause Eighth, paragraph 6).</p></aside>
 </section>
 
-<section class="slide" id="s4-steps" data-lo="LO2">
-  <div class="kicker">Step by step</div>
-  <h2>REPLACE: a process, shown one step per key press</h2>
-  <div class="flow">
-    <div class="step c-teal"><b>1 · REPLACE: name</b>REPLACE: what happens first</div>
-    <div class="arrow frag" data-frag="b">→</div><div class="step c-cyan frag" data-frag="b"><b>2 · REPLACE: name</b>REPLACE: the next piece</div>
-    <div class="arrow frag" data-frag="c">→</div><div class="step c-coral frag" data-frag="c"><b>3 · REPLACE: name</b>REPLACE: the result</div>
+<section class="slide" id="parties-and-route" data-lo="LO2">
+  <div class="kicker">Parties and route</div>
+  <h2>A request has three roles and one front door</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Role</th><th>In the case</th></tr>
+      <tr><td>Data requester</td><td>Masarat Labour Market Observatory</td></tr>
+      <tr><td>Data sharing entity</td><td>Al-Qimam University</td></tr>
+      <tr><td>Data source entity</td><td>The University for marks; another entity for identity numbers</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>The front door is the <b>data management office</b>, never an analyst's inbox</li>
+      <li>Requests for analytical purposes go to the <b>National Data Bank</b> first</li>
+      <li>Between government entities: the <b>controls template</b>. With a private entity: a <b>data sharing agreement</b></li>
+    </ul>
   </div>
-  <div class="callout tip mt frag"><b>Takeaway.</b> REPLACE: the one sentence to remember</div>
-  <aside class="notes">Press once per step and say what each step adds before the next one appears. REPLACE: the example to walk through</aside>
+  <aside class="notes"><p>The request in the lab arrived by email to the analyst. The first correct act is to forward it to the office and say so to the requester. Whether a field's source is the University matters: the policy asks for the source entity's consent when the sharing entity is not the source.</p><p>Sources: Data Sharing Policy, definitions; general rules (clause Third, paragraphs 5, 7 and 13); clause Sixth.</p></aside>
+</section>
+
+<section class="slide" id="three-tests" data-lo="LO2">
+  <div class="kicker">The assessment</div>
+  <h2>Three tests decide whether sharing can go ahead</h2>
+  <div class="cols cols-3">
+    <div class="card c-teal"><h4>1 · Legitimate purpose</h4><p class="small mb0">A legal basis or a justified operational need. For the Observatory: its mandate, a public-interest purpose. <b>Met.</b></p></div>
+    <div class="card c-coral"><h4>2 · Minimum data</h4><p class="small mb0">Only what the purpose needs. It asked for 11 fields of all 18,000 students. <b>Not met.</b></p></div>
+    <div class="card c-amber"><h4>3 · The source's consent</h4><p class="small mb0">Needed for fields the University is not the source of. <b>Met with conditions.</b></p></div>
+  </div>
+  <div class="callout note mt"><b>Time.</b> The office assesses within 10 business days and gives its reasons in writing. A rejected request may be corrected and sent again.</div>
+  <aside class="notes"><p>The verdicts are the solution of Lab 1.4. A failed test is not the end: the office says what must change, the requester resubmits, and the office decides again within five business days.</p><p>Sources: Data Sharing Policy, clause Sixth (paragraph 3) and clause Seventh.</p></aside>
+</section>
+
+<section class="slide" id="form-of-release" data-lo="LO2">
+  <div class="kicker">In what form</div>
+  <h2>Choose the least revealing form that still serves the purpose</h2>
+  <table class="t">
+    <tr><th>Form</th><th>What leaves</th><th>Serves a linkage study?</th></tr>
+    <tr><td>Aggregate</td><td>Counts and averages by programme</td><td>No</td></tr>
+    <tr><td>Pseudonymised</td><td>Rows under a code only the University can reverse</td><td>No</td></tr>
+    <tr class="hl"><td>Record level, minimised</td><td>Rows with the identity number and the few fields needed</td><td>Yes</td></tr>
+  </table>
+  <div class="cols cols-2 mt">
+    <div class="stat center"><div class="big">11 × 18,000</div><div class="lbl">fields and students asked for</div></div>
+    <div class="stat center"><div class="big">5 × 3,612</div><div class="lbl">offered: final-year students, five fields</div></div>
+  </div>
+  <aside class="notes"><p>Aggregates are not always the answer; a participant who says "aggregates only" has refused the purpose without saying so. The purpose is linkage to employment records, and employment follows graduation: final-year students, the identity number, college, programme, level and a grade band. Numbers from the solution of Lab 1.4.</p></aside>
+</section>
+
+<section class="slide" id="eight-headings" data-lo="LO2">
+  <div class="kicker">The conditions</div>
+  <h2>Eight headings turn "yes, but" into something signable</h2>
+  <div class="cols cols-2">
+    <ol class="bullets tight">
+      <li><b>Legal basis:</b> the purpose, and no other use</li>
+      <li><b>Authorisation:</b> named people, need to know</li>
+      <li><b>Data type:</b> the fields, the format, the detail</li>
+      <li><b>Pre-processing:</b> masking, aggregation before or after</li>
+    </ol>
+    <ol class="bullets tight" start="5">
+      <li><b>Sharing means:</b> the channel; retention and destruction</li>
+      <li><b>Usage and protection:</b> the level, limits, onward use</li>
+      <li><b>Duration and termination:</b> end date, what happens then</li>
+      <li><b>Liability:</b> who answers for what</li>
+    </ol>
+  </div>
+  <div class="callout warn mt"><b>Read the request for its weak points.</b> "By email", "and its contractors", "a consulting firm", "kept for future studies": each one becomes a condition.</div>
+  <aside class="notes"><p>These are the eight control groups of the policy's fifth clause. In the lab each heading gets one sentence. Read two of the solution's conditions aloud: the channel (the Government Service Bus or another approved channel, never an attachment) and the destruction of identity numbers after linkage.</p><p>Sources: Data Sharing Policy, clause Fifth.</p></aside>
+</section>
+
+<section class="slide" id="who-signs" data-lo="LO2">
+  <div class="kicker">The decision record</div>
+  <h2>The level of the data decides who signs</h2>
+  <div class="cols cols-2">
+    <table class="t small">
+      <tr><th>Level of the shared data</th><th>Who signs for the sharing entity</th></tr>
+      <tr><td>Secret, Top Secret</td><td>The head of the entity or a delegate</td></tr>
+      <tr class="hl"><td>Restricted</td><td>The director of the data management office</td></tr>
+      <tr><td>Public</td><td>No assessment or agreement needed</td></tr>
+    </table>
+    <ul class="bullets">
+      <li>The record names the decision, the level, the signatory and who was consulted</li>
+      <li>It goes into the <b>record of processing</b> and the office's log of requests</li>
+      <li>Sharing records are kept for <b>five years</b> after the request ends</li>
+    </ul>
+  </div>
+  <aside class="notes"><p>The analyst's name is on the record as "prepared by". That line is a protection as well as a duty: it shows the analyst did not decide alone. Day 3 builds the same habit into the analysis log.</p><p>Sources: Data Sharing Policy, clause Third (paragraph 12), clause Sixth (paragraph 8), clause Eighth (paragraph 7); Personal Data Protection Law, Article 31.</p></aside>
+</section>
+
+<section class="slide" id="a-fact-changes" data-lo="LO2">
+  <div class="kicker">Decisions move</div>
+  <h2>Change one fact and the decision changes with it</h2>
+  <table class="t small">
+    <tr><th>If the request changed to</th><th>What now applies</th></tr>
+    <tr><td>A private company as requester</td><td>A data sharing agreement, a licence under the secondary-use rules, no profit-seeking purpose, and a different PDPL disclosure case</td></tr>
+    <tr><td>Analysts outside the Kingdom</td><td>The transfer rules: adequate protection or approved safeguards</td></tr>
+    <tr><td>Disability status added</td><td>Sensitive data: the narrowest reading of every test</td></tr>
+    <tr><td>Aggregates only</td><td>Small-cell rules, and perhaps a Public table</td></tr>
+  </table>
+  <div class="callout tip mt"><b>In the capstone.</b> The assessor changes one fact of your partner's request and you revise the decision aloud.</div>
+  <aside class="notes"><p>Use this slide to rehearse the capstone's authenticity check. Pick one row, give the room one minute in pairs, and ask one pair to say which condition they would rewrite. The lab's stretch is the second row.</p><p>Sources: Data Sharing Policy; General Rules for Secondary Use of Data; Personal Data Protection Law, Articles 15 and 29.</p></aside>
+</section>
+
+<section class="slide" id="check-sharing" data-lo="LO2">
+  <div class="kicker">Checkpoint</div>
+  <h2>What is the right first answer to this request?</h2>
+  <div class="quiz" data-type="single" data-lo="LO2">
+    <p class="lead">A government health authority emails the analyst: "For a wellbeing study, send names and counselling visit counts of all students." What comes first?</p>
+    <div class="opts">
+      <div class="opt" data-why="Treats a government requester as an automatic yes: the purpose may be lawful, the minimum-data test and the route still apply">Send it: a public entity asked, for the public interest</div>
+      <div class="opt" data-ok>Forward it to the data management office and the data protection officer, with your assessment</div>
+      <div class="opt" data-why="Treats sensitive data as unshareable in any form: counts by college with suppression could serve the study">Refuse: counselling data is health data and is never shared</div>
+      <div class="opt" data-why="Makes the decision alone and changes the request without the office: the analyst prepares, the office decides">Send pseudonymised rows instead, which removes the names</div>
+    </div>
+    <div class="callout tip why"><b>Why.</b> The request has a front door. The analyst routes it there with an assessment: a legitimate purpose, no need for names, counts by college may be enough.</div>
+  </div>
+  <aside class="notes"><p>Answer: the second option. The fourth option is tempting because it sounds careful; it is still the analyst deciding to disclose health data about single students. If the room chooses refusal, ask what the health authority does next: it finds someone less careful.</p></aside>
 </section>
 
 <section class="slide lab" id="lab-1-4" data-auto="lab" data-lab="1.4">
-  <aside class="notes">REPLACE: what to watch for while participants work, the typical problems, and the fallback for anyone who did not finish an earlier lab</aside>
+  <aside class="notes"><p>Watch task 3: some participants answer "aggregate" by reflex. Ask them how the Observatory would link aggregates to employment records. Task 4 needs the request open beside the headings. The lab writes the decision to <code>labs/artifacts/</code>. No earlier lab is needed.</p></aside>
 </section>
 
-<section class="slide" id="wrap-up">
-  <div class="kicker">Day 1 · wrap-up</div>
+<section class="slide" id="wrap-up" data-lo="LO1 LO2">
+  <div class="kicker">Day 1</div>
   <h2>Three things to keep</h2>
   <div class="cols cols-3">
-    <div class="card c-teal"><h4>Remember</h4><p class="small mb0">REPLACE: one idea participants keep</p></div>
-    <div class="card c-coral"><h4>Remember</h4><p class="small mb0">REPLACE: one idea participants keep</p></div>
-    <div class="card c-purple"><h4>Remember</h4><p class="small mb0">REPLACE: one idea participants keep</p></div>
+    <div class="card c-teal"><h4>Name the kind first</h4><p class="small mb0">Inside the purpose, a new purpose, a disclosure, a transfer. The kind tells you which rule to open and who decides.</p></div>
+    <div class="card c-cyan"><h4>The purpose cuts the data</h4><p class="small mb0">Keep, coarsen or drop, with a reason in a log. Thirty columns became eight.</p></div>
+    <div class="card c-coral"><h4>Outputs get a level and requests get conditions</h4><p class="small mb0">Classify what you produce. Answer a partner with a form of release and eight conditions.</p></div>
   </div>
+  <aside class="notes"><p>Ask each participant for one sentence: which of today's four labs would have changed something they did last month? Collect three answers.</p></aside>
 </section>
 
-<section class="slide dark" id="next" data-label="Next">
-  <div class="kicker">Next</div>
-  <h2>Day 2: Fair and safe outputs</h2>
-  <p class="lead">REPLACE: what participants prepare before then; unfinished labs can be finished at home</p>
-  <aside class="notes">REPLACE: accounts, installs or reading participants need before the next unit</aside>
+<section class="slide dark" id="next" data-lo="LO3 LO4">
+  <div class="kicker">Tomorrow</div>
+  <h1>Day 2: fair and safe outputs</h1>
+  <p class="lead">A table that looks harmless and points at one student. A rule that looks neutral and is wrong more often for two groups.</p>
+  <ul class="bullets">
+    <li>Bring: your setup, working</li>
+    <li>Recall: a confidence interval for a proportion</li>
+  </ul>
+  <aside class="notes"><p>Day 2 starts from supplied files, so nobody is blocked by an unfinished lab of today. Remind participants of the prerequisite: rates and an interval for a proportion by group.</p></aside>
 </section>

@@ -1,0 +1,12 @@
+{
+ "columns": [
+  "pid",
+  "college",
+  "level_year",
+  "admission_route",
+  "attendance_rate",
+  "midterm_gpa",
+  "awn_referred",
+  "term_outcome"
+ ]
+}

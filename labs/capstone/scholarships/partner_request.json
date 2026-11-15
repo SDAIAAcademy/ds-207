@@ -1,0 +1,19 @@
+{
+ "requester": "Al-Ata Charitable Foundation",
+ "requester_kind": "non-government entity (a charity that co-funds awards)",
+ "purpose": "Report to its donors how the students it funds are doing.",
+ "requested_fields": [
+  "full_name",
+  "national_id",
+  "phone",
+  "college",
+  "term_gpa",
+  "disability_status",
+  "family_income_band",
+  "flagged_for_review"
+ ],
+ "delivery": "a shared online folder",
+ "retention": "for as long as the Foundation exists",
+ "onward_sharing": "the Foundation's donors, by name",
+ "location": "a cloud folder whose region is not stated"
+}

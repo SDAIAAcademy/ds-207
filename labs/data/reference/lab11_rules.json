@@ -1,0 +1,32 @@
+{
+ "R1": [
+  "lawful basis",
+  "purpose limitation",
+  "minimisation",
+  "records of processing"
+ ],
+ "R2": [
+  "purpose limitation",
+  "minimisation",
+  "sensitive data"
+ ],
+ "R3": [
+  "lawful basis",
+  "purpose limitation",
+  "minimisation",
+  "disclosure",
+  "classification",
+  "records of processing"
+ ],
+ "R4": [
+  "lawful basis",
+  "purpose limitation",
+  "marketing consent"
+ ],
+ "R5": [
+  "minimisation",
+  "sensitive data",
+  "transfer",
+  "classification"
+ ]
+}

@@ -1,0 +1,25 @@
+{
+ "claim": "Awn referred 55% of the students who ended the term struggling (1209 of 2191).",
+ "misreadings": [
+  {
+   "id": "M1",
+   "text": "Awn causes students to pass.",
+   "blocked_by": "a sentence that says the analysis did not test whether support helps"
+  },
+  {
+   "id": "M2",
+   "text": "A student Awn did not refer is safe.",
+   "blocked_by": "the share of struggling students that Awn missed"
+  },
+  {
+   "id": "M3",
+   "text": "The rule works equally well for every group.",
+   "blocked_by": "naming the groups for which it is known to be worse"
+  },
+  {
+   "id": "M4",
+   "text": "The list of referred students can be used to decide who repeats a course.",
+   "blocked_by": "a sentence that says what the result must not be used for"
+  }
+ ]
+}

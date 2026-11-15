@@ -88,7 +88,7 @@
       "sessions": [
         {
           "title": "What the law asks of an analyst",
-          "summary": "Every analysis request engages a small set of PDPL rules, and an analyst who can name them knows when to proceed and when to ask",
+          "summary": "Name the rules a request engages, and know when to ask before touching data",
           "outcomes": [
             "Name the PDPL rules an analysis request engages, from lawful basis to transfer",
             "Distinguish analysis inside the collection purpose from a new purpose, a disclosure and a transfer",
@@ -130,7 +130,7 @@
         },
         {
           "title": "Purpose, minimisation and secondary use",
-          "summary": "The purpose decides the fields: what it does not need is dropped or coarsened, and a new purpose is a new decision",
+          "summary": "The purpose decides the fields; a new purpose is a new decision",
           "outcomes": [
             "Write a purpose precise enough to decide each field against",
             "Cut an extract to the fields the purpose needs, keeping, coarsening or dropping each with a reason",
@@ -173,7 +173,7 @@
         },
         {
           "title": "Classifying data and outputs",
-          "summary": "Tables, charts and lists are data too: each gets a level from the impact of its disclosure, and the level sets the controls",
+          "summary": "Tables, charts and lists get a level, and the level sets the controls",
           "outcomes": [
             "Classify a dataset or an output with the impact questions of the Data Classification Policy",
             "Apply the highest-level rule to combined data and say when an aggregate can be Public",
@@ -215,7 +215,7 @@
         },
         {
           "title": "Sharing requests",
-          "summary": "A partner's request is judged on purpose, minimum data and the source's consent, then answered with a form of release and conditions",
+          "summary": "Judge a partner's request, then answer with a form of release and conditions",
           "outcomes": [
             "Assess a sharing request against the tests of the Data Sharing Policy and the rules for secondary use",
             "Choose the form of release: record level, pseudonymised or aggregate",
@@ -266,7 +266,7 @@
       "sessions": [
         {
           "title": "Aggregate release and small cells",
-          "summary": "An aggregate table can still point at one student: small cells, totals and a second table are the three ways",
+          "summary": "An aggregate table can still point at one student",
           "outcomes": [
             "Explain how a small cell, a total or a second release singles out a student",
             "Apply a threshold rule with complementary suppression and log each suppressed cell",
@@ -308,7 +308,7 @@
         },
         {
           "title": "Where bias enters",
-          "summary": "Bias enters before any metric is computed: in what is recorded, who is covered, how the outcome is defined and how the result is used",
+          "summary": "Bias enters in recording, coverage, labels and use, before any metric",
           "outcomes": [
             "Trace a rule's data from the event to the decision and mark where bias can enter",
             "Distinguish a recording problem, a coverage problem, a label problem and a use problem",
@@ -350,7 +350,7 @@
         },
         {
           "title": "Comparing groups",
-          "summary": "A fair comparison reports the referral rate and both error rates by group, each with its interval, inside the strata that matter",
+          "summary": "Referral and error rates by group, each with its interval",
           "outcomes": [
             "Compute referral, false-referral and missed-student rates by group",
             "Report each rate and each difference with a confidence interval",
@@ -392,7 +392,7 @@
         },
         {
           "title": "Naming the bias",
-          "summary": "A gap has more than one possible cause: name two bias types from the national guide and run the check that separates them",
+          "summary": "Two candidate bias types for a gap, and the check that separates them",
           "outcomes": [
             "Match an observed gap to candidate bias types in the AI Bias Reference Guide",
             "Design the check that separates two candidate causes",
@@ -443,7 +443,7 @@
       "sessions": [
         {
           "title": "Datasheets and analysis logs",
-          "summary": "A reviewer who was not in the room must be able to trace a number to its data, its decisions and its approvals",
+          "summary": "A reviewer must be able to trace a number to data, decisions and approvals",
           "outcomes": [
             "Fill a datasheet that states what the data is, how it was collected and what it must not be used for",
             "Keep an analysis log in which every decision has a reason, a date and an approver",
@@ -485,7 +485,7 @@
         },
         {
           "title": "Scoping with a sponsor",
-          "summary": "A vague request becomes an answerable question when the decision, the population, the measure and the success criterion are agreed",
+          "summary": "A vague request becomes a decision, a population, a measure and a criterion",
           "outcomes": [
             "Ask the questions that turn a request into a decision, a population, a measure and a time frame",
             "Agree success criteria and what is out of scope before any analysis starts",
@@ -527,7 +527,7 @@
         },
         {
           "title": "Pushing back without obstructing",
-          "summary": "Saying no is half an answer: name the rule, offer the lawful alternative that serves the same decision, and escalate when it is not yours to decide",
+          "summary": "Name the harm and the rule, offer an alternative, escalate when needed",
           "outcomes": [
             "Refuse an unsafe request by naming the harm and the rule, not by citing policy at the sponsor",
             "Offer a lawful alternative that serves the sponsor's decision",
@@ -569,7 +569,7 @@
         },
         {
           "title": "Explaining limits",
-          "summary": "A result is finished when its reader knows what it does not show, how sure it is and what it must not be used for",
+          "summary": "Say what the result does not show and what it must not be used for",
           "outcomes": [
             "State what an analysis cannot show, separately from how uncertain it is",
             "Write a limits statement a non-specialist cannot misread",

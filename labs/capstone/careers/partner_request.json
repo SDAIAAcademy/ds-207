@@ -1,0 +1,19 @@
+{
+ "requester": "The Regional Employers' Council",
+ "requester_kind": "non-government entity (a private-sector association)",
+ "purpose": "Let member companies contact promising students directly.",
+ "requested_fields": [
+  "full_name",
+  "phone",
+  "email",
+  "national_id",
+  "college",
+  "gpa",
+  "disability_status",
+  "shortlisted"
+ ],
+ "delivery": "an upload to the Council's recruiting platform",
+ "retention": "until the student unsubscribes",
+ "onward_sharing": "all member companies",
+ "location": "a platform hosted outside the Kingdom"
+}

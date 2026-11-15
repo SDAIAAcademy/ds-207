@@ -1,0 +1,36 @@
+{
+ "D1": [
+  "protective marking",
+  "need-to-know access",
+  "encrypted storage",
+  "retention schedule"
+ ],
+ "D2": [
+  "protective marking",
+  "minimum staff access for health data",
+  "encrypted storage",
+  "retention schedule"
+ ],
+ "D3": [
+  "no control beyond accuracy"
+ ],
+ "D4": [
+  "protective marking",
+  "need-to-know access",
+  "encrypted storage",
+  "retention schedule"
+ ],
+ "O1": [
+  "approval by the data owner before release"
+ ],
+ "O2": [
+  "protective marking",
+  "need-to-know access",
+  "second-person check before release"
+ ],
+ "O3": [
+  "protective marking",
+  "need-to-know access",
+  "retention schedule"
+ ]
+}

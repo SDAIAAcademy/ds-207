@@ -5,7 +5,7 @@
 
 Data Science Track · SDAIA Academy · DS-207 · Level 200
 
-REPLACE: one line under the title: what participants can do after the course
+Handle an analytical request lawfully and fairly: test it against the PDPL, classify and share with conditions, release tables that single nobody out, compare groups honestly, document the work and hold the conversation that rescopes an unsafe request
 
 Participants handle an analytical engagement for a fictional university's student-success unit. They test requests against the Personal Data Protection Law (PDPL), classify the data and decide what may be shared with a government partner, suppress small cells in aggregate outputs, compare outcome and error rates across student groups, keep an analysis log and a datasheet, and handle three stakeholder conversations: scoping, pushing back on an unsafe request and explaining limits. Deeper de-identification and fairness audits are in DS-309.
 
@@ -33,12 +33,12 @@ Participants handle an analytical engagement for a fictional university's studen
 | Day 1 | Lawful analysis | What the law asks of an analyst; Purpose, minimisation and secondary use; Classifying data and outputs; Sharing requests | [`slides/day1.html`](slides/day1.html) |
 | Day 2 | Fair and safe outputs | Aggregate release and small cells; Where bias enters; Comparing groups; Naming the bias | [`slides/day2.html`](slides/day2.html) |
 | Day 3 | Professional conduct | Datasheets and analysis logs; Scoping with a sponsor; Pushing back without obstructing; Explaining limits | [`slides/day3.html`](slides/day3.html) |
-| Capstone | Capstone project presentations |  | [`slides/capstone.html`](slides/capstone.html) |
+| Capstone | Capstone: the responsible-practice pack |  | [`slides/capstone.html`](slides/capstone.html) |
 <!-- /academy:units -->
 
 ## Case study
 
-**REPLACE: the name of the fictional organisation every lab works on.** REPLACE: two sentences on the case study and its synthetic data
+**Al-Qimam University, Student Success Unit.** Al-Qimam University is a fictional public university with six colleges. Its Student Success Unit runs Awn, a rule that refers students to academic support from attendance and midterm marks, and its analyst is asked to evaluate the rule, publish tables, answer a government partner and serve three sponsors. All 18,000 student records are synthetic, generated with a fixed seed, and planted with the problems the labs find: identifiers in free-text notes, small cells that a subtraction recovers, attendance that is under-recorded for one group, marks that are missing for another, a gap that vanishes inside colleges, and a sharing request that asks for too much.
 
 <!-- academy:labs -->
 ## Labs
@@ -47,25 +47,25 @@ Every lab is a notebook in `labs/`. Open it in Google Colab from the course page
 
 | | Session | Lab | File |
 |---|---|---|---|
-| 1.1 | Day 1 · Session 1 | Map five requests to the PDPL principles they engage | [`D1_1_map_five_requests.ipynb`](labs/D1_1_map_five_requests.ipynb) |
-| 1.2 | Day 1 · Session 2 | Cut an extract to the fields the purpose needs, recording why | [`D1_2_cut_extract_fields.ipynb`](labs/D1_2_cut_extract_fields.ipynb) |
-| 1.3 | Day 1 · Session 3 | Classify four datasets and three outputs and name each control | [`D1_3_classify_four_datasets.ipynb`](labs/D1_3_classify_four_datasets.ipynb) |
-| 1.4 | Day 1 · Session 4 | Assess a partner's sharing request and draft approval conditions | [`D1_4_assess_partner_s.ipynb`](labs/D1_4_assess_partner_s.ipynb) |
-| 2.1 | Day 2 · Session 1 | Apply a threshold rule and test for singling out by differencing | [`D2_1_apply_threshold_rule.ipynb`](labs/D2_1_apply_threshold_rule.ipynb) |
-| 2.2 | Day 2 · Session 2 | Mark four points where bias can enter the referral data | [`D2_2_mark_four_points.ipynb`](labs/D2_2_mark_four_points.ipynb) |
-| 2.3 | Day 2 · Session 3 | Compare referral and error rates by group with intervals | [`D2_3_compare_referral_error.ipynb`](labs/D2_3_compare_referral_error.ipynb) |
-| 2.4 | Day 2 · Session 4 | Match two observed gaps to bias types in the national guide | [`D2_4_match_two_observed.ipynb`](labs/D2_4_match_two_observed.ipynb) |
-| 3.1 | Day 3 · Session 1 | Fill a datasheet and log three decisions with their approver | [`D3_1_fill_datasheet_log.ipynb`](labs/D3_1_fill_datasheet_log.ipynb) |
-| 3.2 | Day 3 · Session 2 | Turn a vague request into a question in a timed role-play | [`D3_2_turn_vague_request.ipynb`](labs/D3_2_turn_vague_request.ipynb) |
-| 3.3 | Day 3 · Session 3 | Role-play a request for a risk list; agree a lawful alternative | [`D3_3_role_play_request.ipynb`](labs/D3_3_role_play_request.ipynb) |
-| 3.4 | Day 3 · Session 4 | Write a three-sentence limits statement; choose the capstone case | [`D3_4_write_three_sentence.ipynb`](labs/D3_4_write_three_sentence.ipynb) |
+| 1.1 | Day 1 · Session 1 | Five requests, which rules | [`D1_1_five_requests.ipynb`](labs/D1_1_five_requests.ipynb) |
+| 1.2 | Day 1 · Session 2 | Cut the extract | [`D1_2_cut_extract.ipynb`](labs/D1_2_cut_extract.ipynb) |
+| 1.3 | Day 1 · Session 3 | Classify and control | [`D1_3_classify_control.ipynb`](labs/D1_3_classify_control.ipynb) |
+| 1.4 | Day 1 · Session 4 | The Observatory's request | [`D1_4_sharing_request.ipynb`](labs/D1_4_sharing_request.ipynb) |
+| 2.1 | Day 2 · Session 1 | Suppress, then attack | [`D2_1_small_cells.ipynb`](labs/D2_1_small_cells.ipynb) |
+| 2.2 | Day 2 · Session 2 | Four entry points | [`D2_2_bias_entry_points.ipynb`](labs/D2_2_bias_entry_points.ipynb) |
+| 2.3 | Day 2 · Session 3 | Rates with intervals | [`D2_3_group_rates.ipynb`](labs/D2_3_group_rates.ipynb) |
+| 2.4 | Day 2 · Session 4 | Two gaps, two names | [`D2_4_name_the_bias.ipynb`](labs/D2_4_name_the_bias.ipynb) |
+| 3.1 | Day 3 · Session 1 | Datasheet and log | [`D3_1_datasheet_log.ipynb`](labs/D3_1_datasheet_log.ipynb) |
+| 3.2 | Day 3 · Session 2 | Scope in six minutes | [`D3_2_scoping_roleplay.ipynb`](labs/D3_2_scoping_roleplay.ipynb) |
+| 3.3 | Day 3 · Session 3 | The risk list | [`D3_3_pushback_roleplay.ipynb`](labs/D3_3_pushback_roleplay.ipynb) |
+| 3.4 | Day 3 · Session 4 | Three sentences and the capstone case | [`D3_4_limits_statement.ipynb`](labs/D3_4_limits_statement.ipynb) |
 <!-- /academy:labs -->
 
 ## Capstone
 
 A responsible-practice pack for one of three synthetic engagements (sharing decision, suppressed tables and log, group comparison, datasheet, analysis log, scope note) in a public repository; eight-minute defence that includes a short role-play
 
-**Submission:** REPLACE: what participants submit and how: a public repository link, or a shared folder for a course without code
+**Submission:** a public GitHub repository holding the pack, with a README that links each part and states who approved each release and what the analysis must not be used for. The defence takes eight minutes: six on the pack, including a two-minute role-play with the sponsor, and two in which the assessor changes one fact of the partner's request and the participant revises the sharing decision.
 
 ## Prerequisites
 
@@ -88,16 +88,55 @@ Each line is a capability; the examples are interchangeable.
 <!-- academy:sources -->
 ## Sources
 
-- REPLACE: every source the course cites, with its address, in course.json under "sources"; this list is written from there
+### National references: personal data
+
+- [Personal Data Protection Law (SDAIA)](https://sdaia.gov.sa/en/SDAIA/about/Documents/PersonalDataProtectionLaw.pdf)
+- [Implementing Regulation of the Personal Data Protection Law (SDAIA)](https://sdaia.gov.sa/en/SDAIA/about/Documents/ImplementingRegulationPersonalDataProtectionLaw.pdf)
+- [Regulation on Personal Data Transfer outside the Kingdom (SDAIA)](https://sdaia.gov.sa/Documents/RegulationonPersonalDataEN.pdf)
+- [Personal Data Destruction, Anonymization and Pseudonymisation Guideline (SDAIA)](https://sdaia.gov.sa/Documents/PersonalDataDestructionAnonymizationAndEncryptionGuideline.pdf)
+
+### National references: data management (NDMO)
+
+- [Data Classification Policy (NDMO, SDAIA)](https://sdaia.gov.sa/en/SDAIA/about/Documents/DataClassificationPolicy.pdf)
+- [Data Sharing Policy, version 2.0 (NDMO, SDAIA)](https://sdaia.gov.sa/en/SDAIA/about/Documents/DataSharingPolicyEN.pdf)
+- [General Rules for Secondary Use of Data, issue 1.0 (SDAIA)](https://sdaia.gov.sa/Documents/GeneralRulesForSecondaryUseOfData_EN.pdf)
+
+### National references: AI ethics and bias
+
+- [AI Ethics Principles (SDAIA)](https://sdaia.gov.sa/en/SDAIA/about/Documents/ai-principles.pdf)
+- [AI Bias Reference Guide, first edition (SDAIA, May 2026)](https://sdaia.gov.sa/en/MediaCenter/KnowledgeCenter/ResearchLibrary/EN-AI-BIAS.pdf)
+- [Generative AI Guidelines for Government (SDAIA)](https://sdaia.gov.sa/en/SDAIA/about/Files/GenAIGuidelinesForGovernmentENCompressed.pdf)
+- [Regulations and policies index (SDAIA)](https://sdaia.gov.sa/en/SDAIA/about/Pages/RegulationsAndPolicies.aspx)
+
+### Disclosure control, fairness and documentation
+
+- [Frequently Asked Questions: Disclosure Avoidance (Privacy Technical Assistance Center, US Department of Education)](https://studentprivacy.ed.gov/sites/default/files/resource_document/file/FAQs_disclosure_avoidance_0.pdf)
+- [Gebru et al., Datasheets for Datasets](https://arxiv.org/abs/1803.09010)
+- [Suresh and Guttag, A Framework for Understanding Sources of Harm throughout the Machine Learning Life Cycle](https://arxiv.org/abs/1901.10002)
+- [Kleinberg, Mullainathan and Raghavan, Inherent Trade-Offs in the Fair Determination of Risk Scores](https://arxiv.org/abs/1609.05807)
+- [Chouldechova, Fair prediction with disparate impact](https://arxiv.org/abs/1610.07524)
+- [Barocas, Hardt and Narayanan, Fairness and Machine Learning](https://fairmlbook.org/)
+
+### Tools
+
+- [pandas](https://pandas.pydata.org/)
+- [DuckDB](https://duckdb.org/)
+- [Polars](https://pola.rs/)
+- [JupyterLab documentation](https://jupyterlab.readthedocs.io/en/stable/)
+- [marimo](https://marimo.io/)
+- [Quarto](https://quarto.org/)
+- [Fairlearn: common fairness metrics](https://fairlearn.org/main/user_guide/assessment/common_fairness_metrics.html)
+- [Presidio, personal data detection and anonymisation](https://data-privacy-stack.github.io/presidio/)
+- [statsmodels: confidence intervals for a proportion (Wilson)](https://www.statsmodels.org/stable/generated/statsmodels.stats.proportion.proportion_confint.html)
 <!-- /academy:sources -->
 
 ### National references
 
-- Personal Data Protection Law and its implementing regulations: REPLACE: the address of the official text
-- Regulation on Personal Data Transfer outside the Kingdom: REPLACE: the address of the official text
-- PDPL guideline on destruction, anonymisation and pseudonymisation of personal data: REPLACE: the address of the official text
-- NDMO Data Classification Policy: REPLACE: the address of the official text
-- NDMO Data Sharing Policy: REPLACE: the address of the official text
-- General Rules for Secondary Use of Data: REPLACE: the address of the official text
-- SDAIA AI Ethics Principles: REPLACE: the address of the official text
-- SDAIA AI Bias Reference Guide: REPLACE: the address of the official text
+- Personal Data Protection Law and its implementing regulations: <https://sdaia.gov.sa/en/SDAIA/about/Documents/PersonalDataProtectionLaw.pdf> and <https://sdaia.gov.sa/en/SDAIA/about/Documents/ImplementingRegulationPersonalDataProtectionLaw.pdf>
+- Regulation on Personal Data Transfer outside the Kingdom: <https://sdaia.gov.sa/Documents/RegulationonPersonalDataEN.pdf>
+- PDPL guideline on destruction, anonymisation and pseudonymisation of personal data: <https://sdaia.gov.sa/Documents/PersonalDataDestructionAnonymizationAndEncryptionGuideline.pdf>
+- NDMO Data Classification Policy: <https://sdaia.gov.sa/en/SDAIA/about/Documents/DataClassificationPolicy.pdf>
+- NDMO Data Sharing Policy: <https://sdaia.gov.sa/en/SDAIA/about/Documents/DataSharingPolicyEN.pdf>
+- General Rules for Secondary Use of Data: <https://sdaia.gov.sa/Documents/GeneralRulesForSecondaryUseOfData_EN.pdf>
+- SDAIA AI Ethics Principles: <https://sdaia.gov.sa/en/SDAIA/about/Documents/ai-principles.pdf>
+- SDAIA AI Bias Reference Guide: <https://sdaia.gov.sa/en/MediaCenter/KnowledgeCenter/ResearchLibrary/EN-AI-BIAS.pdf>
